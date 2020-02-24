@@ -1,97 +1,197 @@
-<!-- AUTO-GENERATED-CONTENT:START (STARTER) -->
-<p align="center">
-  <a href="https://www.gatsbyjs.org">
-    <img alt="Gatsby" src="https://www.gatsbyjs.org/monogram.svg" width="60" />
-  </a>
-</p>
-<h1 align="center">
-  Gatsby's default starter
-</h1>
+# Contentful
 
-Kick off your project with this default boilerplate. This starter ships with the main Gatsby configuration files you might need to get up and running blazing fast with the blazing fast app generator for React.
+## For setting up content types and fields from CLI
 
-_Have another more specific idea? You may want to check out our vibrant collection of [official and community-created starters](https://www.gatsbyjs.org/docs/gatsby-starters/)._
+These docs are neither 100% clear nor comprehensive. But they do help some way towards creating the migration files used in the /migration directory to set up content types and their fields via the CLI.
 
-## 🚀 Quick start
+The goal is to get a clear idea of how to write a migration script in JS to use with the Contentful CLI.
 
-1.  **Create a Gatsby site.**
+Using the references below, I've written a migration file in contentful_migrations/01-setup-contenttypes-and-fields.js. To use, run the following in order:
 
-    Use the Gatsby CLI to create a new site, specifying the default starter.
+```
+contentful login --management-token YOUR_CMA_TOKEN
 
-    ```shell
-    # create a new Gatsby site using the default starter
-    gatsby new my-default-starter https://github.com/gatsbyjs/gatsby-starter-default
-    ```
+contentful space create --name 'YOUR_SPACE_NAME_HERE' -l is
 
-1.  **Start developing.**
+// Lets us run contentful commands without typing the space ID again.
+contentful space use -s YOUR_SPACE_ID_HERE
 
-    Navigate into your new site’s directory and start it up.
+contentful space migration contentful_migrations/01-setup-contenttypes-and-fields.js
+```
 
-    ```shell
-    cd my-default-starter/
-    gatsby develop
-    ```
+[CLI docs](https://github.com/contentful/contentful-cli/tree/master/docs): basic use of CLI like login and how to do a migration. But does not include what a migration file looks like, and how to add content types and fields to them.
 
-1.  **Open the source code and start editing!**
+[CLI migration docs](https://github.com/contentful/contentful-migration): details on how to write the migration script.
 
-    Your site is now running at `http://localhost:8000`!
+[Data model](https://www.contentful.com/developers/docs/concepts/data-model): tells you about what fields can be added to your migration script, but has no info on what the script itself looks like.
 
-    _Note: You'll also see a second link: _`http://localhost:8000/___graphql`_. This is a tool you can use to experiment with querying your data. Learn more about using this tool in the [Gatsby tutorial](https://www.gatsbyjs.org/tutorial/part-five/#introducing-graphiql)._
+[Automated Contentful migrations](https://www.robinandeer.com/blog/2019/04/26/automated-contentful-migrations/): a couple of examples for migration scripts worth skimming through for a start.
 
-    Open the `my-default-starter` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes and the browser will update in real time!
+[The right way to migrate your content using the Contentful Migration CLI](https://www.contentful.com/blog/2017/09/18/using-the-contentful-migration-cli/): more useful details for migration scripts, like how to link from one content type to another:
 
-## 🧐 What's inside?
+```
+const blogPost = migration.editContentType('blogPost')
+  blogPost.createField('author')
+    .name('Author')
+    .type('Link')
+    .linkType('Entry')
 
-A quick look at the top-level files and directories you'll see in a Gatsby project.
+    // Isolates link to only the "author" content type.
+    .validations([
+      { "linkContentType": ["author"] }
+    ])
+};
+```
 
-    .
-    ├── node_modules
-    ├── src
-    ├── .gitignore
-    ├── .prettierrc
-    ├── gatsby-browser.js
-    ├── gatsby-config.js
-    ├── gatsby-node.js
-    ├── gatsby-ssr.js
-    ├── LICENSE
-    ├── package-lock.json
-    ├── package.json
-    └── README.md
+[Contentful Migration Cheat Sheet](https://www.cheatography.com/gburgett/cheat-sheets/contentful-migration/): clues you in on how to do some of these fields, and also nice reminders.
 
-1.  **`/node_modules`**: This directory contains all of the modules of code that your project depends on (npm packages) are automatically installed.
+[How to do validations on items({})](https://www.contentfulcommunity.com/t/confusing-validations-error-from-the-migrations-cli/776/4).
 
-2.  **`/src`**: This directory will contain all of the code related to what you will see on the front-end of your site (what you see in the browser) such as your site header or a page template. `src` is a convention for “source code”.
+Basically:
 
-3.  **`.gitignore`**: This file tells git which files it should not track / not maintain a version history for.
+```
+blogPost.createField("categories")
+    .name("Categories")
+    .required(false)
+    .type('Array')
+    .items({
+        type: 'Link',
+        linkType: "Entry",
 
-4.  **`.prettierrc`**: This is a configuration file for [Prettier](https://prettier.io/). Prettier is a tool to help keep the formatting of your code consistent.
+        // Right here.
+        validations: [{
+            linkContentType: [
+                "categories"
+            ],
+        }]
 
-5.  **`gatsby-browser.js`**: This file is where Gatsby expects to find any usage of the [Gatsby browser APIs](https://www.gatsbyjs.org/docs/browser-apis/) (if any). These allow customization/extension of default Gatsby settings affecting the browser.
+    })
+```
 
-6.  **`gatsby-config.js`**: This is the main configuration file for a Gatsby site. This is where you can specify information about your site (metadata) like the site title and description, which Gatsby plugins you’d like to include, etc. (Check out the [config docs](https://www.gatsbyjs.org/docs/gatsby-config/) for more detail).
+## Creating instances from the CLI
 
-7.  **`gatsby-node.js`**: This file is where Gatsby expects to find any usage of the [Gatsby Node APIs](https://www.gatsbyjs.org/docs/node-apis/) (if any). These allow customization/extension of default Gatsby settings affecting pieces of the site build process.
+Use [`createEntryWithId`](https://contentful.github.io/contentful-management.js/contentful-management/latest/ContentfulEnvironmentAPI.html#.createEntryWithId) to create content type instances.
 
-8.  **`gatsby-ssr.js`**: This file is where Gatsby expects to find any usage of the [Gatsby server-side rendering APIs](https://www.gatsbyjs.org/docs/ssr-apis/) (if any). These allow customization of default Gatsby settings affecting server-side rendering.
+I've used this to create fixtures in contentful_fixtures/fixtures.js. Run `node contentful_fixtures.js` to load them into Contentful.
 
-9.  **`LICENSE`**: Gatsby is licensed under the MIT license.
+This requires the [contentful-management](https://github.com/contentful/contentful-management.js) and [uuid](https://github.com/uuidjs/uuid) packages.
 
-10. **`package-lock.json`** (See `package.json` below, first). This is an automatically generated file based on the exact versions of your npm dependencies that were installed for your project. **(You won’t change this file directly).**
+## Delete content types and fields from CLI
 
-11. **`package.json`**: A manifest file for Node.js projects, which includes things like metadata (the project’s name, author, etc). This manifest is how npm knows which packages to install for your project.
+Use [contentful-clean-space](https://github.com/jugglingthebits/contentful-clean-space): `contentful-clean-space --space-id YOUR_SPACE_ID --accesstoken YOUR_CMA_TOKEN --content-types`
 
-12. **`README.md`**: A text file containing useful reference information about your project.
+## For GETs and POSTs
 
-## 🎓 Learning Gatsby
+[Content Management API (CMA)](https://www.contentful.com/developers/docs/references/content-management-api)
 
-Looking for more guidance? Full documentation for Gatsby lives [on the website](https://www.gatsbyjs.org/). Here are some places to start:
+# Localisation
 
-- **For most developers, we recommend starting with our [in-depth tutorial for creating a site with Gatsby](https://www.gatsbyjs.org/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
+[Language subtag registry](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry)
 
-- **To dive straight into code samples, head [to our documentation](https://www.gatsbyjs.org/docs/).** In particular, check out the _Guides_, _API Reference_, and _Advanced Tutorials_ sections in the sidebar.
+[Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat)
 
-## 💫 Deploy
+```
+let date = new Date()
+let intlDate = new Intl.DateTimeFormat('TR', options).format(date)
+console.log(intlDate)
+```
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/gatsbyjs/gatsby-starter-default)
+# How pages are generated according to language
 
-<!-- AUTO-GENERATED-CONTENT:END -->
+In gatsby.node, I first use the official [Contentful JS SDK](https://github.com/contentful/contentful.js) to get locales:
+
+```
+exports.createPages = async ({ actions, graphql }) => {
+  const { createPage } = actions
+
+  const locales = await client.getLocales()
+  ...
+}
+```
+
+Then in the same `createPages` function, I iterate over the `locales` array and use the [gatsby-source-contentful](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful) plugin to retrieve data from Contentful using graphql. I use this data to create pages:
+
+```
+  return locales.items.forEach(locale => {
+    return graphql(`
+      {
+        blogposts: allContentfulBlogPost(filter: {node_locale: {eq: "${locale.code}"}}) {
+            ...
+          }
+        }
+      }
+    `).then(res => {
+      ...
+
+      // Create each blog post with locale as path prefix.
+      blogposts.forEach(node => {
+        createPage({
+          path: `/${node.node_locale}/blog/${node.title}`,
+          component: path.resolve("src/templates/BlogPost.js"),
+          ...
+        })
+      })
+
+      // Create a list of blog posts by locale.
+      createPage({
+        path: `/${locale.code}/blog`,
+        component: path.resolve("src/templates/Blog.js"),
+        ...
+      })
+    })
+  })
+```
+
+# Important plugins
+
+## [gatsby-source-contentful](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful)
+
+### General note
+
+Ordinarily, we can only reach a free Contentful account through its REST API. This plugin makes it possible with graphql. Self-documenting playground at /\_\_\_graphql.
+
+Currently, an [unresolved bug](https://github.com/gatsbyjs/gatsby/issues/15397) causes the program to crash while compiling. It seems a [PR](https://github.com/gatsbyjs/gatsby/pull/12816) is in progress. For the moment, a [workaround](https://github.com/gatsbyjs/gatsby/issues/15397#issuecomment-537418391): log into Contentful, click Media from navigation bar, upload any asset.
+
+### Formatting dates
+
+When querying with graphql, dates can be formatted using formats from [momentjs](https://momentjs.com/docs/#/displaying/format/). For instance, this:
+
+```
+query MyQuery {
+  allContentfulBlogPost {
+    nodes {
+      createdAt(formatString: "DD MMMM YYYY")
+    }
+  }
+}
+```
+
+Produces:
+
+```
+{
+  "data": {
+    "allContentfulBlogPost": {
+      "nodes": [
+        {
+          "createdAt": "08 February 2020"
+        },
+      ]
+    }
+  }
+}
+```
+
+### Crashes if field does not exist
+
+Let's say we we have a field called `description` in Contentful and we have only one record so far, maybe because it's early stages of development. And let's say we haven't filled in the `description` field yet. Graphql fails and it won't compile.
+
+According to this [solution](https://stackoverflow.com/questions/47373455/gatsbyjs-how-to-handle-empty-graphql-node-from-contentful-plugin), at least one record must have this field filled in.
+
+So, the best thing to do is to create a default entry with all fields filled in.
+
+We can't give each field a default value. [This](https://www.contentfulcommunity.com/t/createfield-with-default-value/2485) says it's not part of Contentful's migration API.
+
+# CSS by Bulma
+
+[Bulma with Gatsby](https://www.gatsbyjs.org/docs/bulma/).
