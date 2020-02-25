@@ -1,13 +1,9 @@
-import React from "react"
+import React, { useState } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import { Link } from "gatsby"
 
 function NavBar() {
-  const {
-    site: {
-      siteMetadata: { locales },
-    },
-  } = useStaticQuery(graphql`
+  const data = useStaticQuery(graphql`
     query {
       site {
         siteMetadata {
@@ -19,20 +15,50 @@ function NavBar() {
           }
         }
       }
+
+      allContentfulPage {
+        nodes {
+          slug
+          title
+          node_locale
+        }
+      }
     }
   `)
+
+  const {
+    site: {
+      siteMetadata: { locales },
+    },
+  } = data
+
+  // const { allContentfulPage } = data
+
+  let defaultLocale
+
+  locales.forEach(locale => {
+    if (locale.default) {
+      defaultLocale = locale.code
+    }
+  })
+
+  const [locale, setLocale] = useState(defaultLocale)
+  console.log(locale)
 
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
-        <a className="navbar-item" href="https://bulma.io">
+        <Link
+          className="navbar-item"
+          to={locale === defaultLocale ? `/` : `/${locale}`}
+        >
           <img
             src="https://bulma.io/images/bulma-logo.png"
             width="112"
             height="28"
             alt="Bulma logo."
           />
-        </a>
+        </Link>
 
         <a
           role="button"
@@ -65,13 +91,15 @@ function NavBar() {
 
             <div className="navbar-dropdown">
               {locales.map(locale => (
-                <Link
-                  to={locale.default ? `` : `${locale.code}`}
-                  className="navbar-item"
-                  key={locale.name}
-                >
+                // <Link
+                //   to={locale.default ? `` : `${locale.code}`}
+                //   className="navbar-item"
+                //   key={locale.name}
+                // >
+                <span onClick={() => setLocale(locale.code)}>
                   {locale.code}
-                </Link>
+                </span>
+                // </Link>
               ))}
               <hr className="navbar-divider" />
               <a href="#" className="navbar-item">

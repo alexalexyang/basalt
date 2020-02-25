@@ -87,7 +87,9 @@ exports.createPages = async ({ actions, graphql }) => {
 
       blogposts.forEach(post => {
         createPage({
-          path: `/${post.node_locale}/blog/${post.title}`,
+          path: `/${post.node_locale}/blog/${post.title
+            .toLowerCase()
+            .replace(/ /g, "-")}`,
           component: path.resolve("src/templates/BlogPost.js"),
           context: {
             post,
