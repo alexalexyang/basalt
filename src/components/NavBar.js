@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import { Link } from "gatsby"
 
@@ -32,26 +32,12 @@ function NavBar() {
     },
   } = data
 
-  // const { allContentfulPage } = data
-
-  let defaultLocale
-
-  locales.forEach(locale => {
-    if (locale.default) {
-      defaultLocale = locale.code
-    }
-  })
-
-  const [locale, setLocale] = useState(defaultLocale)
-  console.log(locale)
+  const { allContentfulPage } = data
 
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
-        <Link
-          className="navbar-item"
-          to={locale === defaultLocale ? `/` : `/${locale}`}
-        >
+        <Link className="navbar-item" to={`/${window.location.pathname}`}>
           <img
             src="https://bulma.io/images/bulma-logo.png"
             width="112"
@@ -76,13 +62,11 @@ function NavBar() {
 
       <div id="navbarBasicExample" className="navbar-menu">
         <div className="navbar-start">
-          <a href="#" className="navbar-item">
-            Home
-          </a>
-
-          <a href="#" className="navbar-item">
-            Documentation
-          </a>
+          {allContentfulPage.nodes.map(node => (
+            <a href={`${node.slug}`} className="navbar-item">
+              {node.title}
+            </a>
+          ))}
 
           <div className="navbar-item has-dropdown is-hoverable">
             <a href="#" className="navbar-link">
@@ -90,16 +74,14 @@ function NavBar() {
             </a>
 
             <div className="navbar-dropdown">
-              {locales.map(locale => (
-                // <Link
-                //   to={locale.default ? `` : `${locale.code}`}
-                //   className="navbar-item"
-                //   key={locale.name}
-                // >
-                <span onClick={() => setLocale(locale.code)}>
-                  {locale.code}
-                </span>
-                // </Link>
+              {locales.map(item => (
+                <Link
+                  to={`/${item.path}`}
+                  className="navbar-item"
+                  key={item.name}
+                >
+                  {item.code}
+                </Link>
               ))}
               <hr className="navbar-divider" />
               <a href="#" className="navbar-item">

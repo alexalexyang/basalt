@@ -9,7 +9,15 @@ const ContentfulClient = contentful.createClient({
 let locales = []
 
 ContentfulClient.getLocales()
-  .then(data => data.items.forEach(item => locales.push(item)))
+  .then(data =>
+    data.items.forEach(item => {
+      if (item.default) {
+        locales.push(item)
+      } else {
+        locales.push(item)
+      }
+    })
+  )
   .catch(err => console.log(err))
 
 module.exports = {
