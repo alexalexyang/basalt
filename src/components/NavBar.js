@@ -7,6 +7,11 @@ function NavBar() {
     query {
       site {
         siteMetadata {
+          defaultLocale {
+            code
+            default
+            name
+          }
           locales {
             code
             default
@@ -28,16 +33,40 @@ function NavBar() {
 
   const {
     site: {
-      siteMetadata: { locales },
+      siteMetadata: { defaultLocale, locales },
     },
+    allContentfulPage,
   } = data
 
-  const { allContentfulPage } = data
+  const pages = () => {
+    return window.location.pathname.length === 1
+      ? allContentfulPage.nodes.map(node => {
+          return node.node_locale === defaultLocale.code ? (
+            <Link to={`${node.slug}`} className="navbar-link" key={node.slug}>
+              {node.title}
+            </Link>
+          ) : null
+        })
+      : allContentfulPage.nodes.map(node => {
+          return window.location.pathname.includes(node.node_locale) ? (
+            <Link
+              to={`/${node.node_locale}${node.slug}`}
+              className="navbar-link"
+              key={node.slug}
+            >
+              {node.title}
+            </Link>
+          ) : null
+        })
+  }
 
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
-        <Link className="navbar-item" to={`/${window.location.pathname}`}>
+        <Link
+          className="navbar-item"
+          to={`/${window.location.pathname.split("/")[1]}`}
+        >
           <img
             src="https://bulma.io/images/bulma-logo.png"
             width="112"
@@ -62,11 +91,7 @@ function NavBar() {
 
       <div id="navbarBasicExample" className="navbar-menu">
         <div className="navbar-start">
-          {allContentfulPage.nodes.map(node => (
-            <a href={`${node.slug}`} className="navbar-item">
-              {node.title}
-            </a>
-          ))}
+          {pages()}
 
           <div className="navbar-item has-dropdown is-hoverable">
             <a href="#" className="navbar-link">
@@ -76,7 +101,7 @@ function NavBar() {
             <div className="navbar-dropdown">
               {locales.map(item => (
                 <Link
-                  to={`/${item.path}`}
+                  to={item.code === defaultLocale.code ? `/` : `/${item.code}`}
                   className="navbar-item"
                   key={item.name}
                 >

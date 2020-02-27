@@ -6,12 +6,14 @@ const ContentfulClient = contentful.createClient({
   accessToken: process.env.GATSBY_CONTENTFUL_ACCESS_TOKEN,
 })
 
+let defaultLocale = {}
 let locales = []
 
 ContentfulClient.getLocales()
   .then(data =>
     data.items.forEach(item => {
       if (item.default) {
+        Object.assign(defaultLocale, item)
         locales.push(item)
       } else {
         locales.push(item)
@@ -25,6 +27,7 @@ module.exports = {
     title: `Firstahjalp`,
     description: `A multilingual first aid site`,
     author: `Alex`,
+    defaultLocale,
     locales,
   },
   plugins: [
