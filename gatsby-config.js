@@ -44,7 +44,7 @@ module.exports = {
     title: `Firstahjalp`,
     description: `A multilingual first aid site`,
     author: `Alex`,
-    defaultLocale,
+    defaultLocale: defaultLocale(),
     locales,
   },
   plugins: [
