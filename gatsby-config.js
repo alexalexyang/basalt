@@ -13,9 +13,11 @@ ContentfulClient.getLocales()
   .then(data =>
     data.items.forEach(item => {
       if (item.default) {
+        item["path"] = ""
         Object.assign(defaultLocale, item)
         locales.push(item)
       } else {
+        item["path"] = item.code
         locales.push(item)
       }
     })

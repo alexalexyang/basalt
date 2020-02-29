@@ -99,7 +99,7 @@ exports.createPages = async ({ actions, graphql }) => {
 
       // Create page for list of blog posts.
       createPage({
-        path: `/${locale.code}/blog`,
+        path: locale.code === defaultLocale ? `/blog` : `/${locale.code}/blog`,
         component: path.resolve("src/templates/Blog.js"),
         context: {
           blogposts,
