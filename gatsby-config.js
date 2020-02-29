@@ -6,7 +6,19 @@ const ContentfulClient = contentful.createClient({
   accessToken: process.env.GATSBY_CONTENTFUL_ACCESS_TOKEN,
 })
 
-let defaultLocale = {}
+let defaultLocale = () => {
+  ContentfulClient.getLocales()
+    .then(data =>
+      data.items.forEach(item => {
+        if (item.default) {
+          item["path"] = ""
+          return item
+        } else {
+        }
+      })
+    )
+    .catch(err => console.log(err))
+}
 let locales = []
 
 ContentfulClient.getLocales()
