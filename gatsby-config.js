@@ -7,17 +7,20 @@ const ContentfulClient = contentful.createClient({
 })
 
 let defaultLocale = () => {
+  let dLocale = {}
   ContentfulClient.getLocales()
     .then(data =>
       data.items.forEach(item => {
         if (item.default) {
           item["path"] = ""
-          return item
+          Object.assign(dLocale, item)
+          locales.push(item)
         } else {
         }
       })
     )
     .catch(err => console.log(err))
+  return dLocale
 }
 let locales = []
 
