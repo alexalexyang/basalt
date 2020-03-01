@@ -40,7 +40,7 @@ function NavBar() {
     .catch(err => console.log(err))
 
   const changeLocale = code => {
-    code === defaultLocale.code
+    typeof window !== "undefined" && code === defaultLocale.code
       ? window.location.replace(`${window.location.origin}${subPath}`)
       : window.location.replace(`${window.location.origin}/${code}${subPath}`)
   }
@@ -70,7 +70,6 @@ function NavBar() {
   }
 
   const getCurrentLocale = () => {
-    console.log(window.location.pathname)
     const pathname = window.location.pathname.match(/^\/\w\w\/|^\/\w\w$/)
     return pathname ? pathname[0].match(/\w\w/)[0] : ""
   }
@@ -104,7 +103,7 @@ function NavBar() {
         })
   }
 
-  const subPath = getSubPath()
+  const subPath = typeof window !== "undefined" && getSubPath()
 
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
