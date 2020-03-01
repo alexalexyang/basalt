@@ -1,23 +1,13 @@
-import React, { useState } from "react"
+import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
-import { navigate, Link } from "gatsby"
+import { Link } from "gatsby"
+import contentful from "contentful"
 
 function NavBar() {
   const data = useStaticQuery(graphql`
     query {
       site {
         siteMetadata {
-          defaultLocale {
-            code
-            default
-            name
-          }
-          locales {
-            code
-            default
-            fallbackCode
-            name
-          }
         }
       }
 
@@ -31,23 +21,33 @@ function NavBar() {
     }
   `)
 
-  const {
-    site: {
-      siteMetadata: { defaultLocale, locales },
-    },
-    allContentfulPage,
-  } = data
+  const { allContentfulPage } = data
 
-  // console.log("DEFAULT LOCALE: ", defaultLocale)
+  let defaultLocale = {}
+  let locales = []
+
+  const ContentfulClient = contentful.createClient({
+    space: process.env.GATSBY_CONTENTFUL_SPACE_ID,
+    accessToken: process.env.GATSBY_CONTENTFUL_ACCESS_TOKEN,
+  })
+
+  ContentfulClient.getLocales()
+    .then(data =>
+      data.items.forEach(item => {
+        if (item.default) {
+          Object.assign(defaultLocale, item)
+          locales.push(item)
+        } else {
+          locales.push(item)
+        }
+      })
+    )
+    .catch(err => console.log(err))
 
   const changeLocale = code => {
-    // console.log("setlocale: ", code)
-    // defaultLocale === code ? setCurrentLocale("") : setCurrentLocale(code)
-    console.log("Navigating.")
     code === defaultLocale.code
       ? window.location.replace(`${window.location.origin}${subPath}`)
       : window.location.replace(`${window.location.origin}/${code}${subPath}`)
-    console.log("Navigated.")
   }
 
   const getSubPath = () => {
