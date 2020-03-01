@@ -27,8 +27,6 @@ let siteConfig = {
     title: `Firstahjalp`,
     description: `A multilingual first aid site`,
     author: `Alex`,
-    defaultLocale,
-    locales,
   },
   plugins: [
     {
