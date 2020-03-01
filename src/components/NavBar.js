@@ -1,7 +1,7 @@
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import { Link } from "gatsby"
-import { contentful } from "contentful"
+const contentful = require("contentful")
 
 function NavBar() {
   const data = useStaticQuery(graphql`
