@@ -23,13 +23,23 @@ ContentfulClient.getLocales()
   .catch(err => console.log(err))
 
 module.exports = {
-  defaultLocale,
-  locales,
   siteMetadata: {
     title: `Firstahjalp`,
     description: `A multilingual first aid site`,
     author: `Alex`,
-    defaultLocale,
+    defaultLocale: () => {
+      let defaultLocale = {}
+      ContentfulClient.getLocales()
+        .then(data =>
+          data.items.forEach(item => {
+            if (item.default) {
+              Object.assign(defaultLocale, item)
+            }
+          })
+        )
+        .catch(err => console.log(err))
+      return defaultLocale
+    },
     locales,
   },
   plugins: [
