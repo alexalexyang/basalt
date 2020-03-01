@@ -6,11 +6,6 @@ import contentful from "contentful"
 function NavBar() {
   const data = useStaticQuery(graphql`
     query {
-      site {
-        siteMetadata {
-        }
-      }
-
       allContentfulPage {
         nodes {
           slug
