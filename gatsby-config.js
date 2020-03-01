@@ -6,45 +6,31 @@ const ContentfulClient = contentful.createClient({
   accessToken: process.env.GATSBY_CONTENTFUL_ACCESS_TOKEN,
 })
 
-let defaultLocale = () => {
-  let dLocale = {}
-  ContentfulClient.getLocales()
-    .then(data =>
-      data.items.forEach(item => {
-        if (item.default) {
-          item["path"] = ""
-          Object.assign(dLocale, item)
-          locales.push(item)
-        } else {
-        }
-      })
-    )
-    .catch(err => console.log(err))
-  return dLocale
-}
+let defaultLocale = {}
 let locales = []
 
 ContentfulClient.getLocales()
   .then(data =>
     data.items.forEach(item => {
       if (item.default) {
-        item["path"] = ""
         Object.assign(defaultLocale, item)
         locales.push(item)
       } else {
-        item["path"] = item.code
         locales.push(item)
       }
     })
   )
   .catch(err => console.log(err))
 
+module.exports = defaultLocale
+module.exports = locales
+
 module.exports = {
   siteMetadata: {
     title: `Firstahjalp`,
     description: `A multilingual first aid site`,
     author: `Alex`,
-    defaultLocale: defaultLocale(),
+    defaultLocale,
     locales,
   },
   plugins: [
