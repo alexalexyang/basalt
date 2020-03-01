@@ -22,10 +22,9 @@ ContentfulClient.getLocales()
   )
   .catch(err => console.log(err))
 
-module.exports = defaultLocale
-module.exports = locales
-
 module.exports = {
+  defaultLocale,
+  locales,
   siteMetadata: {
     title: `Firstahjalp`,
     description: `A multilingual first aid site`,
