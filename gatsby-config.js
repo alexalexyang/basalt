@@ -1,36 +1,33 @@
 require("dotenv").config()
 const contentful = require("contentful")
 
-const ContentfulClient = contentful.createClient({
-  space: process.env.GATSBY_CONTENTFUL_SPACE_ID,
-  accessToken: process.env.GATSBY_CONTENTFUL_ACCESS_TOKEN,
-})
+// const ContentfulClient = contentful.createClient({
+//   space: process.env.GATSBY_CONTENTFUL_SPACE_ID,
+//   accessToken: process.env.GATSBY_CONTENTFUL_ACCESS_TOKEN,
+// })
 
-let defaultLocale = {}
-let locales = []
+// let defaultLocale = {}
+// let locales = []
 
-ContentfulClient.getLocales()
-  .then(data =>
-    data.items.forEach(item => {
-      if (item.default) {
-        Object.assign(defaultLocale, item)
-        locales.push(item)
-      } else {
-        locales.push(item)
-      }
-    })
-  )
-  .catch(err => console.log(err))
+// ContentfulClient.getLocales()
+//   .then(data =>
+//     data.items.forEach(item => {
+//       if (item.default) {
+//         Object.assign(defaultLocale, item)
+//         locales.push(item)
+//       } else {
+//         locales.push(item)
+//       }
+//     })
+//   )
+//   .catch(err => console.log(err))
 
-module.exports = {
+let siteConfig = {
   siteMetadata: {
     title: `Firstahjalp`,
     description: `A multilingual first aid site`,
     author: `Alex`,
-    defaultLocale: async () => {
-      let defaultLocale = await ContentfulClient.getLocales()
-      return defaultLocale
-    },
+    defaultLocale,
     locales,
   },
   plugins: [
@@ -84,4 +81,30 @@ module.exports = {
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
   ],
+}
+
+module.exports = async () => {
+  const ContentfulClient = contentful.createClient({
+    space: process.env.GATSBY_CONTENTFUL_SPACE_ID,
+    accessToken: process.env.GATSBY_CONTENTFUL_ACCESS_TOKEN,
+  })
+
+  let defaultLocale = {}
+  let locales = []
+
+  let data = await ContentfulClient.getLocales()
+
+  data.items.forEach(item => {
+    if (item.default) {
+      Object.assign(defaultLocale, item)
+      locales.push(item)
+    } else {
+      locales.push(item)
+    }
+  })
+
+  siteConfig.siteMetadata["defaultLocale"] = defaultLocale
+  siteConfig.siteMetadata["locales"] = locales
+
+  return siteConfig
 }
