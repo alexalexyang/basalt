@@ -11,14 +11,12 @@ function NavBar() {
             code
             default
             name
-            path
           }
           locales {
             code
             default
             fallbackCode
             name
-            path
           }
         }
       }
@@ -41,7 +39,6 @@ function NavBar() {
   } = data
 
   // console.log("DEFAULT LOCALE: ", defaultLocale)
-  // const [currentLocale, setCurrentLocale] = useState(defaultLocale.path)
 
   const changeLocale = code => {
     // console.log("setlocale: ", code)

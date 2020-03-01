@@ -9,7 +9,7 @@ const ContentfulClient = contentful.createClient({
 let defaultLocale = {}
 let locales = []
 
-module.exports = ContentfulClient.getLocales()
+ContentfulClient.getLocales()
   .then(data =>
     data.items.forEach(item => {
       if (item.default) {
@@ -27,7 +27,16 @@ module.exports = {
     title: `Firstahjalp`,
     description: `A multilingual first aid site`,
     author: `Alex`,
-    defaultLocale,
+    defaultLocale: async () => {
+      let l = []
+      let defaultLocale = await ContentfulClient.getLocales()
+      defaultLocale.items.forEach(item => {
+        if (item.default) {
+          l.push(item)
+        }
+      })
+      return l[0]
+    },
     locales,
   },
   plugins: [
