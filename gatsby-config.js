@@ -28,14 +28,8 @@ module.exports = {
     description: `A multilingual first aid site`,
     author: `Alex`,
     defaultLocale: async () => {
-      let l = []
       let defaultLocale = await ContentfulClient.getLocales()
-      defaultLocale.items.forEach(item => {
-        if (item.default) {
-          l.push(item)
-        }
-      })
-      return l[0]
+      return defaultLocale
     },
     locales,
   },
