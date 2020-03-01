@@ -46,7 +46,7 @@ function NavBar() {
   }
 
   const getSubPath = () => {
-    let pathname = window.location.pathname
+    let pathname = typeof window !== "undefined" && window.location.pathname
     let subPath = ""
 
     // If path is "example.com"
@@ -70,7 +70,9 @@ function NavBar() {
   }
 
   const getCurrentLocale = () => {
-    const pathname = window.location.pathname.match(/^\/\w\w\/|^\/\w\w$/)
+    const pathname =
+      typeof window !== "undefined" &&
+      window.location.pathname.match(/^\/\w\w\/|^\/\w\w$/)
     return pathname ? pathname[0].match(/\w\w/)[0] : ""
   }
   const currentLocale = getCurrentLocale()
