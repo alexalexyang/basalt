@@ -26,21 +26,20 @@ function NavBar() {
     accessToken: process.env.GATSBY_CONTENTFUL_ACCESS_TOKEN,
   })
 
+  let localeData = []
   ContentfulClient.getLocales()
     .then(data => {
-      let locales = []
-      data.items.forEach(item => {
-        if (item.default) {
-          locales.push(item)
-          setDefaultLocale(item)
-        } else {
-          locales.push(item)
-        }
-      })
-      return locales
+      localeData = data.items
     })
-    .then(locales => setLocales(locales))
     .catch(err => console.log(err))
+
+  localeData.items.forEach(item => {
+    if (item.default) {
+      setDefaultLocale(item)
+    } else {
+      setLocales(localeData)
+    }
+  })
 
   const changeLocale = code => {
     typeof window !== "undefined" && code === defaultLocale.code
