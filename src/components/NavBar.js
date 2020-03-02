@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import { Link } from "gatsby"
 const contentful = require("contentful")
@@ -26,22 +26,25 @@ function NavBar() {
     accessToken: process.env.GATSBY_CONTENTFUL_ACCESS_TOKEN,
   })
 
-  let localeData = []
-  ContentfulClient.getLocales()
-    .then(data => {
-      localeData = data.items
-    })
-    .catch(err => console.log(err))
+  useEffect(() => {
+    ContentfulClient.getLocales()
+      .then(data => {
+        setLocales(data.items)
+        data.items.forEach(item => {
+          if (item.default) {
+            setDefaultLocale(item)
+          }
+        })
+      })
+      .catch(err => console.log(err))
+  }, [])
 
-  localeData.items.forEach(item => {
-    if (item.default) {
-      setDefaultLocale(item)
-    }
-  })
-  setLocales(localeData)
-
+  console.log("LOCALES: ", locales)
+  console.log("DEFAULT LOCALE: ", defaultLocale)
   const changeLocale = code => {
-    typeof window !== "undefined" && code === defaultLocale.code
+    typeof window !== "undefined" &&
+    defaultLocale &&
+    code === defaultLocale.code
       ? window.location.replace(`${window.location.origin}${getSubPath()}`)
       : window.location.replace(
           `${window.location.origin}/${code}${getSubPath()}`
@@ -81,8 +84,12 @@ function NavBar() {
   const currentLocale = getCurrentLocale()
 
   const pages = () => {
+    console.log("DEFAULT LOCALE EXISTS. RUNNING PAGES().")
+    console.log("DEFAULT LOCALE CODE: ", defaultLocale.code)
+    console.log("CURRENT LOCALE: ", currentLocale)
     return currentLocale === ""
       ? allContentfulPage.nodes.map(node => {
+        console.log("CPAGE NODE: ", node)
           return node.node_locale === defaultLocale.code ? (
             <>
               <Link to={`${node.slug}`} className="navbar-item" key={node.slug}>
@@ -137,7 +144,7 @@ function NavBar() {
         <div className="navbar-start"></div>
 
         <div className="navbar-end">
-          {defaultLocale && pages()}
+          {defaultLocale ? pages() : null}
 
           <Link
             to={currentLocale === "" ? `/blog` : `/${currentLocale}/blog`}
