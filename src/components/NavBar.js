@@ -44,8 +44,10 @@ function NavBar() {
 
   const changeLocale = code => {
     typeof window !== "undefined" && code === defaultLocale.code
-      ? window.location.replace(`${window.location.origin}${subPath}`)
-      : window.location.replace(`${window.location.origin}/${code}${subPath}`)
+      ? window.location.replace(`${window.location.origin}${getSubPath()}`)
+      : window.location.replace(
+          `${window.location.origin}/${code}${getSubPath()}`
+        )
   }
 
   const getSubPath = () => {
@@ -106,7 +108,7 @@ function NavBar() {
         })
   }
 
-  const subPath = typeof window !== "undefined" && getSubPath()
+  // const subPath = typeof window !== "undefined" && getSubPath()
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
