@@ -18,8 +18,6 @@ function NavBar() {
 
   const { allContentfulPage } = data
 
-  // let defaultLocale = {}
-  // let locales = []
   const [defaultLocale, setDefaultLocale] = useState()
   const [locales, setLocales] = useState()
 
@@ -33,7 +31,6 @@ function NavBar() {
       let locales = []
       data.items.forEach(item => {
         if (item.default) {
-          // Object.assign(defaultLocale, item)
           locales.push(item)
           setDefaultLocale(item)
         } else {
@@ -44,10 +41,8 @@ function NavBar() {
     })
     .then(locales => setLocales(locales))
     .catch(err => console.log(err))
-  console.log("DEFAULTLOCALE: ", defaultLocale)
 
   const changeLocale = code => {
-    console.log("DEFAULTLOCALE.CODE: ", defaultLocale.code)
     typeof window !== "undefined" && code === defaultLocale.code
       ? window.location.replace(`${window.location.origin}${subPath}`)
       : window.location.replace(`${window.location.origin}/${code}${subPath}`)
@@ -81,14 +76,11 @@ function NavBar() {
     const pathname =
       typeof window !== "undefined" &&
       window.location.pathname.match(/^\/\w\w\/|^\/\w\w$/)
-    console.log("PATHNAME(GETCURRENTLOCALE): ", pathname)
     return pathname ? pathname[0].match(/\w\w/)[0] : ""
   }
   const currentLocale = getCurrentLocale()
-  typeof window !== "undefined" && console.log("WINDOW: ", window.location)
 
   const pages = () => {
-    console.log("CURRENTLOCALE (PAGES): ", currentLocale)
     return currentLocale === ""
       ? allContentfulPage.nodes.map(node => {
           return node.node_locale === defaultLocale.code ? (
@@ -100,7 +92,6 @@ function NavBar() {
           ) : null
         })
       : allContentfulPage.nodes.map(node => {
-          // return window.location.pathname.includes(node.node_locale) ? (
           return node.node_locale === currentLocale ? (
             <>
               <Link
