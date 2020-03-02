@@ -29,10 +29,10 @@ function NavBar() {
   useEffect(() => {
     ContentfulClient.getLocales()
       .then(data => {
-        setLocales(data.items)
         data.items.forEach(item => {
           if (item.default) {
             setDefaultLocale(item)
+            setLocales(data.items)
           }
         })
       })
@@ -84,12 +84,8 @@ function NavBar() {
   const currentLocale = getCurrentLocale()
 
   const pages = () => {
-    console.log("DEFAULT LOCALE EXISTS. RUNNING PAGES().")
-    console.log("DEFAULT LOCALE CODE: ", defaultLocale.code)
-    console.log("CURRENT LOCALE: ", currentLocale)
     return currentLocale === ""
       ? allContentfulPage.nodes.map(node => {
-        console.log("CPAGE NODE: ", node)
           return node.node_locale === defaultLocale.code ? (
             <>
               <Link to={`${node.slug}`} className="navbar-item" key={node.slug}>
