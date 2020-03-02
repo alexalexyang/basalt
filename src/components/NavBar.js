@@ -76,7 +76,7 @@ function NavBar() {
     return pathname ? pathname[0].match(/\w\w/)[0] : ""
   }
   const currentLocale = getCurrentLocale()
-  console.log("WINDOW: ", window.location)
+  typeof window !== "undefined" && console.log("WINDOW: ", window.location)
 
   const pages = () => {
     return currentLocale === ""
