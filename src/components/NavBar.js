@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import { Link } from "gatsby"
 const contentful = require("contentful")
@@ -18,8 +18,10 @@ function NavBar() {
 
   const { allContentfulPage } = data
 
-  let defaultLocale = {}
-  let locales = []
+  // let defaultLocale = {}
+  // let locales = []
+  const [defaultLocale, setDefaultLocale] = useState()
+  const [locales, setLocales] = useState()
 
   const ContentfulClient = contentful.createClient({
     space: process.env.GATSBY_CONTENTFUL_SPACE_ID,
@@ -27,19 +29,25 @@ function NavBar() {
   })
 
   ContentfulClient.getLocales()
-    .then(data =>
+    .then(data => {
+      let locales = []
       data.items.forEach(item => {
         if (item.default) {
-          Object.assign(defaultLocale, item)
+          // Object.assign(defaultLocale, item)
           locales.push(item)
+          setDefaultLocale(item)
         } else {
           locales.push(item)
         }
       })
-    )
+      return locales
+    })
+    .then(locales => setLocales(locales))
     .catch(err => console.log(err))
+  console.log("DEFAULTLOCALE: ", defaultLocale)
 
   const changeLocale = code => {
+    console.log("DEFAULTLOCALE.CODE: ", defaultLocale.code)
     typeof window !== "undefined" && code === defaultLocale.code
       ? window.location.replace(`${window.location.origin}${subPath}`)
       : window.location.replace(`${window.location.origin}/${code}${subPath}`)
@@ -73,12 +81,14 @@ function NavBar() {
     const pathname =
       typeof window !== "undefined" &&
       window.location.pathname.match(/^\/\w\w\/|^\/\w\w$/)
+    console.log("PATHNAME(GETCURRENTLOCALE): ", pathname)
     return pathname ? pathname[0].match(/\w\w/)[0] : ""
   }
   const currentLocale = getCurrentLocale()
   typeof window !== "undefined" && console.log("WINDOW: ", window.location)
 
   const pages = () => {
+    console.log("CURRENTLOCALE (PAGES): ", currentLocale)
     return currentLocale === ""
       ? allContentfulPage.nodes.map(node => {
           return node.node_locale === defaultLocale.code ? (
@@ -106,7 +116,6 @@ function NavBar() {
   }
 
   const subPath = typeof window !== "undefined" && getSubPath()
-
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
@@ -118,8 +127,8 @@ function NavBar() {
             alt="Bulma logo."
           />
         </Link>
-
-        <button
+        {/* 
+        <a
           role="button"
           className="navbar-burger burger"
           aria-label="menu"
@@ -130,14 +139,14 @@ function NavBar() {
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
-        </button>
+        </a> */}
       </div>
 
       <div id="navbarBasicExample" className="navbar-menu">
         <div className="navbar-start"></div>
 
         <div className="navbar-end">
-          {pages()}
+          {defaultLocale && pages()}
 
           <Link
             to={currentLocale === "" ? `/blog` : `/${currentLocale}/blog`}
@@ -152,20 +161,17 @@ function NavBar() {
             </a>
 
             <div className="navbar-dropdown">
-              {locales.map(item => (
-                <p
-                  // to={
-                  //   item.code === defaultLocale.code
-                  //     ? `/${subPath}`
-                  //     : `/${item.code}${subPath}`
-                  // }
-                  className="navbar-item"
-                  key={item.name}
-                  onClick={() => changeLocale(item.code)}
-                >
-                  {item.code}
-                </p>
-              ))}
+              {locales &&
+                locales.map(item => (
+                  <p
+                    className="navbar-item"
+                    key={item.name}
+                    onClick={() => changeLocale(item.code)}
+                  >
+                    {item.code}
+                    {console.log("ITEM: ", item)}
+                  </p>
+                ))}
             </div>
           </div>
         </div>
