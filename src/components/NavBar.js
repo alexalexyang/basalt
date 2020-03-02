@@ -28,8 +28,8 @@ function NavBar() {
 
   ContentfulClient.getLocales()
     .then(data => {
-      let locales = []
       data.items.forEach(item => {
+        let locales = []
         if (item.default) {
           locales.push(item)
           setDefaultLocale(item)
@@ -162,7 +162,6 @@ function NavBar() {
                     onClick={() => changeLocale(item.code)}
                   >
                     {item.code}
-                    {console.log("ITEM: ", item)}
                   </p>
                 ))}
             </div>
