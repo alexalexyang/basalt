@@ -36,10 +36,9 @@ function NavBar() {
   localeData.items.forEach(item => {
     if (item.default) {
       setDefaultLocale(item)
-    } else {
-      setLocales(localeData)
     }
   })
+  setLocales(localeData)
 
   const changeLocale = code => {
     typeof window !== "undefined" && code === defaultLocale.code
