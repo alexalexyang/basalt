@@ -31,8 +31,7 @@ function NavBar() {
       .then(data => {
         data.items.forEach(item => {
           if (item.default) {
-            setDefaultLocale(item)
-            setLocales(data.items)
+            setDefaultLocale(item) && setLocales(data.items)
           }
         })
       })
