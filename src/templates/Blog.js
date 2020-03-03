@@ -3,6 +3,8 @@ import React from "react"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
+import { Link } from "gatsby"
+
 function Blog({ pageContext }) {
   console.log(pageContext)
   pageContext.blogposts.forEach(node => console.log(node))
@@ -11,7 +13,9 @@ function Blog({ pageContext }) {
       <SEO title={`Blog`} />
       <div>
         {pageContext.blogposts.map(node => (
-          <p>{node.title}</p>
+          <p>
+            <Link to={node.slug}>{node.title}</Link>
+          </p>
         ))}
       </div>
     </Layout>

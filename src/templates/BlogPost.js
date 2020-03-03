@@ -10,6 +10,7 @@ function BlogPost({ pageContext: { post } }) {
       <article className="section content">
         <div classname="container">
           <article className="content">
+            <p>{post.testslug}</p>
             <p>
               Written by {post.author} on{" "}
               <time datetime={post.createdAt}>{post.createdAt}</time>.

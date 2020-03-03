@@ -1,3 +1,21 @@
+# To do
+
+- Put slug back into pages
+- Remake slugs in migration and fixture scripts, localised
+- Recreate database and migrate
+- Rework slugs in gatsby-node.js
+- Link to blog posts
+- Create categories page
+- Create tags page
+- Bring in images
+- Create fuller fixtures to test with
+- Format markdown properly
+- Create language items in Contentful and pull
+- Webhook from Contentful to Netlify
+- Bring in design
+- Test data dump for migration
+- Write docs
+
 # Contentful
 
 ## For setting up content types and fields from CLI
@@ -145,6 +163,10 @@ Then in the same `createPages` function, I iterate over the `locales` array and 
 # Important plugins
 
 ## [gatsby-source-contentful](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful)
+
+### [setFieldsOnGraphQLNodeType](https://www.gatsbyjs.org/docs/node-apis/#setFieldsOnGraphQLNodeType)
+
+Use this so set custom fields on gatsby-source-contentful's graphql schema.
 
 ### General note
 

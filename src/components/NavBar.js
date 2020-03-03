@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from "react"
+import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import { Link } from "gatsby"
-const contentful = require("contentful")
 
 function NavBar() {
   const data = useStaticQuery(graphql`
     query {
+      site {
+        defaultLocale
+        locales
+      }
       allContentfulPage {
         nodes {
+          id
           slug
           title
           node_locale
@@ -16,30 +20,11 @@ function NavBar() {
     }
   `)
 
-  const { allContentfulPage } = data
+  const {
+    site: { defaultLocale, locales },
+    allContentfulPage,
+  } = data
 
-  const [defaultLocale, setDefaultLocale] = useState()
-  const [locales, setLocales] = useState()
-
-  const ContentfulClient = contentful.createClient({
-    space: process.env.GATSBY_CONTENTFUL_SPACE_ID,
-    accessToken: process.env.GATSBY_CONTENTFUL_ACCESS_TOKEN,
-  })
-
-  useEffect(() => {
-    ContentfulClient.getLocales()
-      .then(data => {
-        data.items.forEach(item => {
-          if (item.default) {
-            setDefaultLocale(item) && setLocales(data.items)
-          }
-        })
-      })
-      .catch(err => console.log(err))
-  }, [])
-
-  console.log("LOCALES: ", locales)
-  console.log("DEFAULT LOCALE: ", defaultLocale)
   const changeLocale = code => {
     typeof window !== "undefined" &&
     defaultLocale &&
@@ -87,7 +72,7 @@ function NavBar() {
       ? allContentfulPage.nodes.map(node => {
           return node.node_locale === defaultLocale.code ? (
             <>
-              <Link to={`${node.slug}`} className="navbar-item" key={node.slug}>
+              <Link to={`${node.slug}`} className="navbar-item" key={node.id}>
                 {node.title}
               </Link>
             </>
@@ -99,7 +84,7 @@ function NavBar() {
               <Link
                 to={`/${node.node_locale}${node.slug}`}
                 className="navbar-item"
-                key={node.slug}
+                key={node.id}
               >
                 {node.title}
               </Link>
@@ -108,7 +93,6 @@ function NavBar() {
         })
   }
 
-  // const subPath = typeof window !== "undefined" && getSubPath()
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
@@ -120,19 +104,18 @@ function NavBar() {
             alt="Bulma logo."
           />
         </Link>
-        {/* 
-        <a
+
+        <button
           role="button"
           className="navbar-burger burger"
           aria-label="menu"
           aria-expanded="false"
           data-target="navbarBasicExample"
-          href="#"
         >
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
-        </a> */}
+        </button>
       </div>
 
       <div id="navbarBasicExample" className="navbar-menu">
@@ -148,14 +131,14 @@ function NavBar() {
             Blog
           </Link>
 
-          <div className="navbar-item has-dropdown is-hoverable">
-            <a href="#" className="navbar-link">
-              Languages
-            </a>
+          {locales ? (
+            <div className="navbar-item has-dropdown is-hoverable">
+              <a href="#" className="navbar-link">
+                Languages
+              </a>
 
-            <div className="navbar-dropdown">
-              {locales &&
-                locales.map(item => (
+              <div className="navbar-dropdown">
+                {locales.map(item => (
                   <p
                     className="navbar-item"
                     key={item.name}
@@ -164,8 +147,9 @@ function NavBar() {
                     {item.code}
                   </p>
                 ))}
+              </div>
             </div>
-          </div>
+          ) : null}
         </div>
       </div>
     </nav>

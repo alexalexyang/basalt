@@ -1,28 +1,33 @@
 const path = require("path")
 const contentful = require("contentful")
+const { GraphQLString, GraphQLJSON } = require("gatsby/graphql")
 
 const ContentfulClient = contentful.createClient({
   space: process.env.GATSBY_CONTENTFUL_SPACE_ID,
   accessToken: process.env.GATSBY_CONTENTFUL_ACCESS_TOKEN,
 })
 
+let defaultLocale = {}
+let locales = []
+
+ContentfulClient.getLocales().then(data => {
+  locales = data.items
+  data.items.forEach(locale => {
+    if (locale.default) {
+      defaultLocale = locale
+    }
+  })
+})
+
 exports.createPages = async ({ actions, graphql }) => {
   const { createPage } = actions
 
-  let defaultLocale = ""
-  const locales = await ContentfulClient.getLocales()
-
-  locales.items.forEach(locale => {
-    if (locale.default) {
-      defaultLocale = locale.code
-    }
-  })
-
-  locales.items.forEach(locale => {
+  locales.forEach(locale => {
     return graphql(`
       {
         pages: allContentfulPage(filter: {node_locale: {eq: "${locale.code}"}}) {
           nodes {
+            id
             slug
             title
             createdAt
@@ -37,6 +42,8 @@ exports.createPages = async ({ actions, graphql }) => {
 
         blogposts: allContentfulBlogPost(filter: {node_locale: {eq: "${locale.code}"}}) {
           nodes {
+            id
+            slug
             node_locale
             createdAt(formatString: "D MMM YYYY, HH:MM")
             title
@@ -47,7 +54,7 @@ exports.createPages = async ({ actions, graphql }) => {
               }
             }
             categories {
-              category
+              title
             }
             tags
           }
@@ -64,7 +71,7 @@ exports.createPages = async ({ actions, graphql }) => {
 
       pages.forEach(page => {
         let route = ""
-        if (page.node_locale == defaultLocale) {
+        if (page.node_locale == defaultLocale.code) {
           if (page.slug == "/") {
             route = ""
           }
@@ -86,10 +93,13 @@ exports.createPages = async ({ actions, graphql }) => {
       const blogposts = res.data.blogposts.nodes
 
       blogposts.forEach(post => {
+        // const title = post.title.toLowerCase().replace(/ /g, "-")
+        const slug =
+          post.node_locale === defaultLocale.code
+            ? `/blog/${post.slug}`
+            : `/${post.node_locale}/blog/${post.slug}`
         createPage({
-          path: `/${post.node_locale}/blog/${post.title
-            .toLowerCase()
-            .replace(/ /g, "-")}`,
+          path: slug,
           component: path.resolve("src/templates/BlogPost.js"),
           context: {
             post,
@@ -99,12 +109,57 @@ exports.createPages = async ({ actions, graphql }) => {
 
       // Create page for list of blog posts.
       createPage({
-        path: locale.code === defaultLocale ? `/blog` : `/${locale.code}/blog`,
+        path:
+          locale.code === defaultLocale.code ? `/blog` : `/${locale.code}/blog`,
         component: path.resolve("src/templates/Blog.js"),
         context: {
           blogposts,
         },
       })
+
+      // Create page for categories.
+
+      // Create page for tags.
     })
   })
+}
+
+// Move slug logic here
+// First, look for slug (by language)
+// If slug does not exist, use title
+
+exports.setFieldsOnGraphQLNodeType = ({ type }) => {
+  if (type.name === `ContentfulPage` || type.name === `ContentfulBlogPost`) {
+    return {
+      slug: {
+        type: GraphQLString,
+        args: {},
+        resolve: (source, fieldArgs) => {
+          const slug = source.title.toLowerCase().replace(/ /g, "-")
+          return slug
+        },
+      },
+    }
+  }
+
+  if (type.name === `Site`) {
+    console.log(type)
+    return {
+      defaultLocale: {
+        type: GraphQLJSON,
+        args: {},
+        resolve: (source, fieldArgs) => {
+          return defaultLocale
+        },
+      },
+      locales: {
+        type: GraphQLJSON,
+        args: {},
+        resolve: (source, fieldArgs) => {
+          return locales
+        },
+      },
+    }
+  }
+  return {}
 }

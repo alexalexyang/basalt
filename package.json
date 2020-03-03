@@ -6,27 +6,27 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "bulma": "^0.8.0",
-    "gatsby": "^2.19.7",
-    "gatsby-image": "^2.2.39",
-    "gatsby-plugin-manifest": "^2.2.39",
-    "gatsby-plugin-offline": "^3.0.32",
-    "gatsby-plugin-react-helmet": "^3.1.21",
+    "gatsby": "^2.19.27",
+    "gatsby-image": "^2.2.42",
+    "gatsby-plugin-manifest": "^2.2.42",
+    "gatsby-plugin-offline": "^3.0.35",
+    "gatsby-plugin-react-helmet": "^3.1.22",
     "gatsby-plugin-sass": "^2.1.29",
-    "gatsby-plugin-sharp": "^2.4.3",
-    "gatsby-source-contentful": "^2.1.86",
-    "gatsby-source-filesystem": "^2.1.46",
+    "gatsby-plugin-sharp": "^2.4.5",
+    "gatsby-source-contentful": "^2.1.89",
+    "gatsby-source-filesystem": "^2.1.48",
     "gatsby-transformer-remark": "^2.6.53",
-    "gatsby-transformer-sharp": "^2.3.13",
+    "gatsby-transformer-sharp": "^2.3.16",
     "node-sass": "^4.13.1",
     "prop-types": "^15.7.2",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
     "react-helmet": "^5.2.1"
   },
   "devDependencies": {
     "contentful-management": "^5.13.0",
     "prettier": "^1.19.1",
-    "uuid": "^7.0.0"
+    "uuid": "^7.0.1"
   },
   "keywords": [
     "gatsby"

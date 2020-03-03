@@ -76,15 +76,15 @@ client
 client
   .then(space => space.getEnvironment("master"))
   .then(environment =>
-    environment.createEntryWithId("categories", v4(), {
+    environment.createEntryWithId("category", v4(), {
       fields: {
-        category: {
+        title: {
           is: "Dummy IS category",
           en: "Dummy EN category",
         },
-        slug: {
-          is: "/dummy_category",
-        },
+        // slug: {
+        //   is: "/dummy_category",
+        // },
         description: {
           is: "Dummy IS category description.",
           en: "Dummy EN category description.",
@@ -106,9 +106,9 @@ client
           is: "Home page IS",
           en: "Home page EN",
         },
-        slug: {
-          is: "/",
-        },
+        // slug: {
+        //   is: "/",
+        // },
         body: {
           is: "# Big plans today! *~*~ IS ~*~* Everyone is awesome.",
           en: "# Big plans today! *~*~ EN ~*~* Everyone is awesome.",

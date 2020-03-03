@@ -37,7 +37,7 @@ module.exports = (migration, context) => {
       linkType: "Entry",
       validations: [
         {
-          linkContentType: ["categories"],
+          linkContentType: ["category"],
         },
       ],
     })
@@ -60,28 +60,28 @@ module.exports = (migration, context) => {
 
   // CATEGORIES CONTENT TYPE
 
-  const categories = migration
-    .createContentType("categories")
-    .name("Categories")
-    .description("Categories for blog posts")
-    .displayField("category")
-
-  categories
-    .createField("slug")
-    .name("URL Slug")
-    .type("Symbol")
-    .validations([{ unique: true }])
-    .required(false)
-    .localized(false)
-
-  categories
-    .createField("category")
+  const category = migration
+    .createContentType("category")
     .name("Category")
+    .description("Categories for blog posts")
+    .displayField("title")
+
+  // category
+  //   .createField("slug")
+  //   .name("URL Slug")
+  //   .type("Symbol")
+  //   .validations([{ unique: true }])
+  //   .required(false)
+  //   .localized(false)
+
+  category
+    .createField("title")
+    .name("Title")
     .type("Symbol")
     .required(true)
     .localized(true)
 
-  categories
+  category
     .createField("featuredImage")
     .name("Featured image")
     .type("Link")
@@ -89,7 +89,7 @@ module.exports = (migration, context) => {
     .required(false)
     .localized(true)
 
-  categories
+  category
     .createField("description")
     .name("Description")
     .type("Text")
@@ -104,11 +104,11 @@ module.exports = (migration, context) => {
     .description("Page model")
     .displayField("title")
 
-  page
-    .createField("slug")
-    .name("Slug")
-    .type("Symbol")
-    .required(false)
+  // page
+  //   .createField("slug")
+  //   .name("Slug")
+  //   .type("Symbol")
+  //   .required(false)
 
   page
     .createField("title")
