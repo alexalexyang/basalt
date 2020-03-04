@@ -3,7 +3,6 @@
 - Put slug back into pages
 - Remake slugs in migration and fixture scripts, localised
 - Recreate database and migrate
-- Rework slugs in gatsby-node.js
 - Link to blog posts
 - Create categories page
 - Create tags page
@@ -13,6 +12,7 @@
 - Create language items in Contentful and pull
 - Webhook from Contentful to Netlify
 - Bring in design
+- Rework slugs in gatsby-node.js
 - Test data dump for migration
 - Write docs
 

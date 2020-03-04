@@ -94,12 +94,12 @@ exports.createPages = async ({ actions, graphql }) => {
 
       blogposts.forEach(post => {
         // const title = post.title.toLowerCase().replace(/ /g, "-")
-        const slug =
-          post.node_locale === defaultLocale.code
-            ? `/blog/${post.slug}`
-            : `/${post.node_locale}/blog/${post.slug}`
+        // const slug =
+        //   post.node_locale === defaultLocale.code
+        //     ? `/blog${post.slug}`
+        //     : `/${post.node_locale}/blog${post.slug}`
         createPage({
-          path: slug,
+          path: post.slug,
           component: path.resolve("src/templates/BlogPost.js"),
           context: {
             post,
@@ -129,13 +129,17 @@ exports.createPages = async ({ actions, graphql }) => {
 // If slug does not exist, use title
 
 exports.setFieldsOnGraphQLNodeType = ({ type }) => {
-  if (type.name === `ContentfulPage` || type.name === `ContentfulBlogPost`) {
+  if (type.name === `ContentfulBlogPost`) {
     return {
       slug: {
         type: GraphQLString,
         args: {},
         resolve: (source, fieldArgs) => {
-          const slug = source.title.toLowerCase().replace(/ /g, "-")
+          // const slug = `${source.title.toLowerCase().replace(/ /g, "-")}`
+          const slug =
+            source.node_locale === defaultLocale.code
+              ? `/blog${source.slug}`
+              : `/${source.node_locale}/blog${source.slug}`
           return slug
         },
       },
@@ -143,7 +147,6 @@ exports.setFieldsOnGraphQLNodeType = ({ type }) => {
   }
 
   if (type.name === `Site`) {
-    console.log(type)
     return {
       defaultLocale: {
         type: GraphQLJSON,

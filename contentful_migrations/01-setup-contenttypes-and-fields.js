@@ -8,6 +8,14 @@ module.exports = (migration, context) => {
     .displayField("title")
 
   blogPost
+    .createField("slug")
+    .name("Slug")
+    .type("Symbol")
+    .validations([{ unique: true }])
+    .required(false)
+    .localized(false)
+
+  blogPost
     .createField("author")
     .name("Author name")
     .type("Symbol")
@@ -66,13 +74,13 @@ module.exports = (migration, context) => {
     .description("Categories for blog posts")
     .displayField("title")
 
-  // category
-  //   .createField("slug")
-  //   .name("URL Slug")
-  //   .type("Symbol")
-  //   .validations([{ unique: true }])
-  //   .required(false)
-  //   .localized(false)
+  category
+    .createField("slug")
+    .name("Slug")
+    .type("Symbol")
+    .validations([{ unique: true }])
+    .required(false)
+    .localized(false)
 
   category
     .createField("title")
@@ -104,11 +112,13 @@ module.exports = (migration, context) => {
     .description("Page model")
     .displayField("title")
 
-  // page
-  //   .createField("slug")
-  //   .name("Slug")
-  //   .type("Symbol")
-  //   .required(false)
+  page
+    .createField("slug")
+    .name("Slug")
+    .type("Symbol")
+    .validations([{ unique: true }])
+    .required(false)
+    .localized(false)
 
   page
     .createField("title")
