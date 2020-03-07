@@ -30,6 +30,13 @@ module.exports = (migration, context) => {
     .localized(true)
 
   blogPost
+    .createField("excerpt")
+    .name("Excerpt")
+    .type("Symbol")
+    .required(false)
+    .localized(true)
+
+  blogPost
     .createField("body")
     .name("Body")
     .type("Text")

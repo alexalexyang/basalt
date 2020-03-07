@@ -25,7 +25,7 @@ exports.createPages = async ({ actions, graphql }) => {
   locales.forEach(locale => {
     return graphql(`
       {
-        pages: allContentfulPage(filter: {node_locale: {eq: "${locale.code}"}}) {
+        pages: allContentfulPage (filter: {node_locale: {eq: "${locale.code}"}}) {
           nodes {
             id
             slug
@@ -40,7 +40,7 @@ exports.createPages = async ({ actions, graphql }) => {
           }
         }
 
-        blogposts: allContentfulBlogPost(filter: {node_locale: {eq: "${locale.code}"}}) {
+        blogposts: allContentfulBlogPost (filter: {node_locale: {eq: "${locale.code}"}}) {
           nodes {
             id
             slug
@@ -59,16 +59,48 @@ exports.createPages = async ({ actions, graphql }) => {
             tags
           }
         }
+
+        categories: allContentfulCategory (filter: {node_locale: {eq: "${locale.code}"}}) {
+          nodes {
+            id
+            node_locale
+            slug
+            title
+            description {
+              childMarkdownRemark {
+                html
+              }
+            }
+            
+            featuredImage {
+              contentful_id
+              fluid(maxHeight: 300) {
+                srcSet
+                src
+                base64
+                aspectRatio
+                srcSetWebp
+                srcWebp
+              }
+            }
+
+            blog_post {
+              title
+              slug
+              node_locale
+              contentful_id
+              createdAt(formatString: "D MMM YYYY, HH:MM")
+            }
+          }
+        }
       }
     `).then(res => {
       if (res.errors) {
         return Promise.reject(res.errors)
       }
 
-      // Create each page.
-
+      // PAGE
       const pages = res.data.pages.nodes
-
       pages.forEach(page => {
         let route = ""
         if (page.node_locale == defaultLocale.code) {
@@ -89,9 +121,8 @@ exports.createPages = async ({ actions, graphql }) => {
         })
       })
 
-      // Create page for each blog post.
+      // BLOGPOST
       const blogposts = res.data.blogposts.nodes
-
       blogposts.forEach(post => {
         // const title = post.title.toLowerCase().replace(/ /g, "-")
         // const slug =
@@ -107,7 +138,7 @@ exports.createPages = async ({ actions, graphql }) => {
         })
       })
 
-      // Create page for list of blog posts.
+      // BLOG
       createPage({
         path:
           locale.code === defaultLocale.code ? `/blog` : `/${locale.code}/blog`,
@@ -117,8 +148,29 @@ exports.createPages = async ({ actions, graphql }) => {
         },
       })
 
-      // Create page for categories.
+      // CATEGORY
+      const categories = res.data.categories.nodes
+      categories.forEach(category => {
+        createPage({
+          path: category.slug,
+          component: path.resolve("src/templates/Category.js"),
+          context: {
+            category,
+          },
+        })
+      })
 
+      // CATEGORIES
+      createPage({
+        path:
+          locale.code === defaultLocale.code
+            ? `/categories`
+            : `/${locale.code}/categories`,
+        component: path.resolve("src/templates/Categories.js"),
+        context: {
+          categories,
+        },
+      })
       // Create page for tags.
     })
   })

@@ -71,24 +71,20 @@ function NavBar() {
     return currentLocale === ""
       ? allContentfulPage.nodes.map(node => {
           return node.node_locale === defaultLocale.code ? (
-            <>
-              <Link to={`${node.slug}`} className="navbar-item" key={node.id}>
-                {node.title}
-              </Link>
-            </>
+            <Link to={`${node.slug}`} className="navbar-item" key={node.id}>
+              {node.title}
+            </Link>
           ) : null
         })
       : allContentfulPage.nodes.map(node => {
           return node.node_locale === currentLocale ? (
-            <>
-              <Link
-                to={`/${node.node_locale}${node.slug}`}
-                className="navbar-item"
-                key={node.id}
-              >
-                {node.title}
-              </Link>
-            </>
+            <Link
+              to={`/${node.node_locale}${node.slug}`}
+              className="navbar-item"
+              key={node.id}
+            >
+              {node.title}
+            </Link>
           ) : null
         })
   }
@@ -124,19 +120,31 @@ function NavBar() {
         <div className="navbar-end">
           {defaultLocale ? pages() : null}
 
-          <Link
-            to={currentLocale === "" ? `/blog` : `/${currentLocale}/blog`}
-            className="navbar-item"
-          >
-            Blog
-          </Link>
+          <div className="navbar-item has-dropdown is-hoverable">
+            <Link
+              to={currentLocale === "" ? `/blog` : `/${currentLocale}/blog`}
+              className="navbar-item"
+            >
+              Blog
+            </Link>
+            <div className="navbar-dropdown">
+              <Link
+                to={
+                  currentLocale === ""
+                    ? `/categories`
+                    : `/${currentLocale}/categories`
+                }
+              >
+                Categories
+              </Link>
+            </div>
+          </div>
 
           {locales ? (
             <div className="navbar-item has-dropdown is-hoverable">
-              <a href="#" className="navbar-link">
+              <Link to={getSubPath()} className="navbar-link">
                 Languages
-              </a>
-
+              </Link>
               <div className="navbar-dropdown">
                 {locales.map(item => (
                   <p

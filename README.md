@@ -1,17 +1,13 @@
 # To do
 
-- Put slug back into pages
-- Remake slugs in migration and fixture scripts, localised
-- Recreate database and migrate
-- Link to blog posts
-- Create categories page
-- Create tags page
 - Bring in images
-- Create fuller fixtures to test with
+- add excerpt to blogpost model (and fixtures)
 - Format markdown properly
 - Create language items in Contentful and pull
+- search
 - Webhook from Contentful to Netlify
 - Bring in design
+- Create tags page
 - Rework slugs in gatsby-node.js
 - Test data dump for migration
 - Write docs
