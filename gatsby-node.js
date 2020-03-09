@@ -204,10 +204,7 @@ exports.createPages = async ({ actions, graphql }) => {
       const categories = res.data.categories.nodes
       categories.forEach(category => {
         createPage({
-          path:
-            locale.code === defaultLocale.code
-              ? `${category.slug}`
-              : `${locale.code}${category.slug}`,
+          path: category.slug,
           component: path.resolve("src/templates/Category.js"),
           context: {
             locale: locale.code,
@@ -244,11 +241,26 @@ exports.setFieldsOnGraphQLNodeType = ({ type }) => {
         type: GraphQLString,
         args: {},
         resolve: (source, fieldArgs) => {
-          // const slug = `${source.title.toLowerCase().replace(/ /g, "-")}`
           const slug =
             source.node_locale === defaultLocale.code
               ? `/blog${source.slug}`
               : `/${source.node_locale}/blog${source.slug}`
+          return slug
+        },
+      },
+    }
+  }
+
+  if (type.name === `ContentfulCategory`) {
+    return {
+      slug: {
+        type: GraphQLString,
+        args: {},
+        resolve: (source, fieldArgs) => {
+          const slug =
+            source.node_locale === defaultLocale.code
+              ? `/category${source.slug}`
+              : `/${source.node_locale}/category${source.slug}`
           return slug
         },
       },

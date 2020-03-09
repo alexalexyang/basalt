@@ -1,6 +1,6 @@
 # To do
 
-- Create language items in Contentful and pull
+- Fix category page for locales: gatsby-node.js
 - search
 - Format markdown properly
 - Webhook from Contentful to Netlify
