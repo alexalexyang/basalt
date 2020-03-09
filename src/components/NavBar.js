@@ -51,10 +51,10 @@ function NavBar() {
   }
 
   const getSubPath = () => {
-    if (typeof window !== "undefined") {
-      return ""
-    }
-    let pathname = typeof window !== "undefined" && window.location.pathname
+    let pathname =
+      typeof window !== "undefined" && window.location.pathname
+        ? window.location.pathname
+        : ""
     let subPath = ""
 
     // If path is "example.com"
