@@ -1,15 +1,24 @@
 import React from "react"
+import { Link, useStaticQuery, graphql } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Img from "gatsby-image"
 
-import { Link } from "gatsby"
+function Blog({ pageContext: { locale, blogposts } }) {
+  const {
+    site: { translations },
+  } = useStaticQuery(graphql`
+    query {
+      site {
+        translations
+      }
+    }
+  `)
 
-function Blog({ pageContext: { blogposts } }) {
   return (
     <Layout>
-      <SEO title={`Blog`} />
+      <SEO title={translations.blog[locale]} />
       {blogposts.map(post => (
         <div className="section" key={post.id}>
           <div className="container">
@@ -22,8 +31,10 @@ function Blog({ pageContext: { blogposts } }) {
                   {post.title}
                 </Link>
                 <p>
-                  Written by {post.author} on{" "}
-                  <time dateTime={post.createdAt}>{post.createdAt}</time>.
+                  {translations.writtenByAuthorOnDate[locale]
+                    .replace("%AUTHOR%", post.author)
+                    .replace("%DATE%", post.createdAt)}
+                  .
                 </p>
                 <p>EXCERPT HERE.</p>
               </article>

@@ -6,7 +6,9 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 
 function Categories({ pageContext: { locale, categories } }) {
-  const data = useStaticQuery(graphql`
+  const {
+    site: { translations },
+  } = useStaticQuery(graphql`
     query {
       site {
         translations
@@ -14,13 +16,9 @@ function Categories({ pageContext: { locale, categories } }) {
     }
   `)
 
-  const {
-    site: { translations },
-  } = data
-
   return (
     <Layout>
-      <SEO title={`Categories`} />
+      <SEO title={translations.categories[locale]} />
       <div className="section">
         <div className="title">
           <h1>{translations.categories[locale]}</h1>

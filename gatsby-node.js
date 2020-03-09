@@ -40,10 +40,11 @@ exports.createPages = async ({ actions, graphql }) => {
         translations: allContentfulTranslations {
           nodes {
             languages
+            writtenByAuthorOnDate
             blog
             categories
+            category
             tags
-            writtenByAuthorOnDate
           }
         }
 
@@ -182,6 +183,7 @@ exports.createPages = async ({ actions, graphql }) => {
           path: post.slug,
           component: path.resolve("src/templates/BlogPost.js"),
           context: {
+            locale: locale.code,
             post,
           },
         })
@@ -193,6 +195,7 @@ exports.createPages = async ({ actions, graphql }) => {
           locale.code === defaultLocale.code ? `/blog` : `/${locale.code}/blog`,
         component: path.resolve("src/templates/Blog.js"),
         context: {
+          locale: locale.code,
           blogposts,
         },
       })
@@ -207,6 +210,7 @@ exports.createPages = async ({ actions, graphql }) => {
               : `${locale.code}${category.slug}`,
           component: path.resolve("src/templates/Category.js"),
           context: {
+            locale: locale.code,
             category,
           },
         })

@@ -1,18 +1,32 @@
 import React from "react"
-import { Link } from "gatsby"
+import { Link, useStaticQuery, graphql } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Img from "gatsby-image"
 
-function Categories({ pageContext: { category } }) {
+function Categories({ pageContext: { locale, category } }) {
+  const {
+    site: { translations },
+  } = useStaticQuery(graphql`
+    query {
+      site {
+        translations
+      }
+    }
+  `)
+
   console.log(category)
+
   return (
     <Layout>
-      <SEO title={category.title} />
+      <SEO title={translations.category[locale]} />
       <div className="section">
+        <div className="title">
+          <h1>{translations.categories[locale]}</h1>
+        </div>
         <div className="container">
-          <h1 className="title">{category.title}</h1>
+          <h2 className="title">{category.title}</h2>
           <article
             className="container content"
             dangerouslySetInnerHTML={{
