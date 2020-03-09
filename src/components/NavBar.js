@@ -51,6 +51,9 @@ function NavBar() {
   }
 
   const getSubPath = () => {
+    if (typeof window !== "undefined") {
+      return ""
+    }
     let pathname = typeof window !== "undefined" && window.location.pathname
     let subPath = ""
 
@@ -150,7 +153,7 @@ function NavBar() {
           {locales ? (
             <div className="navbar-item has-dropdown is-hoverable">
               <Link to={getSubPath()} className="navbar-link">
-              {translations.languages[getTranslationLocale()]}
+                {translations.languages[getTranslationLocale()]}
               </Link>
               <div className="navbar-dropdown">
                 {locales.map(item => (
