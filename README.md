@@ -1,18 +1,26 @@
 # To do
 
-- Bring in images
-- add excerpt to blogpost model (and fixtures)
-- Format markdown properly
 - Create language items in Contentful and pull
 - search
+- Format markdown properly
 - Webhook from Contentful to Netlify
+- add excerpt to blogpost model (and fixtures)
+  - [This](https://www.contentful.com/developers/docs/references/content-management-api/#/reference/assets/published-assets-collection) to upload assets in migrate?
 - Bring in design
 - Create tags page
 - Rework slugs in gatsby-node.js
 - Test data dump for migration
 - Write docs
 
+- Change images to fixed, or put them into fixed divs?
+
 # Contentful
+
+## Images
+
+[gatsby-image](https://www.gatsbyjs.org/packages/gatsby-image/): efficiently use images. Refer also to: [Working with Images in Gatsby](https://www.gatsbyjs.org/docs/working-with-images/).
+
+[gatsby-remark-embed-video](https://github.com/borgfriend/gatsby-remark-embed-video): embed YouTube, Vimeo, and Twitch in markdown.
 
 ## For setting up content types and fields from CLI
 

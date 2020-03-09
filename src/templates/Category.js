@@ -25,7 +25,9 @@ function Categories({ pageContext: { category } }) {
           {category.blog_post.map(post => (
             <div className="card" key={post.contentful_id}>
               <article className="content">
-                <h2>{post.title}</h2>
+                <h2>
+                  <Link to={post.slug}>{post.title}</Link>
+                </h2>
                 <p key={post.contentful_id}>
                   <time dateTime={post.createdAt}>{post.createdAt}</time>{" "}
                   {post.title}

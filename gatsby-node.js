@@ -19,12 +19,34 @@ ContentfulClient.getLocales().then(data => {
   })
 })
 
+let translations = {}
+ContentfulClient.getEntries({
+  content_type: "translations",
+  locale: "*",
+})
+  .then(data => {
+    console.log("TRANSLATIONS: ", data.items[0].fields)
+    translations = data.items[0].fields
+  })
+  .catch(console.error)
+
 exports.createPages = async ({ actions, graphql }) => {
   const { createPage } = actions
 
   locales.forEach(locale => {
     return graphql(`
       {
+
+        translations: allContentfulTranslations {
+          nodes {
+            languages
+            blog
+            categories
+            tags
+            writtenByAuthorOnDate
+          }
+        }
+
         pages: allContentfulPage (filter: {node_locale: {eq: "${locale.code}"}}) {
           nodes {
             id
@@ -32,6 +54,19 @@ exports.createPages = async ({ actions, graphql }) => {
             title
             createdAt
             node_locale
+
+            featuredImage {
+              contentful_id
+              fluid(maxHeight: 200) {
+                srcSet
+                src
+                base64
+                aspectRatio
+                srcSetWebp
+                srcWebp
+              }
+            }
+
             body {
               childMarkdownRemark {
                 html
@@ -48,6 +83,19 @@ exports.createPages = async ({ actions, graphql }) => {
             createdAt(formatString: "D MMM YYYY, HH:MM")
             title
             author
+
+            featuredImage {
+              contentful_id
+              fluid(maxWidth: 40) {
+                srcSet
+                src
+                base64
+                aspectRatio
+                srcSetWebp
+                srcWebp
+              }
+            }
+
             body {
               childMarkdownRemark {
                 html
@@ -74,7 +122,7 @@ exports.createPages = async ({ actions, graphql }) => {
             
             featuredImage {
               contentful_id
-              fluid(maxHeight: 300) {
+              fluid(maxHeight: 200) {
                 srcSet
                 src
                 base64
@@ -93,6 +141,7 @@ exports.createPages = async ({ actions, graphql }) => {
             }
           }
         }
+
       }
     `).then(res => {
       if (res.errors) {
@@ -152,7 +201,10 @@ exports.createPages = async ({ actions, graphql }) => {
       const categories = res.data.categories.nodes
       categories.forEach(category => {
         createPage({
-          path: category.slug,
+          path:
+            locale.code === defaultLocale.code
+              ? `${category.slug}`
+              : `${locale.code}${category.slug}`,
           component: path.resolve("src/templates/Category.js"),
           context: {
             category,
@@ -168,6 +220,7 @@ exports.createPages = async ({ actions, graphql }) => {
             : `/${locale.code}/categories`,
         component: path.resolve("src/templates/Categories.js"),
         context: {
+          locale: locale.code,
           categories,
         },
       })
@@ -212,6 +265,13 @@ exports.setFieldsOnGraphQLNodeType = ({ type }) => {
         args: {},
         resolve: (source, fieldArgs) => {
           return locales
+        },
+      },
+      translations: {
+        type: GraphQLJSON,
+        args: {},
+        resolve: (source, fieldArgs) => {
+          return translations
         },
       },
     }

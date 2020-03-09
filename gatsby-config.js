@@ -10,16 +10,31 @@ module.exports = {
     {
       resolve: `gatsby-transformer-remark`,
       options: {
-        // CommonMark mode (default: true)
         commonmark: true,
-        // Footnotes mode (default: true)
         footnotes: true,
-        // Pedantic mode (default: true)
         pedantic: true,
-        // GitHub Flavored Markdown mode (default: true)
         gfm: true,
-        // Plugins configs
-        plugins: [],
+        plugins: [
+          {
+            resolve: "gatsby-remark-embed-video",
+            options: {
+              width: 800,
+              ratio: 1.77,
+              height: 400,
+              related: false,
+              noIframeBorder: true,
+            },
+          },
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 500,
+              withWebP: true,
+              backgroundColor: "transparent",
+              showCaptions: true,
+            },
+          },
+        ],
       },
     },
     {
