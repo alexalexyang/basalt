@@ -31,7 +31,7 @@ function Categories({ pageContext: { locale, categories } }) {
               </div>
               <div className="container">
                 <h2 className="title">
-                  <Link to={cat.slug}>{cat.title}</Link>
+                  <Link to={cat.fields.slug}>{cat.title}</Link>
                 </h2>
               </div>
               <div className="container">

@@ -1,18 +1,17 @@
 # To do
 
-- Fix category page for locales: gatsby-node.js
-- search
-- Format markdown properly
+- Create modal for search results to avoid using Context API (reduces renders).
 - Webhook from Contentful to Netlify
-- add excerpt to blogpost model (and fixtures)
+- Size images properly.
+  - Change images to fixed, or put them into fixed divs?
+- Add excerpt to blogpost model (and fixtures)
   - [This](https://www.contentful.com/developers/docs/references/content-management-api/#/reference/assets/published-assets-collection) to upload assets in migrate?
 - Bring in design
 - Create tags page
 - Rework slugs in gatsby-node.js
 - Test data dump for migration
+- Format markdown properly
 - Write docs
-
-- Change images to fixed, or put them into fixed divs?
 
 # Contentful
 

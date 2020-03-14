@@ -16,7 +16,7 @@ function BlogPost({ pageContext: { locale, post } }) {
     }
   `)
 
-  console.log("POST: ", post)
+  // console.log("POST: ", post)
 
   return (
     <Layout>

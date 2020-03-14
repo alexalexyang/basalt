@@ -40,7 +40,7 @@ function Categories({ pageContext: { locale, category } }) {
             <div className="card" key={post.contentful_id}>
               <article className="content">
                 <h2>
-                  <Link to={post.slug}>{post.title}</Link>
+                  <Link to={post.fields.slug}>{post.title}</Link>
                 </h2>
                 <p key={post.contentful_id}>
                   <time dateTime={post.createdAt}>{post.createdAt}</time>{" "}

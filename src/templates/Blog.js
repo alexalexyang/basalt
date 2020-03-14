@@ -27,7 +27,7 @@ function Blog({ pageContext: { locale, blogposts } }) {
             </div>
             <div className="container">
               <article className="content">
-                <Link to={post.slug} className="title">
+                <Link to={post.fields.slug} className="title">
                   {post.title}
                 </Link>
                 <p>

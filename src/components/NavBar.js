@@ -1,6 +1,7 @@
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import { Link } from "gatsby"
+import Search from "./Search"
 
 function NavBar() {
   const data = useStaticQuery(graphql`
@@ -36,7 +37,7 @@ function NavBar() {
   const currentLocale = getCurrentLocale()
 
   const getTranslationLocale = () => {
-    const locale = currentLocale == "" ? defaultLocale.code : currentLocale
+    const locale = currentLocale === "" ? defaultLocale.code : currentLocale
     return locale
   }
 
@@ -132,7 +133,11 @@ function NavBar() {
 
           <div className="navbar-item has-dropdown is-hoverable">
             <Link
-              to={currentLocale === "" ? `/blog` : `/${currentLocale}/blog`}
+              to={
+                currentLocale === ""
+                  ? `/${translations.blog[defaultLocale.code]}`
+                  : `/${currentLocale}/${translations.blog[defaultLocale.code]}`
+              }
               className="navbar-item"
             >
               {translations.blog[getTranslationLocale()]}
@@ -141,8 +146,10 @@ function NavBar() {
               <Link
                 to={
                   currentLocale === ""
-                    ? `/categories`
-                    : `/${currentLocale}/categories`
+                    ? `/${translations.categories[defaultLocale.code]}`
+                    : `/${currentLocale}/${
+                        translations.categories[defaultLocale.code]
+                      }`
                 }
               >
                 {translations.categories[getTranslationLocale()]}
@@ -168,6 +175,9 @@ function NavBar() {
               </div>
             </div>
           ) : null}
+          <div className="navbar-item">
+            <Search />
+          </div>
         </div>
       </div>
     </nav>
