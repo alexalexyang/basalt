@@ -1,9 +1,9 @@
 # To do
 
-- Create modal for search results to avoid using Context API (reduces renders).
 - Webhook from Contentful to Netlify
 - Size images properly.
   - Change images to fixed, or put them into fixed divs?
+- Add "Sorry, no results found." translation to SearchModal.
 - Add excerpt to blogpost model (and fixtures)
   - [This](https://www.contentful.com/developers/docs/references/content-management-api/#/reference/assets/published-assets-collection) to upload assets in migrate?
 - Bring in design

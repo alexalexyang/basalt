@@ -100,6 +100,13 @@ function NavBar() {
         })
   }
 
+  const burger = () => {
+    const burger = document.getElementById("navbar-burger")
+    burger.classList.toggle("is-active")
+    const navbarMenu = document.getElementById("navbar-menu")
+    navbarMenu.classList.toggle("is-active")
+  }
+
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
@@ -115,9 +122,11 @@ function NavBar() {
         <button
           role="button"
           className="navbar-burger burger"
+          id="navbar-burger"
           aria-label="menu"
           aria-expanded="false"
-          data-target="navbarBasicExample"
+          data-target="navbar-burger"
+          onClick={() => burger()}
         >
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -125,7 +134,7 @@ function NavBar() {
         </button>
       </div>
 
-      <div id="navbarBasicExample" className="navbar-menu">
+      <div id="navbar-menu" className="navbar-menu">
         <div className="navbar-start"></div>
 
         <div className="navbar-end">
