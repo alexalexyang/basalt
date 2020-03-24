@@ -1,9 +1,9 @@
 import React, { useState } from "react"
-import { Link, useStaticQuery, graphql } from "gatsby"
+import { useStaticQuery, graphql } from "gatsby"
 import { Index } from "elasticlunr"
 import SearchModal from "./SearchModal"
 
-function Search() {
+function Search({ noSearchResults }) {
   const query = useStaticQuery(graphql`
     query {
       siteSearchIndex {
@@ -16,21 +16,15 @@ function Search() {
     siteSearchIndex: { index },
   } = query
 
-  //   console.log("SEARCH QUERY: ", query)
-  //   console.log("SEARCH INDEX: ", index)
-
   const [results, setResults] = useState()
-  // console.log(results)
   const search = e => {
     if (e.key !== "Enter") {
       return
     }
     const query = e.target.value
-    // console.log("QUERY: ", query)
     let result = Index.load(index)
       .search(query, { expand: true })
       .map(data => Index.load(index).documentStore.getDoc(data.ref))
-    // console.log(result)
     setResults(result)
   }
 
@@ -45,7 +39,11 @@ function Search() {
         />
       </div>
       {results ? (
-        <SearchModal results={results} setResults={setResults} />
+        <SearchModal
+          results={results}
+          setResults={setResults}
+          noSearchResults={noSearchResults}
+        />
       ) : null}
     </>
   )

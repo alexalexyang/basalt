@@ -1,17 +1,33 @@
 # To do
 
-- Webhook from Contentful to Netlify
-- Size images properly.
-  - Change images to fixed, or put them into fixed divs?
-- Add "Sorry, no results found." translation to SearchModal.
 - Add excerpt to blogpost model (and fixtures)
   - [This](https://www.contentful.com/developers/docs/references/content-management-api/#/reference/assets/published-assets-collection) to upload assets in migrate?
 - Bring in design
 - Create tags page
 - Rework slugs in gatsby-node.js
-- Test data dump for migration
 - Format markdown properly
+- Test data dump for migration
+- Blog pagination
 - Write docs
+
+# To consider
+
+## Images
+
+- Switch to using fixed images?
+- Is lazy loading really enabled? Test image is always loaded at 151kb no matter the size of its containing div or viewport.
+
+Ref: [fluid images example](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-contentful/src/pages/image-api.js). Somehow, childImageSharp and its ilk are not showing up for Basalt.
+
+## Search
+
+It may be possible to use the search engine, [elasticlunr](https://github.com/gatsby-contrib/gatsby-plugin-elasticlunr-search), for multilingual slugs.
+
+# Setup
+
+## Netlify build hook
+
+Remember to set up a [Netlify build hook](https://www.contentful.com/developers/docs/tutorials/general/automate-site-builds-with-webhooks/) for Contentful so the site builds with every new entry.
 
 # Contentful
 

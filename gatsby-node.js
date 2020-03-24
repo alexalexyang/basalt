@@ -50,6 +50,7 @@ exports.createPages = async ({ actions, graphql }) => {
             categories
             category
             tags
+            noSearchResults
           }
         }
 
@@ -63,7 +64,8 @@ exports.createPages = async ({ actions, graphql }) => {
 
             featuredImage {
               contentful_id
-              fluid(maxHeight: 200) {
+              fluid {
+                sizes
                 srcSet
                 src
                 base64
@@ -94,7 +96,8 @@ exports.createPages = async ({ actions, graphql }) => {
 
             featuredImage {
               contentful_id
-              fluid(maxWidth: 40) {
+              fluid {
+                sizes
                 srcSet
                 src
                 base64
@@ -133,7 +136,8 @@ exports.createPages = async ({ actions, graphql }) => {
             
             featuredImage {
               contentful_id
-              fluid(maxHeight: 200) {
+              fluid {
+                sizes
                 srcSet
                 src
                 base64
@@ -206,6 +210,7 @@ exports.createPages = async ({ actions, graphql }) => {
         context: {
           locale: locale.code,
           blogposts,
+          translations,
         },
       })
 
@@ -218,6 +223,7 @@ exports.createPages = async ({ actions, graphql }) => {
           context: {
             locale: locale.code,
             category,
+            translations,
           },
         })
       })
@@ -232,6 +238,7 @@ exports.createPages = async ({ actions, graphql }) => {
         context: {
           locale: locale.code,
           categories,
+          translations,
         },
       })
       // Create page for tags.

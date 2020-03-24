@@ -1,21 +1,11 @@
 import React from "react"
-import { Link, useStaticQuery, graphql } from "gatsby"
+import { Link } from "gatsby"
 import Img from "gatsby-image"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
-function Categories({ pageContext: { locale, categories } }) {
-  const {
-    site: { translations },
-  } = useStaticQuery(graphql`
-    query {
-      site {
-        translations
-      }
-    }
-  `)
-
+function Categories({ pageContext: { locale, categories, translations } }) {
   return (
     <Layout>
       <SEO title={translations.categories[locale]} />
@@ -26,7 +16,7 @@ function Categories({ pageContext: { locale, categories } }) {
         <div className="container">
           {categories.map(cat => (
             <div className="card" key={cat.id}>
-              <div className="container">
+              <div className="container featuredImage">
                 <Img fluid={cat.featuredImage.fluid} />
               </div>
               <div className="container">

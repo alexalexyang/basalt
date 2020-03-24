@@ -1,23 +1,10 @@
 import React from "react"
-import { Link, useStaticQuery, graphql } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Img from "gatsby-image"
 
-function BlogPost({ pageContext: { locale, post } }) {
-  const {
-    site: { translations },
-  } = useStaticQuery(graphql`
-    query {
-      site {
-        translations
-      }
-    }
-  `)
-
-  // console.log("POST: ", post)
-
+function BlogPost({ pageContext: { locale, post, translations } }) {
   return (
     <Layout>
       <SEO title={`Blog | ${post.title}`} />
@@ -32,7 +19,7 @@ function BlogPost({ pageContext: { locale, post } }) {
                 .
               </p>
             </article>
-            <div className="container">
+            <div className="container featuredImage">
               <Img fluid={post.featuredImage.fluid} />
             </div>
             <article

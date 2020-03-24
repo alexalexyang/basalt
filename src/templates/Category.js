@@ -1,23 +1,11 @@
 import React from "react"
-import { Link, useStaticQuery, graphql } from "gatsby"
+import { Link } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Img from "gatsby-image"
 
-function Categories({ pageContext: { locale, category } }) {
-  const {
-    site: { translations },
-  } = useStaticQuery(graphql`
-    query {
-      site {
-        translations
-      }
-    }
-  `)
-
-  console.log(category)
-
+function Categories({ pageContext: { locale, category, translations } }) {
   return (
     <Layout>
       <SEO title={translations.category[locale]} />
@@ -33,7 +21,9 @@ function Categories({ pageContext: { locale, category } }) {
               __html: category.description.childMarkdownRemark.html,
             }}
           ></article>
-          <Img fluid={category.featuredImage.fluid} />
+          <div className="container featuredImage">
+            <Img fluid={category.featuredImage.fluid} />
+          </div>
         </div>
         <div className="container">
           {category.blog_post.map(post => (

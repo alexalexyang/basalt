@@ -1,10 +1,9 @@
 module.exports = (migration, context) => {
   // BLOG POST CONTENT TYPE
-
   const blogPost = migration
     .createContentType("blogPost")
-    .name("Blog Post")
-    .description("Blog post model")
+    .name("Blog post")
+    .description("Blog post")
     .displayField("title")
 
   blogPost
@@ -116,7 +115,7 @@ module.exports = (migration, context) => {
   const page = migration
     .createContentType("page")
     .name("Page")
-    .description("Page model")
+    .description("Page")
     .displayField("title")
 
   page
@@ -154,7 +153,7 @@ module.exports = (migration, context) => {
   const siteSettings = migration
     .createContentType("siteSettings")
     .name("Site settings")
-    .description("Site Settings model")
+    .description("Site settings")
     .displayField("siteName")
 
   siteSettings
@@ -212,5 +211,62 @@ module.exports = (migration, context) => {
     .type("Link")
     .linkType("Asset")
     .required(false)
+    .localized(true)
+
+  // TRANSLATIONS
+
+  const translations = migration
+    .createContentType("translations")
+    .name("Translations")
+    .description("Translations model")
+    .displayField("translations")
+
+  translations
+    .createField("blog")
+    .name("Blog")
+    .type("Symbol")
+    .required(true)
+    .localized(true)
+
+  translations
+    .createField("writtenByAuthorOnDate")
+    .name("Written by %AUTHOR% on %DATE%")
+    .type("Symbol")
+    .required(true)
+    .localized(true)
+
+  translations
+    .createField("categories")
+    .name("Categories")
+    .type("Symbol")
+    .required(true)
+    .localized(true)
+
+  translations
+    .createField("category")
+    .name("Category")
+    .type("Symbol")
+    .required(true)
+    .localized(true)
+
+  translations
+    .createField("tags")
+    .name("Tags")
+    .type("Symbol")
+    .required(true)
+    .localized(true)
+
+  translations
+    .createField("languages")
+    .name("Languages")
+    .type("Symbol")
+    .required(true)
+    .localized(true)
+
+  translations
+    .createField("noSearchResults")
+    .name("No search results")
+    .type("Symbol")
+    .required(true)
     .localized(true)
 }

@@ -119,8 +119,8 @@ function NavBar() {
           />
         </Link>
 
-        <button
-          role="button"
+        <span
+          // role="span"
           className="navbar-burger burger"
           id="navbar-burger"
           aria-label="menu"
@@ -131,7 +131,7 @@ function NavBar() {
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
-        </button>
+        </span>
       </div>
 
       <div id="navbar-menu" className="navbar-menu">
@@ -173,19 +173,23 @@ function NavBar() {
               </Link>
               <div className="navbar-dropdown">
                 {locales.map(item => (
-                  <p
+                  <button
                     className="navbar-item"
                     key={item.name}
                     onClick={() => changeLocale(item.code)}
                   >
                     {item.code}
-                  </p>
+                  </button>
                 ))}
               </div>
             </div>
           ) : null}
           <div className="navbar-item">
-            <Search />
+            <Search
+              noSearchResults={
+                translations.noSearchResults[getTranslationLocale()]
+              }
+            />
           </div>
         </div>
       </div>

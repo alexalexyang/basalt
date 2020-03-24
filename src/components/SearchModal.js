@@ -1,7 +1,7 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { Link } from "gatsby"
 
-function SearchModal({ results, setResults }) {
+function SearchModal({ results, setResults, noSearchResults }) {
   const closeModal = () => {
     setResults(null)
   }
@@ -21,7 +21,7 @@ function SearchModal({ results, setResults }) {
               </li>
             ))
           ) : (
-            <li>Sorry, no results found.</li>
+            <li>{noSearchResults}</li>
           )}
         </ul>
       </div>

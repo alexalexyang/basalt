@@ -11852,7 +11852,7 @@ label.panel-block:hover {
 }
 
 .modal {
-  display: none;
+  display: block;
   /* Hidden by default */
   position: fixed;
   /* Stay in place */
@@ -11896,5 +11896,9 @@ label.panel-block:hover {
   color: #000;
   text-decoration: none;
   cursor: pointer;
+}
+
+.featuredImage {
+  width: 40px;
 }
 /*# sourceMappingURL=style.css.map */
