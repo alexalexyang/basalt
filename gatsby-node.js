@@ -196,6 +196,7 @@ exports.createPages = async ({ actions, graphql }) => {
           context: {
             locale: locale.code,
             post,
+            translations,
           },
         })
       })
@@ -249,15 +250,23 @@ exports.createPages = async ({ actions, graphql }) => {
 // Move slug logic here
 // First, look for slug (by language)
 // If slug does not exist, use title
+const punctuation = /[`~!@#$%^&*()_+-={}\[\];:'",.<>\/?\\\|]/g
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions
 
   if (node.internal.type === `ContentfulBlogPost`) {
+    const nodeSlug = node.slug
+      ? node.slug
+      : `/${node.title
+          .replace(punctuation, "")
+          .replace(/\s/g, "-")
+          .toLowerCase()}`
+
     const slug =
       node.node_locale === defaultLocale.code
-        ? `/${transBlog}${node.slug}`
-        : `/${node.node_locale}/${transBlog}${node.slug}`
+        ? `/${transBlog}${nodeSlug}`
+        : `/${node.node_locale}/${transBlog}${nodeSlug}`
     createNodeField({
       node,
       name: `slug`,

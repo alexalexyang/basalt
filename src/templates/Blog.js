@@ -26,7 +26,7 @@ function Blog({ pageContext: { locale, blogposts, translations } }) {
                     .replace("%DATE%", post.createdAt)}
                   .
                 </p>
-                <p>EXCERPT HERE.</p>
+                <p>{post.excerpt}</p>
               </article>
             </div>
           </div>

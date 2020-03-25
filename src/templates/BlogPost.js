@@ -28,18 +28,22 @@ function BlogPost({ pageContext: { locale, post, translations } }) {
                 __html: post.body.childMarkdownRemark.html,
               }}
             ></article>
-            <article className="content">
-              <h3>Tags:</h3>
-              {post.tags.map(tag => (
-                <p key={tag}>{tag}</p>
-              ))}
-            </article>
-            <article className="content">
-              <h3>Categories:</h3>
-              {post.categories.map(cat => (
-                <p key={cat.id}>{cat.title}</p>
-              ))}
-            </article>
+            {post.tags ? (
+              <article className="content">
+                <h3>Tags:</h3>
+                {post.tags.map(tag => (
+                  <p key={tag}>{tag}</p>
+                ))}
+              </article>
+            ) : null}
+            {post.categories ? (
+              <article className="content">
+                <h3>Categories:</h3>
+                {post.categories.map(cat => (
+                  <p key={cat.id}>{cat.title}</p>
+                ))}
+              </article>
+            ) : null}
           </article>
         </div>
       </div>
