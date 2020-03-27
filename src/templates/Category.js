@@ -25,21 +25,23 @@ function Categories({ pageContext: { locale, category, translations } }) {
             <Img fluid={category.featuredImage.fluid} />
           </div>
         </div>
-        <div className="container">
-          {category.blog_post.map(post => (
-            <div className="card" key={post.contentful_id}>
-              <article className="content">
-                <h2>
-                  <Link to={post.fields.slug}>{post.title}</Link>
-                </h2>
-                <p key={post.contentful_id}>
-                  <time dateTime={post.createdAt}>{post.createdAt}</time>{" "}
-                  {post.title}
-                </p>
-              </article>
-            </div>
-          ))}
-        </div>
+        {category.blog_post ? (
+          <div className="container">
+            {category.blog_post.map(post => (
+              <div className="card" key={post.contentful_id}>
+                <article className="content">
+                  <h2>
+                    <Link to={post.fields.slug}>{post.title}</Link>
+                  </h2>
+                  <p key={post.contentful_id}>
+                    <time dateTime={post.createdAt}>{post.createdAt}</time>{" "}
+                    {post.title}
+                  </p>
+                </article>
+              </div>
+            ))}
+          </div>
+        ) : null}
       </div>
     </Layout>
   )
