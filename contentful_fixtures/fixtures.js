@@ -185,6 +185,22 @@ const createBlogposts = client => {
               },
             },
           },
+          categories: {
+            is: {
+              sys: {
+                id: "cat1",
+                linkType: "Entry",
+                type: "Link",
+              }
+            },
+            en: {
+              sys: {
+                id: "cat1",
+                linkType: "Entry",
+                type: "Link",
+              }
+            },
+          }
           tags: {
             is: ["spínat", "grænmeti", "eitrað"],
             en: ["spinach", "vegetable", "venomous"],
@@ -202,7 +218,7 @@ const createBlogposts = client => {
 function createCategories(client) {
   client
     .then(environment =>
-      environment.createEntryWithId("category", v4(), {
+      environment.createEntryWithId("category", "cat1", {
         fields: {
           slug: {
             is: "/graenmeti",

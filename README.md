@@ -1,8 +1,5 @@
 # To do
 
-- Rework slugs in gatsby-node.js
-  - Blogpost slug done. Need to do Page and Category.
-- Make defaultLocale the default for every field in every content type
 - Migrate CSS to Contentful
 - Create tags page
 - Format markdown properly

@@ -41,6 +41,14 @@ exports.createPages = async ({ actions, graphql }) => {
   locales.forEach(locale => {
     return graphql(`
       {
+        css: allContentfulAsset(filter: {file: {fileName: {eq: "style.css"}}}) {
+          nodes {
+            title
+            localFile {
+              publicURL
+            }
+          }
+        }
 
         translations: allContentfulTranslations {
           nodes {
@@ -56,14 +64,15 @@ exports.createPages = async ({ actions, graphql }) => {
 
         pages: allContentfulPage (filter: {node_locale: {eq: "${locale.code}"}}) {
           nodes {
-            id
-            slug
+            contentful_id
+            fields {
+              slug
+            }
             title
             createdAt
             node_locale
 
             featuredImage {
-              contentful_id
               fluid {
                 sizes
                 srcSet
@@ -85,7 +94,7 @@ exports.createPages = async ({ actions, graphql }) => {
 
         blogposts: allContentfulBlogPost (filter: {node_locale: {eq: "${locale.code}"}}) {
           nodes {
-            id
+            contentful_id
             fields {
               slug
             }
@@ -95,7 +104,6 @@ exports.createPages = async ({ actions, graphql }) => {
             author
 
             featuredImage {
-              contentful_id
               fluid {
                 sizes
                 srcSet
@@ -113,7 +121,7 @@ exports.createPages = async ({ actions, graphql }) => {
               }
             }
             categories {
-              id
+              contentful_id
               title
             }
             tags
@@ -122,7 +130,7 @@ exports.createPages = async ({ actions, graphql }) => {
 
         categories: allContentfulCategory (filter: {node_locale: {eq: "${locale.code}"}}) {
           nodes {
-            id
+            contentful_id
             node_locale
             fields {
               slug
@@ -168,18 +176,8 @@ exports.createPages = async ({ actions, graphql }) => {
       // PAGE
       const pages = res.data.pages.nodes
       pages.forEach(page => {
-        let route = ""
-        if (page.node_locale == defaultLocale.code) {
-          if (page.slug == "/") {
-            route = ""
-          }
-          route = page.slug
-        } else {
-          route = `/${page.node_locale}${page.slug}`
-        }
-
         createPage({
-          path: route,
+          path: page.fields.slug,
           component: path.resolve("src/templates/Page.js"),
           context: {
             page,
@@ -247,26 +245,38 @@ exports.createPages = async ({ actions, graphql }) => {
   })
 }
 
-// Move slug logic here
-// First, look for slug (by language)
-// If slug does not exist, use title
 const punctuation = /[`~!@#$%^&*()_+-={}\[\];:'",.<>\/?\\\|]/g
+
+const makeSlug = (slug, title) => {
+  return slug
+    ? slug
+    : `/${title
+        .replace(punctuation, "")
+        .replace(/\s/g, "-")
+        .toLowerCase()}`
+}
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions
 
-  if (node.internal.type === `ContentfulBlogPost`) {
-    const nodeSlug = node.slug
-      ? node.slug
-      : `/${node.title
-          .replace(punctuation, "")
-          .replace(/\s/g, "-")
-          .toLowerCase()}`
-
+  if (node.internal.type === `ContentfulPage`) {
     const slug =
       node.node_locale === defaultLocale.code
-        ? `/${transBlog}${nodeSlug}`
-        : `/${node.node_locale}/${transBlog}${nodeSlug}`
+        ? `/${node.slug === "/" ? "" : node.slug}`
+        : `/${node.node_locale}${node.slug}`
+
+    createNodeField({
+      node,
+      name: `slug`,
+      value: slug,
+    })
+  }
+
+  if (node.internal.type === `ContentfulBlogPost`) {
+    const slug =
+      node.node_locale === defaultLocale.code
+        ? `/${transBlog}${node.slug}`
+        : `/${node.node_locale}/${transBlog}${node.slug}`
     createNodeField({
       node,
       name: `slug`,
@@ -288,38 +298,6 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 }
 
 exports.setFieldsOnGraphQLNodeType = ({ type }) => {
-  // if (type.name === `ContentfulBlogPost`) {
-  //   return {
-  //     slug: {
-  //       type: GraphQLString,
-  //       args: {},
-  //       resolve: (source, fieldArgs) => {
-  //         const slug =
-  //           source.node_locale === defaultLocale.code
-  //             ? `/blog${source.slug}`
-  //             : `/${source.node_locale}/blog${source.slug}`
-  //         return slug
-  //       },
-  //     },
-  //   }
-  // }
-
-  // if (type.name === `ContentfulCategory`) {
-  //   return {
-  //     slug: {
-  //       type: GraphQLString,
-  //       args: {},
-  //       resolve: (source, fieldArgs) => {
-  //         const slug =
-  //           source.node_locale === defaultLocale.code
-  //             ? `/category${source.slug}`
-  //             : `/${source.node_locale}/category${source.slug}`
-  //         return slug
-  //       },
-  //     },
-  //   }
-  // }
-
   if (type.name === `Site`) {
     return {
       defaultLocale: {
