@@ -178,7 +178,7 @@ exports.createPages = async ({ actions, graphql }) => {
       })
 
       // BLOGPOST
-      const blogposts = res.data.blogposts.nodes
+      let blogposts = res.data.blogposts.nodes
       blogposts.forEach(post => {
         createPage({
           path: post.fields.slug,
@@ -192,18 +192,44 @@ exports.createPages = async ({ actions, graphql }) => {
       })
 
       // BLOG
-      createPage({
-        path:
+      let bloglist = []
+      const postsPerPage = 1
+      while (blogposts.length) {
+        let slice = blogposts.splice(0, postsPerPage)
+        bloglist.push(slice)
+      }
+
+      bloglist.forEach((postSlice, i) => {
+        const blogSlug =
           locale.code === defaultLocale.code
             ? `/${transBlog}`
-            : `/${locale.code}/${transBlog}`,
-        component: path.resolve("src/templates/Blog.js"),
-        context: {
-          locale: locale.code,
-          blogposts,
-          translations,
-        },
+            : `/${locale.code}/${transBlog}`
+        createPage({
+          path: i === 0 ? blogSlug : `${blogSlug}/${i + 1}`,
+          component: path.resolve("src/templates/Blog.js"),
+          context: {
+            defaultLocale: defaultLocale.code,
+            locale: locale.code,
+            translations,
+            numPages: bloglist.length,
+            blogposts: postSlice,
+            currentPage: i + 1,
+          },
+        })
       })
+
+      // createPage({
+      //   path:
+      //     locale.code === defaultLocale.code
+      //       ? `/${transBlog}`
+      //       : `/${locale.code}/${transBlog}`,
+      //   component: path.resolve("src/templates/Blog.js"),
+      //   context: {
+      //     locale: locale.code,
+      //     blogposts,
+      //     translations,
+      //   },
+      // })
 
       // CATEGORY
       const categories = res.data.categories.nodes

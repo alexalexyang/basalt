@@ -19,10 +19,6 @@ It may be possible to use the search engine, [elasticlunr](https://github.com/ga
 
 # Setup
 
-## Migration
-
-If we want to move to another Contentful space or to a new platform, we have to first export the content using Contentful CLI's [export](https://www.contentful.com/developers/docs/tutorials/cli/import-and-export/) methods. Thereafter, we can either use its import methods for another Contentful space, or, we can figure out how to import it into whatever platform of choice that we cannot prefigure now.
-
 ## Netlify build hook
 
 Remember to set up a [Netlify build hook](https://www.contentful.com/developers/docs/tutorials/general/automate-site-builds-with-webhooks/) for Contentful so the site builds with every new entry.
@@ -234,3 +230,47 @@ We can't give each field a default value. [This](https://www.contentfulcommunity
 # CSS by Bulma
 
 [Bulma with Gatsby](https://www.gatsbyjs.org/docs/bulma/).
+
+# Migration
+
+If we want to move to another Contentful space, we can do it with Contentful CLI's [import and export methods](https://www.contentful.com/developers/docs/tutorials/cli/import-and-export/).
+
+For other platforms, export with Contentful CLI is a suitable first step. In this case, be sure to use the `--download-assets` flag: `contentful space export --config config.json --download-assets`
+
+Images and other media assets might be a bit of a bother to figure out. The shape of the assets directory for images is as follows:
+
+```
+data_dump/images.ctfassets.net/
+└── space_id
+    └── contentful_image_id
+        ├── 187325106489ccd3656af64361f2afb6
+        │   └── is.jpg
+        └── 1ce968b10d3e0727d1e9540945717293
+            └── is.jpg
+```
+
+In the above example, the directory starting with 1873 is the image for the Icelandic locale. 1ce9 contains the image for English. As we can see, the files themselves are both named "is.jpg".
+
+To figure out which image is for which locale, look at the "assets" array in the JSON generated in the exported file:
+
+```
+...
+"assets": [
+  ...
+  "fields": {
+    ...
+    "file": {
+          "en": {
+            "url": "//images.ctfassets.net/space_id/contentful_image_id/187325106489ccd3656af64361f2afb6/is.jpg",
+            ...
+          },
+          "is": {
+            "url": "//images.ctfassets.net/space_id/contentful_image_id/1ce968b10d3e0727d1e9540945717293/is.jpg",
+            ...
+          }
+    }
+  }
+]
+```
+
+It may also be possible to migrate using Gatsby itself but I haven't thought about it in detail.
