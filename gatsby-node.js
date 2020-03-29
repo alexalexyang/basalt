@@ -41,14 +41,6 @@ exports.createPages = async ({ actions, graphql }) => {
   locales.forEach(locale => {
     return graphql(`
       {
-        css: allContentfulAsset(filter: {file: {fileName: {eq: "style.css"}}}) {
-          nodes {
-            title
-            localFile {
-              publicURL
-            }
-          }
-        }
 
         translations: allContentfulTranslations {
           nodes {

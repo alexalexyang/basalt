@@ -1,8 +1,5 @@
 # To do
 
-- Migrate CSS to Contentful
-- Create tags page
-- Format markdown properly
 - Test data dump for migration
 - Blog pagination
 - Write docs
@@ -21,6 +18,10 @@ Ref: [fluid images example](https://github.com/gatsbyjs/gatsby/blob/master/examp
 It may be possible to use the search engine, [elasticlunr](https://github.com/gatsby-contrib/gatsby-plugin-elasticlunr-search), for multilingual slugs.
 
 # Setup
+
+## Migration
+
+If we want to move to another Contentful space or to a new platform, we have to first export the content using Contentful CLI's [export](https://www.contentful.com/developers/docs/tutorials/cli/import-and-export/) methods. Thereafter, we can either use its import methods for another Contentful space, or, we can figure out how to import it into whatever platform of choice that we cannot prefigure now.
 
 ## Netlify build hook
 
