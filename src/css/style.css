@@ -11898,7 +11898,39 @@ label.panel-block:hover {
   cursor: pointer;
 }
 
+.language-button {
+  background: none;
+  color: inherit;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+.search-box {
+  width: 200px;
+}
+
 .featuredImage {
-  width: 40px;
+  width: 150px;
+}
+
+.blog-blogpost {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+@media only screen and (max-width: 700px) {
+  .blog-blogpost {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+
+.blog-blogpost-item {
+  padding: 5px;
 }
 /*# sourceMappingURL=style.css.map */

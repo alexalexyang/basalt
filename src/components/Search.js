@@ -30,12 +30,12 @@ function Search({ noSearchResults }) {
 
   return (
     <>
-      <div className="">
+      <div className="search-box">
         <input
           onKeyDown={e => search(e)}
           className="input is-rounded"
           type="text"
-          placeholder="Looking for something?"
+          placeholder="Search?"
         />
       </div>
       {results ? (

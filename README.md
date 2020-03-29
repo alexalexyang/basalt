@@ -1,8 +1,10 @@
 # To do
 
-- Test data dump for migration
-- Blog pagination
+- Prettify things a bit
+- Work on locale slugs
 - Write docs
+- Set up new Contentful account and everything
+- Live tests
 
 # To consider
 

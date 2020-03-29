@@ -86,7 +86,7 @@ exports.createPages = async ({ actions, graphql }) => {
 
         blogposts: allContentfulBlogPost (filter: {node_locale: {eq: "${locale.code}"}}) {
           nodes {
-            contentful_id
+            id: contentful_id
             fields {
               slug
             }
@@ -94,6 +94,7 @@ exports.createPages = async ({ actions, graphql }) => {
             createdAt(formatString: "D MMM YYYY, HH:MM")
             title
             author
+            excerpt
 
             featuredImage {
               fluid {

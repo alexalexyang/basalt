@@ -174,7 +174,7 @@ function NavBar() {
               <div className="navbar-dropdown">
                 {locales.map(item => (
                   <button
-                    className="navbar-item"
+                    className="navbar-item language-button"
                     key={item.name}
                     onClick={() => changeLocale(item.code)}
                   >
