@@ -8,7 +8,7 @@ function BlogPost({ pageContext: { locale, post, translations } }) {
   return (
     <Layout>
       <SEO title={`Blog | ${post.title}`} />
-      <div className="section">
+      <div key={post.contentful_id} className="section">
         <div className="container">
           <article className="content">
             <article className="content">
@@ -40,7 +40,7 @@ function BlogPost({ pageContext: { locale, post, translations } }) {
               <article className="content">
                 <h3>Categories:</h3>
                 {post.categories.map(cat => (
-                  <p key={cat.id}>{cat.title}</p>
+                  <p key={cat.contentful_id}>{cat.title}</p>
                 ))}
               </article>
             ) : null}

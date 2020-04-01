@@ -20,7 +20,7 @@ ContentfulClient.getLocales().then(data => {
 })
 
 let translations = {}
-let transBlog = ""
+// let transBlog = ""
 let transCategories = ""
 let transCategory = ""
 ContentfulClient.getEntries({
@@ -29,7 +29,7 @@ ContentfulClient.getEntries({
 })
   .then(data => {
     translations = data.items[0].fields
-    transBlog = translations.blog[defaultLocale.code]
+    // transBlog = translations.blog[defaultLocale.code]
     transCategories = translations.categories[defaultLocale.code]
     transCategory = translations.category[defaultLocale.code]
   })
@@ -86,7 +86,7 @@ exports.createPages = async ({ actions, graphql }) => {
 
         blogposts: allContentfulBlogPost (filter: {node_locale: {eq: "${locale.code}"}}) {
           nodes {
-            id: contentful_id
+            contentful_id
             fields {
               slug
             }
@@ -174,6 +174,8 @@ exports.createPages = async ({ actions, graphql }) => {
           component: path.resolve("src/templates/Page.js"),
           context: {
             page,
+            locale: locale.code,
+            defaultLocale: defaultLocale.code,
           },
         })
       })
@@ -201,14 +203,16 @@ exports.createPages = async ({ actions, graphql }) => {
       }
 
       bloglist.forEach((postSlice, i) => {
+        const blog = translations.blog[locale.code]
         const blogSlug =
           locale.code === defaultLocale.code
-            ? `/${transBlog}`
-            : `/${locale.code}/${transBlog}`
+            ? `/${blog}`
+            : `/${locale.code}/${blog}`
         createPage({
           path: i === 0 ? blogSlug : `${blogSlug}/${i + 1}`,
           component: path.resolve("src/templates/Blog.js"),
           context: {
+            basaltID: `blog-${i + 1}`,
             defaultLocale: defaultLocale.code,
             locale: locale.code,
             translations,
@@ -218,19 +222,6 @@ exports.createPages = async ({ actions, graphql }) => {
           },
         })
       })
-
-      // createPage({
-      //   path:
-      //     locale.code === defaultLocale.code
-      //       ? `/${transBlog}`
-      //       : `/${locale.code}/${transBlog}`,
-      //   component: path.resolve("src/templates/Blog.js"),
-      //   context: {
-      //     locale: locale.code,
-      //     blogposts,
-      //     translations,
-      //   },
-      // })
 
       // CATEGORY
       const categories = res.data.categories.nodes
@@ -278,41 +269,77 @@ const makeSlug = (slug, title) => {
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions
 
-  if (node.internal.type === `ContentfulPage`) {
-    const slug =
-      node.node_locale === defaultLocale.code
-        ? `/${node.slug === "/" ? "" : node.slug}`
-        : `/${node.node_locale}${node.slug}`
-
+  const addBasaltField = (name, value) => {
     createNodeField({
       node,
-      name: `slug`,
-      value: slug,
+      name,
+      value,
     })
   }
 
+  if (node.internal.type.includes(`SitePage`)) {
+    let basaltID =
+      node.context && node.context.basaltID ? node.context.basaltID : null
+    addBasaltField(`basaltID`, basaltID)
+    // console.log("=== NODE ==== \n")
+    // console.log(node.path)
+    // console.log(node.context.locale)
+    node.context.locale && addBasaltField(`basaltLocale`, node.context.locale)
+  }
+
+  if (node.internal.type === `ContentfulPage`) {
+    let slug = ""
+
+    if (node.slug === "/") {
+      slug = node.node_locale === defaultLocale.code ? "" : node.node_locale
+    } else {
+      slug =
+        node.node_locale === defaultLocale.code
+          ? node.slug
+          : `${node.node_locale}/${node.slug}`
+    }
+
+    createNodeField({
+      node,
+      name: `slug`,
+      value: `/${slug}`,
+    })
+
+    let basaltID = node.slug === "/" ? "basaltHome" : node.contentful_id
+
+    addBasaltField(`basaltID`, basaltID)
+    addBasaltField(`basaltLocale`, node.node_locale)
+  }
+
   if (node.internal.type === `ContentfulBlogPost`) {
+    const blog = translations.blog[node.node_locale]
     const slug =
       node.node_locale === defaultLocale.code
-        ? `/${transBlog}${node.slug}`
-        : `/${node.node_locale}/${transBlog}${node.slug}`
+        ? `/${blog}/${node.slug}`
+        : `/${node.node_locale}/${blog}/${node.slug}`
     createNodeField({
       node,
       name: `slug`,
       value: slug,
     })
+
+    addBasaltField(`basaltID`, node.contentful_id)
+    addBasaltField(`basaltLocale`, node.node_locale)
   }
 
   if (node.internal.type === `ContentfulCategory`) {
     const slug =
       node.node_locale === defaultLocale.code
-        ? `/${transCategory}${node.slug}`
-        : `/${node.node_locale}/${transCategory}${node.slug}`
+        ? `/${transCategory}/${node.slug}`
+        : `/${node.node_locale}/${transCategory}/${node.slug}`
     createNodeField({
       node,
       name: `slug`,
       value: slug,
     })
+
+    addBasaltField(`basaltID`, node.contentful_id)
+    addBasaltField(`basaltLocale`, node.node_locale)
   }
 }
 

@@ -27,7 +27,7 @@ function Search({ noSearchResults }) {
       .map(data => Index.load(index).documentStore.getDoc(data.ref))
     setResults(result)
   }
-
+  console.log(results)
   return (
     <>
       <div className="search-box">

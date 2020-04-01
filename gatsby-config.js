@@ -72,12 +72,12 @@ module.exports = {
       resolve: `@gatsby-contrib/gatsby-plugin-elasticlunr-search`,
       options: {
         // Fields to index
-        fields: [`author`, `title`, `body`],
+        fields: [`basaltID`, `basaltLocale`, `author`, `title`, `body`, `slug`],
         // How to resolve each field`s value for a supported node type
         resolvers: {
           ContentfulBlogPost: {
-            id: node => node.id,
-            node_locale: node => node.node_locale,
+            basaltID: node => node.fields.basaltID,
+            basaltLocale: node => node.fields.basaltLocale,
             slug: node => node.fields.slug,
             createdAt: node => node.createdAt,
             author: node => node.author,
@@ -87,15 +87,20 @@ module.exports = {
               getNode(node.featuredImage___NODE),
           },
           ContentfulPage: {
-            id: node => node.id,
-            node_locale: node => node.node_locale,
-            slug: node => node.slug,
+            basaltID: node => node.fields.basaltID,
+            basaltLocale: node => node.fields.basaltLocale,
+            slug: node => node.fields.slug,
             createdAt: node => node.createdAt,
             author: node => node.author,
             title: node => node.title,
             body: (node, getNode) => getNode(node.body___NODE).body,
             featuredImage: (node, getNode) =>
               getNode(node.featuredImage___NODE),
+          },
+          SitePage: {
+            basaltID: node => node.fields.basaltID,
+            basaltLocale: node => node.fields.basaltLocale,
+            slug: node => node.path,
           },
         },
         // Optional filter to limit indexed nodes

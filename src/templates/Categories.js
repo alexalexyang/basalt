@@ -15,7 +15,7 @@ function Categories({ pageContext: { locale, categories, translations } }) {
         </div>
         <div className="container">
           {categories.map(cat => (
-            <div className="card" key={cat.id}>
+            <div className="card" key={cat.contentful_id}>
               <div className="container featuredImage">
                 <Img fluid={cat.featuredImage.fluid} />
               </div>

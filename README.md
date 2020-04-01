@@ -1,8 +1,8 @@
 # To do
 
-- Prettify things a bit
 - Work on locale slugs
 - Write docs
+- Prettify things, get logo and tab icon
 - Set up new Contentful account and everything
 - Live tests
 

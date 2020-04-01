@@ -2,6 +2,7 @@ import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import { Link } from "gatsby"
 import Search from "./Search"
+import LocaleSwitcher from "./LocaleSwitcher"
 
 function NavBar() {
   const data = useStaticQuery(graphql`
@@ -172,7 +173,11 @@ function NavBar() {
                 {translations.languages[getTranslationLocale()]}
               </Link>
               <div className="navbar-dropdown">
-                {locales.map(item => (
+                <LocaleSwitcher
+                  defaultLocale={defaultLocale.code}
+                  locales={locales}
+                />
+                {/* {locales.map(item => (
                   <button
                     className="navbar-item language-button"
                     key={item.name}
@@ -180,7 +185,7 @@ function NavBar() {
                   >
                     {item.code}
                   </button>
-                ))}
+                ))} */}
               </div>
             </div>
           ) : null}
