@@ -281,10 +281,9 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
     let basaltID =
       node.context && node.context.basaltID ? node.context.basaltID : null
     addBasaltField(`basaltID`, basaltID)
-    // console.log("=== NODE ==== \n")
-    // console.log(node.path)
-    // console.log(node.context.locale)
-    node.context.locale && addBasaltField(`basaltLocale`, node.context.locale)
+    if (node.context.locale) {
+      addBasaltField(`basaltLocale`, node.context.locale)
+    }
   }
 
   if (node.internal.type === `ContentfulPage`) {
