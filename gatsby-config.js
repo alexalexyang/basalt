@@ -97,6 +97,11 @@ module.exports = {
             featuredImage: (node, getNode) =>
               getNode(node.featuredImage___NODE),
           },
+          ContentfulCategory: {
+            basaltID: node => node.fields.basaltID,
+            basaltLocale: node => node.fields.basaltLocale,
+            slug: node => node.fields.slug,
+          },
           SitePage: {
             basaltID: node => node.fields.basaltID,
             basaltLocale: node => node.fields.basaltLocale,

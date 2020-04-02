@@ -1,6 +1,6 @@
 # To do
 
-- Work on locale slugs
+- Work on locale slugs for categories
 - Write docs
 - Prettify things, get logo and tab icon
 - Set up new Contentful account and everything
