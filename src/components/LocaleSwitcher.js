@@ -44,7 +44,7 @@ function LocaleSwitcher({ locales }) {
       }
     })
 
-    // window.location.replace(`${window.location.origin}${slug}`)
+    window.location.replace(`${window.location.origin}${slug}`)
   }
 
   return (

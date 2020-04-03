@@ -1,7 +1,5 @@
 # To do
 
-- Clean up navbar
-- Add EN slugs to fixtures
 - Upload logo, also use as tab icon
 - Write docs
 - Prettify things

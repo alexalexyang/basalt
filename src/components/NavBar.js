@@ -15,7 +15,9 @@ function NavBar() {
       allContentfulPage {
         nodes {
           id
-          slug
+          fields {
+            slug
+          }
           title
           node_locale
         }
@@ -42,48 +44,15 @@ function NavBar() {
     return locale
   }
 
-  const changeLocale = code => {
-    typeof window !== "undefined" &&
-    defaultLocale &&
-    code === defaultLocale.code
-      ? window.location.replace(`${window.location.origin}${getSubPath()}`)
-      : window.location.replace(
-          `${window.location.origin}/${code}${getSubPath()}`
-        )
-  }
-
-  const getSubPath = () => {
-    let pathname =
-      typeof window !== "undefined" && window.location.pathname
-        ? window.location.pathname
-        : ""
-    let subPath = ""
-
-    // If path is "example.com"
-    if (pathname.match(/^\/\D\D\//) == null && pathname.length === 1) {
-      subPath = ""
-    }
-
-    // If path is "example.com/page"
-    if (pathname.match(/^\/\D\D\//) == null && pathname.length > 3) {
-      // return "/page"
-      subPath = pathname
-    }
-
-    // If path is "example.com/en/page"
-    if (pathname.match(/^\/\D\D\//) && pathname.length > 1) {
-      let locale = pathname.match(/^\/\D\D\//)
-      subPath = pathname.replace(locale, "/")
-    }
-
-    return subPath
-  }
-
   const pages = () => {
     return currentLocale === ""
       ? allContentfulPage.nodes.map(node => {
           return node.node_locale === defaultLocale.code ? (
-            <Link to={`${node.slug}`} className="navbar-item" key={node.id}>
+            <Link
+              to={`${node.fields.slug}`}
+              className="navbar-item"
+              key={node.id}
+            >
               {node.title}
             </Link>
           ) : null
@@ -91,7 +60,7 @@ function NavBar() {
       : allContentfulPage.nodes.map(node => {
           return node.node_locale === currentLocale ? (
             <Link
-              to={`/${node.node_locale}${node.slug}`}
+              to={`/${node.fields.slug}`}
               className="navbar-item"
               key={node.id}
             >
@@ -121,7 +90,6 @@ function NavBar() {
         </Link>
 
         <span
-          // role="span"
           className="navbar-burger burger"
           id="navbar-burger"
           aria-label="menu"
@@ -145,8 +113,10 @@ function NavBar() {
             <Link
               to={
                 currentLocale === ""
-                  ? `/${translations.blog[defaultLocale.code]}`
-                  : `/${currentLocale}/${translations.blog[defaultLocale.code]}`
+                  ? `/${translations.blog[defaultLocale.code].toLowerCase()}`
+                  : `/${currentLocale}/${translations.blog[
+                      getTranslationLocale()
+                    ].toLowerCase()}`
               }
               className="navbar-item"
             >
@@ -156,10 +126,12 @@ function NavBar() {
               <Link
                 to={
                   currentLocale === ""
-                    ? `/${translations.categories[defaultLocale.code]}`
-                    : `/${currentLocale}/${
-                        translations.categories[defaultLocale.code]
-                      }`
+                    ? `/${translations.categories[
+                        defaultLocale.code
+                      ].toLowerCase()}`
+                    : `/${currentLocale}/${translations.categories[
+                        getTranslationLocale()
+                      ].toLowerCase()}`
                 }
               >
                 {translations.categories[getTranslationLocale()]}
@@ -169,7 +141,7 @@ function NavBar() {
 
           {locales ? (
             <div className="navbar-item has-dropdown is-hoverable">
-              <Link to={getSubPath()} className="navbar-link">
+              <Link to={`/`} className="navbar-link">
                 {translations.languages[getTranslationLocale()]}
               </Link>
               <div className="navbar-dropdown">
@@ -177,15 +149,6 @@ function NavBar() {
                   defaultLocale={defaultLocale.code}
                   locales={locales}
                 />
-                {/* {locales.map(item => (
-                  <button
-                    className="navbar-item language-button"
-                    key={item.name}
-                    onClick={() => changeLocale(item.code)}
-                  >
-                    {item.code}
-                  </button>
-                ))} */}
               </div>
             </div>
           ) : null}

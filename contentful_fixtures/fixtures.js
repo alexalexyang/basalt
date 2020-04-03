@@ -96,6 +96,7 @@ const createBlogposts = client => {
         fields: {
           slug: {
             is: "hin-yndislega-gulrot",
+            en: "the-wonderful-carrot",
           },
           author: {
             is: "Prófessor Hvítkál",
@@ -149,6 +150,7 @@ const createBlogposts = client => {
         fields: {
           slug: {
             is: "mognud-spinat",
+            en: "amazing-spinach",
           },
           author: {
             is: "Dr Ósvífinn Andlit",
@@ -222,6 +224,7 @@ function createCategories(client) {
         fields: {
           slug: {
             is: "graenmeti",
+            en: "vegetables",
           },
           title: {
             is: "Grænmeti",
@@ -261,7 +264,8 @@ function createCategories(client) {
       environment.createEntryWithId("category", v4(), {
         fields: {
           slug: {
-            is: "ávöxtur",
+            is: "avoxtur",
+            en: "fruit",
           },
           title: {
             is: "Ávextir",
@@ -305,6 +309,7 @@ function createPages(client) {
         fields: {
           slug: {
             is: "/",
+            en: "/",
           },
           title: {
             is: "Heim",
@@ -345,6 +350,7 @@ function createPages(client) {
         fields: {
           slug: {
             is: "um-okkur",
+            en:"about-us",
           },
           title: {
             is: "Um okkur",

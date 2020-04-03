@@ -12,7 +12,7 @@ function Pagination({
   const localePath = () => {
     return defaultLocale === locale
       ? `${translations[pageType][defaultLocale]}`
-      : `/${locale}/${translations[pageType][defaultLocale]}`
+      : `/${locale}/${translations[pageType][locale]}`
   }
 
   const prev = () => {

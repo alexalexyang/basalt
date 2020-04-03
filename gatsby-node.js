@@ -20,7 +20,6 @@ ContentfulClient.getLocales().then(data => {
 })
 
 let translations = {}
-// let transBlog = ""
 let transCategories = ""
 let transCategory = ""
 ContentfulClient.getEntries({
@@ -202,7 +201,7 @@ exports.createPages = async ({ actions, graphql }) => {
       }
 
       bloglist.forEach((postSlice, i) => {
-        const blog = translations.blog[locale.code]
+        const blog = translations.blog[locale.code].toLowerCase()
         const blogSlug =
           locale.code === defaultLocale.code
             ? `/${blog}`
@@ -236,20 +235,6 @@ exports.createPages = async ({ actions, graphql }) => {
         })
       })
 
-      // CATEGORIES
-      // createPage({
-      //   path:
-      //     locale.code === defaultLocale.code
-      //       ? `/${transCategories}`
-      //       : `/${locale.code}/${transCategories}`,
-      //   component: path.resolve("src/templates/Categories.js"),
-      //   context: {
-      //     locale: locale.code,
-      //     categories,
-      //     translations,
-      //   },
-      // })
-
       let categoriesList = []
       const categoriesPerPage = 1
       while (categories.length) {
@@ -258,7 +243,7 @@ exports.createPages = async ({ actions, graphql }) => {
       }
 
       categoriesList.forEach((categorySlice, i) => {
-        const categories = translations.categories[locale.code]
+        const categories = translations.categories[locale.code].toLowerCase()
         const categoriesSlug =
           locale.code === defaultLocale.code
             ? `/${categories}`
@@ -346,7 +331,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
     createNodeField({
       node,
       name: `slug`,
-      value: slug,
+      value: slug.toLowerCase(),
     })
 
     addBasaltField(`basaltID`, node.contentful_id)
@@ -361,7 +346,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
     createNodeField({
       node,
       name: `slug`,
-      value: slug,
+      value: slug.toLowerCase(),
     })
 
     addBasaltField(`basaltID`, node.contentful_id)
