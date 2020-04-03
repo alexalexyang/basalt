@@ -29,7 +29,6 @@ ContentfulClient.getEntries({
 })
   .then(data => {
     translations = data.items[0].fields
-    // transBlog = translations.blog[defaultLocale.code]
     transCategories = translations.categories[defaultLocale.code]
     transCategory = translations.category[defaultLocale.code]
   })
@@ -238,17 +237,45 @@ exports.createPages = async ({ actions, graphql }) => {
       })
 
       // CATEGORIES
-      createPage({
-        path:
+      // createPage({
+      //   path:
+      //     locale.code === defaultLocale.code
+      //       ? `/${transCategories}`
+      //       : `/${locale.code}/${transCategories}`,
+      //   component: path.resolve("src/templates/Categories.js"),
+      //   context: {
+      //     locale: locale.code,
+      //     categories,
+      //     translations,
+      //   },
+      // })
+
+      let categoriesList = []
+      const categoriesPerPage = 1
+      while (categories.length) {
+        let slice = categories.splice(0, categoriesPerPage)
+        categoriesList.push(slice)
+      }
+
+      categoriesList.forEach((categorySlice, i) => {
+        const categories = translations.categories[locale.code]
+        const categoriesSlug =
           locale.code === defaultLocale.code
-            ? `/${transCategories}`
-            : `/${locale.code}/${transCategories}`,
-        component: path.resolve("src/templates/Categories.js"),
-        context: {
-          locale: locale.code,
-          categories,
-          translations,
-        },
+            ? `/${categories}`
+            : `/${locale.code}/${categories}`
+        createPage({
+          path: i === 0 ? categoriesSlug : `${categoriesSlug}/${i + 1}`,
+          component: path.resolve("src/templates/Categories.js"),
+          context: {
+            basaltID: `categories-${i + 1}`,
+            defaultLocale: defaultLocale.code,
+            locale: locale.code,
+            translations,
+            numPages: categoriesList.length,
+            categories: categorySlice,
+            currentPage: i + 1,
+          },
+        })
       })
       // Create page for tags.
     })

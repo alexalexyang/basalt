@@ -4,8 +4,18 @@ import Img from "gatsby-image"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import Pagination from "../components/Pagination"
 
-function Categories({ pageContext: { locale, categories, translations } }) {
+function Categories({
+  pageContext: {
+    defaultLocale,
+    locale,
+    translations,
+    categories,
+    currentPage,
+    numPages,
+  },
+}) {
   return (
     <Layout>
       <SEO title={translations.categories[locale]} />
@@ -36,6 +46,14 @@ function Categories({ pageContext: { locale, categories, translations } }) {
           ))}
         </div>
       </div>
+      <Pagination
+        defaultLocale={defaultLocale}
+        locale={locale}
+        translations={translations}
+        pageType="categories"
+        currentPage={currentPage}
+        numPages={numPages}
+      />
     </Layout>
   )
 }

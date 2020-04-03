@@ -18,25 +18,33 @@ function LocaleSwitcher({ locales }) {
 
     let path =
       pathname === "/" || /^\/\w\w$/.test(pathname) ? "basaltHome" : pathname
+    console.log("PATH: ", path)
 
     let pages = Index.load(index)
       .search(path)
       .map(data => Index.load(index).documentStore.getDoc(data.ref))
 
+    if (pages.length === 0) {
+      return window.location.replace(`${window.location.origin}${pathname}`)
+    }
+
     let pageID = pages[0].basaltID
+    console.log("PAGE ID: ", pageID)
 
     pages = Index.load(index)
       .search(pageID)
       .map(data => Index.load(index).documentStore.getDoc(data.ref))
 
     let slug = ""
+    console.log("PAGES: ", pages)
     pages.forEach(page => {
       if (page.basaltLocale === locale && page.basaltID === pageID) {
         slug = page.slug
+        console.log("SLUG: ", slug)
       }
     })
 
-    window.location.replace(`${window.location.origin}${slug}`)
+    // window.location.replace(`${window.location.origin}${slug}`)
   }
 
   return (

@@ -4,6 +4,7 @@ import { Link } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Img from "gatsby-image"
+import Pagination from "../components/Pagination"
 
 function Blog({
   pageContext: {
@@ -15,36 +16,6 @@ function Blog({
     numPages,
   },
 }) {
-  const localePath = () => {
-    return defaultLocale === locale
-      ? `${translations.blog[defaultLocale]}`
-      : `/${locale}/${translations.blog[defaultLocale]}`
-  }
-
-  const prev = () => {
-    if (currentPage !== 1) {
-      return (
-        <Link
-          to={`${
-            currentPage === 2
-              ? `${localePath()}`
-              : `${localePath()}/${currentPage - 1}`
-          }`}
-        >
-          {`<<`}
-        </Link>
-      )
-    }
-    return null
-  }
-
-  const next = () => {
-    if (currentPage !== numPages) {
-      return <Link to={`${localePath()}/${currentPage + 1}`}>{`>>`}</Link>
-    }
-    return null
-  }
-
   return (
     <Layout>
       <SEO title={translations.blog[locale]} />
@@ -73,13 +44,14 @@ function Blog({
           </div>
         </div>
       ))}
-      <div className="section">
-        <div className="container">
-          <p>
-            {prev()} {currentPage} of {numPages} {next()}
-          </p>
-        </div>
-      </div>
+      <Pagination
+        defaultLocale={defaultLocale}
+        locale={locale}
+        translations={translations}
+        pageType="blog"
+        currentPage={currentPage}
+        numPages={numPages}
+      />
     </Layout>
   )
 }

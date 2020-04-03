@@ -1,8 +1,10 @@
 # To do
 
-- Work on locale slugs for categories
+- Clean up navbar
+- Add EN slugs to fixtures
+- Upload logo, also use as tab icon
 - Write docs
-- Prettify things, get logo and tab icon
+- Prettify things
 - Set up new Contentful account and everything
 - Live tests
 
