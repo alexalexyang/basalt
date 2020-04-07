@@ -43,7 +43,11 @@ ContentfulClient.getEntries({
     // delete items.defaultImage
     // delete items.logo
     console.log("ITEMS: ", items)
-    siteSettings = items
+    siteSettings = {
+      siteName: { is: "Fyrstahjalp" },
+      author: { is: "Mr Moumou" },
+      email: { is: "helpmepls@omg-help-me-build-this-site.whatever.lol.com" },
+    }
     return items.logo[defaultLocale.code].sys.id
   })
   .then(logoID => {
