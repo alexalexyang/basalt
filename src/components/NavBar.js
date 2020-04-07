@@ -3,6 +3,7 @@ import { useStaticQuery, graphql } from "gatsby"
 import { Link } from "gatsby"
 import Search from "./Search"
 import LocaleSwitcher from "./LocaleSwitcher"
+import logo from "../images/logo.svg"
 
 function NavBar() {
   const data = useStaticQuery(graphql`
@@ -81,12 +82,7 @@ function NavBar() {
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
         <Link className="navbar-item" to={currentLocale}>
-          <img
-            src="https://bulma.io/images/bulma-logo.png"
-            width="112"
-            height="28"
-            alt="Bulma logo."
-          />
+          <img src={logo} width="112" height="28" alt="Bulma logo." />
         </Link>
 
         <span
