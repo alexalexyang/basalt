@@ -13,8 +13,56 @@ const client = contentful
 
 // SAMPLE FEATURED IMAGES
 
+let logoID = ""
 let featuredImages = {}
 let featuredImageID = ""
+
+client
+  .then(environment =>
+    environment.createUpload({
+      file: readFileSync(path.resolve(__dirname, "logo.svg")),
+      contentType: "image/svg",
+      fileName: "logo.svg",
+    })
+  )
+  .then(upload => {
+    return client
+      .then(environment =>
+        environment.createAsset({
+          fields: {
+            title: {
+              is: "Logo",
+            },
+            description: {
+              is: "Logo for Firstahjalp",
+            },
+            file: {
+              is: {
+                fileName: "logo.svg",
+                contentType: "image/svg",
+                uploadFrom: {
+                  sys: {
+                    type: "Link",
+                    linkType: "Upload",
+                    id: upload.sys.id,
+                  },
+                },
+              },
+            },
+          },
+        })
+      )
+      .then(asset => {
+        return asset.processForAllLocales()
+      })
+      .then(asset => {
+        asset.publish()
+        logoID = asset.sys.id
+        createSiteSettings(client)
+      })
+      .then(res => console.log("Image uploaded."))
+      .catch(console.error)
+  })
 
 client
   .then(async environment => {
@@ -75,7 +123,6 @@ client
         })
       )
       .then(asset => {
-        featuredImageID = asset.sys.id
         return asset.processForAllLocales()
       })
       .then(asset => asset.publish())
@@ -86,6 +133,7 @@ client
     createBlogposts(client)
     createCategories(client)
     createPages(client)
+    // createSiteSettings(client)
   })
 
 // BLOG POSTS
@@ -188,21 +236,25 @@ const createBlogposts = client => {
             },
           },
           categories: {
-            is: {
-              sys: {
-                id: "cat1",
-                linkType: "Entry",
-                type: "Link",
-              }
-            },
-            en: {
-              sys: {
-                id: "cat1",
-                linkType: "Entry",
-                type: "Link",
-              }
-            },
-          }
+            is: [
+              {
+                sys: {
+                  id: "cat1",
+                  linkType: "Entry",
+                  type: "Link",
+                },
+              },
+            ],
+            en: [
+              {
+                sys: {
+                  id: "cat1",
+                  linkType: "Entry",
+                  type: "Link",
+                },
+              },
+            ],
+          },
           tags: {
             is: ["spínat", "grænmeti", "eitrað"],
             en: ["spinach", "vegetable", "venomous"],
@@ -350,7 +402,7 @@ function createPages(client) {
         fields: {
           slug: {
             is: "um-okkur",
-            en:"about-us",
+            en: "about-us",
           },
           title: {
             is: "Um okkur",
@@ -426,3 +478,74 @@ client
   .then(entry => entry.publish())
   .then(res => console.log("Translations published"))
   .catch(console.error)
+
+// SITE SETTINGS
+
+function createSiteSettings(client) {
+  client
+    .then(environment =>
+      environment.createEntryWithId("siteSettings", v4(), {
+        fields: {
+          siteName: {
+            is: "Fyrstahjalp",
+          },
+          author: {
+            is: "Mr Moumou",
+          },
+          address: {
+            is: "Somewhere in Reykjavik, Iceland",
+          },
+          phoneNumber: {
+            is: "+0100100110001001001",
+          },
+          email: {
+            is: "helpmepls@omg-help-me-build-this-site.whatever.lol.com",
+          },
+          facebookLink: {
+            is: "facebook.com",
+          },
+          twitterLink: {
+            is: "twitter.com",
+          },
+          instagramLink: {
+            is: "instagram.com",
+          },
+          logo: {
+            is: {
+              sys: {
+                id: logoID,
+                linkType: "Asset",
+                type: "Link",
+              },
+            },
+            en: {
+              sys: {
+                id: logoID,
+                linkType: "Asset",
+                type: "Link",
+              },
+            },
+          },
+          defaultImage: {
+            is: {
+              sys: {
+                id: logoID,
+                linkType: "Asset",
+                type: "Link",
+              },
+            },
+            en: {
+              sys: {
+                id: logoID,
+                linkType: "Asset",
+                type: "Link",
+              },
+            },
+          },
+        },
+      })
+    )
+    .then(entry => entry.publish())
+    .then(res => console.log("Page published"))
+    .catch(console.error)
+}

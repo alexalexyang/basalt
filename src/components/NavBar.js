@@ -3,6 +3,7 @@ import { useStaticQuery, graphql } from "gatsby"
 import { Link } from "gatsby"
 import Search from "./Search"
 import LocaleSwitcher from "./LocaleSwitcher"
+import logo from "../images/logo.svg"
 
 function NavBar() {
   const data = useStaticQuery(graphql`
@@ -11,6 +12,7 @@ function NavBar() {
         defaultLocale
         locales
         translations
+        siteSettings
       }
       allContentfulPage {
         nodes {
@@ -26,9 +28,11 @@ function NavBar() {
   `)
 
   const {
-    site: { defaultLocale, locales, translations },
+    site: { defaultLocale, locales, translations, siteSettings },
     allContentfulPage,
   } = data
+
+  console.log(siteSettings)
 
   const getCurrentLocale = () => {
     const pathname =
@@ -82,11 +86,12 @@ function NavBar() {
       <div className="navbar-brand">
         <Link className="navbar-item" to={currentLocale}>
           <img
-            src="https://bulma.io/images/bulma-logo.png"
+            src={logo}
             width="112"
             height="28"
-            alt="Bulma logo."
-          />
+            alt={`${siteSettings.siteName[defaultLocale.code]} logo.`}
+          />{" "}
+          {siteSettings.siteName[defaultLocale.code]}
         </Link>
 
         <span

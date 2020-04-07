@@ -1,8 +1,11 @@
 # To do
 
-- Upload logo, also use as tab icon
-- Write docs
+- Add logo from images dir to graphql and use in img sharp?
+  - Upload logo using fixtures, also use as tab icon
+- Add featured image to contentful categories in fixtures, check them on blogposts and pages
+- Social media buttons
 - Prettify things
+- Write docs
 - Set up new Contentful account and everything
 - Live tests
 

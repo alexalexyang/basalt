@@ -1,6 +1,8 @@
 const path = require("path")
 const contentful = require("contentful")
 const { GraphQLString, GraphQLJSON } = require("gatsby/graphql")
+const http = require("http")
+const fs = require("fs")
 
 const ContentfulClient = contentful.createClient({
   space: process.env.GATSBY_CONTENTFUL_SPACE_ID,
@@ -20,7 +22,6 @@ ContentfulClient.getLocales().then(data => {
 })
 
 let translations = {}
-let transCategories = ""
 let transCategory = ""
 ContentfulClient.getEntries({
   content_type: "translations",
@@ -28,8 +29,30 @@ ContentfulClient.getEntries({
 })
   .then(data => {
     translations = data.items[0].fields
-    transCategories = translations.categories[defaultLocale.code]
     transCategory = translations.category[defaultLocale.code]
+  })
+  .catch(console.error)
+
+let siteSettings = {}
+ContentfulClient.getEntries({
+  content_type: "siteSettings",
+  locale: "*",
+})
+  .then(data => {
+    items = data.items[0].fields
+    siteSettings = items
+    return items.logo[defaultLocale.code].sys.id
+  })
+  .then(logoID => {
+    ContentfulClient.getAsset(logoID)
+      .then(asset => {
+        console.log("LOGO: ", asset)
+        const file = fs.createWriteStream("src/images/logo.svg")
+        http.get(`http:${asset.fields.file.url}`, response =>
+          response.pipe(file)
+        )
+      })
+      .catch(console.error)
   })
   .catch(console.error)
 
@@ -376,6 +399,13 @@ exports.setFieldsOnGraphQLNodeType = ({ type }) => {
         args: {},
         resolve: (source, fieldArgs) => {
           return translations
+        },
+      },
+      siteSettings: {
+        type: GraphQLJSON,
+        args: {},
+        resolve: (source, fieldArgs) => {
+          return siteSettings
         },
       },
     }

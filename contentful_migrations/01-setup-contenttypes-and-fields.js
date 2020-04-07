@@ -12,7 +12,7 @@ module.exports = (migration, context) => {
     .type("Symbol")
     .validations([{ unique: true }])
     .required(false)
-    .localized(false)
+    .localized(true)
 
   blogPost
     .createField("author")
@@ -86,7 +86,7 @@ module.exports = (migration, context) => {
     .type("Symbol")
     .validations([{ unique: true }])
     .required(false)
-    .localized(false)
+    .localized(true)
 
   category
     .createField("title")
@@ -124,7 +124,7 @@ module.exports = (migration, context) => {
     .type("Symbol")
     .validations([{ unique: true }])
     .required(false)
-    .localized(false)
+    .localized(true)
 
   page
     .createField("title")
@@ -157,11 +157,18 @@ module.exports = (migration, context) => {
     .displayField("siteName")
 
   siteSettings
+    .createField("logo")
+    .name("Logo")
+    .type("Link")
+    .linkType("Asset")
+    .required(false)
+
+  siteSettings
     .createField("siteName")
     .name("Site name")
     .type("Symbol")
     .required(false)
-    .localized(true)
+    .localized(false)
 
   siteSettings
     .createField("author")
@@ -219,7 +226,7 @@ module.exports = (migration, context) => {
     .createContentType("translations")
     .name("Translations")
     .description("Translations model")
-    .displayField("translations")
+    .displayField("languages")
 
   translations
     .createField("blog")
