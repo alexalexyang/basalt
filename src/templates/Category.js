@@ -21,9 +21,11 @@ function Categories({ pageContext: { locale, category, translations } }) {
               __html: category.description.childMarkdownRemark.html,
             }}
           ></article>
-          <div className="container featuredImage">
-            <Img fluid={category.featuredImage.fluid} />
-          </div>
+          {category.featuredImage ? (
+            <div className="container featuredImage">
+              <Img fluid={category.featuredImage.fluid} />
+            </div>
+          ) : null}
         </div>
         {category.blog_post ? (
           <div className="container">

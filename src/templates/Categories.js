@@ -26,7 +26,7 @@ function Categories({
         <div className="container">
           {categories.map(cat => (
             <div className="card" key={cat.contentful_id}>
-              {post.featuredImage ? (
+              {cat.featuredImage ? (
                 <div className="container featuredImage">
                   <Img fluid={cat.featuredImage.fluid} />
                 </div>
