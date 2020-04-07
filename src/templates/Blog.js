@@ -23,9 +23,11 @@ function Blog({
         <div className="section" key={post.contentful_id}>
           <div className="container">
             <div className="blog-blogpost">
-              <div className="blog-blogpost-item featuredImage">
-                <Img fluid={post.featuredImage.fluid} />
-              </div>
+              {post.featuredImage ? (
+                <div className="blog-blogpost-item featuredImage">
+                  <Img fluid={post.featuredImage.fluid} />
+                </div>
+              ) : null}
               <div className="blog-blogpost-item">
                 <article className="content">
                   <Link to={post.fields.slug} className="title">

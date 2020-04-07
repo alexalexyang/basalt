@@ -42,7 +42,7 @@ ContentfulClient.getEntries({
     items = data.items[0].fields
     // delete items.defaultImage
     // delete items.logo
-    console.log(items)
+    console.log("ITEMS: ", items)
     siteSettings = items
     return items.logo[defaultLocale.code].sys.id
   })
