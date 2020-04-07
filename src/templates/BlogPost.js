@@ -19,9 +19,11 @@ function BlogPost({ pageContext: { locale, post, translations } }) {
                 .
               </p>
             </article>
-            <div className="container featuredImage">
-              <Img fluid={post.featuredImage.fluid} />
-            </div>
+            {post.featuredImage.fluid ? (
+              <div className="container featuredImage">
+                <Img fluid={post.featuredImage.fluid} />
+              </div>
+            ) : null}
             <article
               className="content"
               dangerouslySetInnerHTML={{

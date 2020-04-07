@@ -402,13 +402,13 @@ exports.setFieldsOnGraphQLNodeType = ({ type }) => {
           return translations
         },
       },
-      // siteSettings: {
-      //   type: GraphQLJSON,
-      //   args: {},
-      //   resolve: (source, fieldArgs) => {
-      //     return siteSettings
-      //   },
-      // },
+      siteSettings: {
+        type: GraphQLJSON,
+        args: {},
+        resolve: (source, fieldArgs) => {
+          return siteSettings
+        },
+      },
     }
   }
   return {}

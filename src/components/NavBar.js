@@ -12,7 +12,7 @@ function NavBar() {
         defaultLocale
         locales
         translations
-        # siteSettings
+        siteSettings
       }
       allContentfulPage {
         nodes {
@@ -28,11 +28,11 @@ function NavBar() {
   `)
 
   const {
-    site: { defaultLocale, locales, translations },
+    site: { defaultLocale, locales, translations, siteSettings },
     allContentfulPage,
   } = data
 
-  // console.log(siteSettings)
+  console.log(siteSettings)
 
   const getCurrentLocale = () => {
     const pathname =
@@ -84,7 +84,7 @@ function NavBar() {
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
-        {/* <Link className="navbar-item" to={currentLocale}>
+        <Link className="navbar-item" to={currentLocale}>
           <img
             src={logo}
             width="112"
@@ -92,7 +92,7 @@ function NavBar() {
             alt={`${siteSettings.siteName[defaultLocale.code]} logo.`}
           />{" "}
           {siteSettings.siteName[defaultLocale.code]}
-        </Link> */}
+        </Link>
 
         <span
           className="navbar-burger burger"
