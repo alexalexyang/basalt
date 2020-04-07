@@ -1,7 +1,6 @@
 # To do
 
-- Add logo from images dir to graphql and use in img sharp?
-  - Upload logo using fixtures, also use as tab icon
+- Use logo as tab icon
 - Add featured image to contentful categories in fixtures, check them on blogposts and pages
 - Social media buttons
 - Prettify things
