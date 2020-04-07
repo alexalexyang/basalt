@@ -12,6 +12,7 @@ function NavBar() {
         defaultLocale
         locales
         translations
+        siteSettings
       }
       allContentfulPage {
         nodes {
@@ -27,9 +28,11 @@ function NavBar() {
   `)
 
   const {
-    site: { defaultLocale, locales, translations },
+    site: { defaultLocale, locales, translations, siteSettings },
     allContentfulPage,
   } = data
+
+  console.log(siteSettings)
 
   const getCurrentLocale = () => {
     const pathname =
