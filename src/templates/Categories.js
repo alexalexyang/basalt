@@ -26,9 +26,11 @@ function Categories({
         <div className="container">
           {categories.map(cat => (
             <div className="card" key={cat.contentful_id}>
-              <div className="container featuredImage">
-                <Img fluid={cat.featuredImage.fluid} />
-              </div>
+              {post.featuredImage ? (
+                <div className="container featuredImage">
+                  <Img fluid={cat.featuredImage.fluid} />
+                </div>
+              ) : null}
               <div className="container">
                 <h2 className="title">
                   <Link to={cat.fields.slug}>{cat.title}</Link>
