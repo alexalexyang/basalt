@@ -40,13 +40,14 @@ ContentfulClient.getEntries({
 })
   .then(data => {
     items = data.items[0].fields
+    delete items.defaultImage
+    delete items.logo
     siteSettings = items
     return items.logo[defaultLocale.code].sys.id
   })
   .then(logoID => {
     ContentfulClient.getAsset(logoID)
       .then(asset => {
-        console.log("LOGO: ", asset)
         const file = fs.createWriteStream("src/images/logo.svg")
         http.get(`http:${asset.fields.file.url}`, response =>
           response.pipe(file)
