@@ -407,7 +407,7 @@ exports.setFieldsOnGraphQLNodeType = ({ type }) => {
         type: GraphQLJSON,
         args: {},
         resolve: (source, fieldArgs) => {
-          return { whatever: "just a test" }
+          return siteSettings
         },
       },
     }
