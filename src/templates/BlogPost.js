@@ -19,7 +19,7 @@ function BlogPost({ pageContext: { locale, post, translations } }) {
                 .
               </p>
             </article>
-            {post.featuredImage.fluid ? (
+            {post.featuredImage ? (
               <div className="container featuredImage">
                 <Img fluid={post.featuredImage.fluid} />
               </div>
