@@ -32,8 +32,6 @@ function NavBar() {
     allContentfulPage,
   } = data
 
-  console.log(siteSettings)
-
   const getCurrentLocale = () => {
     const pathname =
       typeof window !== "undefined" &&
@@ -85,7 +83,8 @@ function NavBar() {
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
         <Link className="navbar-item" to={currentLocale}>
-          <img src={logo} width="112" height="28" alt="Bulma logo." />
+          <img src={logo} width="112" height="28" alt="Bulma logo." />{" "}
+          <h1 className="title">{siteSettings.siteName[defaultLocale.code]}</h1>
         </Link>
 
         <span
