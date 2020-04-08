@@ -1,5 +1,6 @@
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
+import FooterItem from "./FooterItem"
 
 function Footer() {
   const {
@@ -26,26 +27,62 @@ function Footer() {
         <div className="level-right">
           <article className="level-item">
             <div>
-              <h3 className="heading">
-                {siteSettings.siteName[defaultLocale.code]}
-              </h3>
+              <FooterItem
+                siteSettings={siteSettings}
+                item={"siteName"}
+                locale={defaultLocale.code}
+                htmlTag="h3"
+              />
               <ul>
-                <li>{siteSettings.facebookLink[defaultLocale.code]}</li>
-                <li>{siteSettings.twitterLink[defaultLocale.code]}</li>
-                <li>{siteSettings.instagramLink[defaultLocale.code]}</li>
+                <FooterItem
+                  siteSettings={siteSettings}
+                  item={"facebookLink"}
+                  locale={defaultLocale.code}
+                  htmlTag="li"
+                />
+                <FooterItem
+                  siteSettings={siteSettings}
+                  item={"twitterLink"}
+                  locale={defaultLocale.code}
+                  htmlTag="li"
+                />
+                <FooterItem
+                  siteSettings={siteSettings}
+                  item={"instagramLink"}
+                  locale={defaultLocale.code}
+                  htmlTag="li"
+                />
               </ul>
             </div>
           </article>
           <article className="level-item">
             <div>
-              <h3 className="heading">
-                {siteSettings.siteName[defaultLocale.code]}
-              </h3>
+              <FooterItem
+                siteSettings={siteSettings}
+                item={"siteName"}
+                locale={defaultLocale.code}
+                htmlTag="h3"
+              />
               <p>
                 <ul>
-                  <li>{siteSettings.email[defaultLocale.code]}</li>
-                  <li>{siteSettings.phoneNumber[defaultLocale.code]}</li>
-                  <li>{siteSettings.address[defaultLocale.code]}</li>
+                  <FooterItem
+                    siteSettings={siteSettings}
+                    item={"email"}
+                    locale={defaultLocale.code}
+                    htmlTag="li"
+                  />
+                  <FooterItem
+                    siteSettings={siteSettings}
+                    item={"phoneNumber"}
+                    locale={defaultLocale.code}
+                    htmlTag="li"
+                  />
+                  <FooterItem
+                    siteSettings={siteSettings}
+                    item={"address"}
+                    locale={defaultLocale.code}
+                    htmlTag="li"
+                  />
                 </ul>
               </p>
             </div>

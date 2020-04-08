@@ -1,13 +1,11 @@
 # To do
 
-- Add "social media", "address", "email", and "phone number" to translations
-- Use logo as tab icon
-  - Use some svg from monster to check if size is an issue
-- Social media buttons
+- Get logo.svg from Daniel
+- Social media icon buttons
 - Prettify things
-- Write docs
 - Set up new Contentful account and everything
 - Live tests
+- Write docs
 
 # To consider
 

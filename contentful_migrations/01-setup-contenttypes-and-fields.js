@@ -276,4 +276,32 @@ module.exports = (migration, context) => {
     .type("Symbol")
     .required(true)
     .localized(true)
+
+  translations
+    .createField("address")
+    .name("Address")
+    .type("Symbol")
+    .required(true)
+    .localized(true)
+
+  translations
+    .createField("socialMedia")
+    .name("Social media")
+    .type("Symbol")
+    .required(true)
+    .localized(true)
+
+  translations
+    .createField("email")
+    .name("Email")
+    .type("Symbol")
+    .required(true)
+    .localized(true)
+
+  translations
+    .createField("phoneNumber")
+    .name("Phone number")
+    .type("Symbol")
+    .required(true)
+    .localized(true)
 }
