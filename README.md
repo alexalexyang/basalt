@@ -1,7 +1,7 @@
 # To do
 
 - Use logo as tab icon
-- Add featured image to contentful categories in fixtures, check them on blogposts and pages
+  - Use some svg from monster to check if size is an issue
 - Social media buttons
 - Prettify things
 - Write docs
