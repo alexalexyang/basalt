@@ -1,5 +1,6 @@
 # To do
 
+- Add "social media", "address", "email", and "phone number" to translations
 - Use logo as tab icon
   - Use some svg from monster to check if size is an issue
 - Social media buttons
