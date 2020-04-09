@@ -1,7 +1,5 @@
 # To do
 
-- Place getCurrentLocale into its own utils file?
-- Change social media icons and get more icons for home, email, etc?
 - Prettify things
 - Set up new Contentful account and everything
 - Live tests

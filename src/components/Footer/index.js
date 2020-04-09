@@ -1,10 +1,12 @@
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
-import SocialMediaSection from "./SocialMediaSection"
+import SocialMedia from "./SocialMedia"
+import OrgDetails from "./OrgDetails"
+import { getCurrentLocale } from "../utils"
 
 function Footer() {
   const {
-    site: { defaultLocale, siteSettings },
+    site: { defaultLocale },
   } = useStaticQuery(graphql`
     query {
       site {
@@ -13,13 +15,6 @@ function Footer() {
       }
     }
   `)
-
-  const getCurrentLocale = () => {
-    const pathname =
-      typeof window !== "undefined" &&
-      window.location.pathname.match(/^\/\w\w\/|^\/\w\w$/)
-    return pathname ? pathname[0].match(/\w\w/)[0] : ""
-  }
 
   const currentLocale =
     getCurrentLocale() === "" ? defaultLocale.code : getCurrentLocale()
@@ -36,31 +31,10 @@ function Footer() {
         </div>
         <div className="level-right">
           <article className="level-item">
-            <SocialMediaSection />
+            <SocialMedia />
           </article>
           <article className="level-item">
-            <div>
-              {siteSettings.siteName[defaultLocale.code] ? (
-                <h3 className="title">
-                  {siteSettings.siteName[defaultLocale.code]}
-                </h3>
-              ) : null}
-              <ul>
-                {siteSettings.email[defaultLocale.code] ? (
-                  <li className="">{siteSettings.email[defaultLocale.code]}</li>
-                ) : null}
-                {siteSettings.phoneNumber[defaultLocale.code] ? (
-                  <li className="">
-                    {siteSettings.phoneNumber[defaultLocale.code]}
-                  </li>
-                ) : null}
-                {siteSettings.address[defaultLocale.code] ? (
-                  <li className="">
-                    {siteSettings.address[defaultLocale.code]}
-                  </li>
-                ) : null}
-              </ul>
-            </div>
+            <OrgDetails />
           </article>
         </div>
       </div>

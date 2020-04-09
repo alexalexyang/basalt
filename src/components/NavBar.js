@@ -5,6 +5,8 @@ import Search from "./Search"
 import LocaleSwitcher from "./LocaleSwitcher"
 import logo from "../images/logo.svg"
 
+import { getCurrentLocale } from "./utils"
+
 function NavBar() {
   const data = useStaticQuery(graphql`
     query {
@@ -31,13 +33,6 @@ function NavBar() {
     site: { defaultLocale, locales, translations, siteSettings },
     allContentfulPage,
   } = data
-
-  const getCurrentLocale = () => {
-    const pathname =
-      typeof window !== "undefined" &&
-      window.location.pathname.match(/^\/\w\w\/|^\/\w\w$/)
-    return pathname ? pathname[0].match(/\w\w/)[0] : ""
-  }
 
   const currentLocale = getCurrentLocale()
 

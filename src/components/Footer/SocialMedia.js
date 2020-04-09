@@ -5,7 +5,7 @@ import facebook from "../../images/socialMedia/facebook.svg"
 import twitter from "../../images/socialMedia/twitter.svg"
 import instagram from "../../images/socialMedia/instagram.svg"
 
-function SocialMediaSection() {
+function SocialMedia() {
   const {
     site: { defaultLocale, siteSettings },
   } = useStaticQuery(graphql`
@@ -13,6 +13,7 @@ function SocialMediaSection() {
       site {
         defaultLocale
         siteSettings
+        translations
       }
     }
   `)
@@ -69,4 +70,4 @@ function SocialMediaSection() {
   )
 }
 
-export default SocialMediaSection
+export default SocialMedia
