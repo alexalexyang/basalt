@@ -271,6 +271,13 @@ module.exports = (migration, context) => {
     .localized(true)
 
   translations
+    .createField("searchPlaceholder")
+    .name("Search placeholder")
+    .type("Symbol")
+    .required(true)
+    .localized(true)
+
+  translations
     .createField("noSearchResults")
     .name("No search results")
     .type("Symbol")
@@ -301,6 +308,13 @@ module.exports = (migration, context) => {
   translations
     .createField("phoneNumber")
     .name("Phone number")
+    .type("Symbol")
+    .required(true)
+    .localized(true)
+
+  translations
+    .createField("sourceCode")
+    .name("Source code")
     .type("Symbol")
     .required(true)
     .localized(true)

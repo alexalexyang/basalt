@@ -11933,4 +11933,51 @@ label.panel-block:hover {
 .blog-blogpost-item {
   padding: 5px;
 }
+
+body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+footer {
+  background-color: #aa0000;
+  color: white;
+}
+
+footer .title {
+  color: white;
+}
+
+footer a {
+  color: white;
+}
+
+footer a:hover {
+  color: lightgrey;
+}
+
+.level {
+  -webkit-box-align: normal;
+      -ms-flex-align: normal;
+          align-items: normal;
+}
+
+.level-item {
+  height: 100%;
+}
+
+.level-item .title {
+  margin-bottom: 5px;
+}
+
+.footer-item {
+  height: 100%;
+}
+
+.footer-item li {
+  margin-bottom: 5px;
+}
 /*# sourceMappingURL=style.css.map */

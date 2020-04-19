@@ -1,6 +1,7 @@
 # To do
 
-- Prettify things
+- Add images to page, blogpost, category in fixtures
+- Add translations to footer
 - Set up new Contentful account and everything
 - Live tests
 - Write docs

@@ -445,32 +445,56 @@ client
     environment.createEntryWithId("translations", v4(), {
       fields: {
         blog: {
-          is: "blogg",
-          en: "blog",
+          is: "Blogg",
+          en: "Blog",
         },
         writtenByAuthorOnDate: {
           is: "Skrifað af %AUTHOR% þann %DATE%",
           en: "Written by %AUTHOR% on %DATE%",
         },
         categories: {
-          is: "flokkar",
-          en: "categories",
+          is: "Flokkar",
+          en: "Categories",
         },
         category: {
-          is: "flokkur",
-          en: "category",
+          is: "Flokkur",
+          en: "Category",
         },
         tags: {
-          is: "merki",
-          en: "tags",
+          is: "Merki",
+          en: "Tags",
         },
         languages: {
           is: "Tungumál",
           en: "Languages",
         },
+        searchPlaceholder: {
+          is: "Leit?",
+          en: "Search?",
+        },
         noSearchResults: {
           is: "Því miður fundust engar niðurstöður.",
           en: "Sorry, no results found.",
+        },
+        email: {
+          is: "Email",
+          en: "Email",
+        },
+        address: {
+          is: "Heimilisfang",
+          en: "Address",
+        },
+        phoneNumber: {
+          is: "Tel.",
+          en: "Tel.",
+        },
+        sourceCode: {
+          is: "Frumkóða",
+          en: "Source code",
+        },
+        socialMedia: {
+          is: "samfélagsmiðla",
+          en: "Social media",
         },
       },
     })
@@ -499,7 +523,7 @@ function createSiteSettings(client) {
             is: "+0100100110001001001",
           },
           email: {
-            is: "helpmepls@omg-help-me-build-this-site.whatever.lol.com",
+            is: "helpmepls@omglol.com",
           },
           facebookLink: {
             is: "facebook.com",

@@ -19,10 +19,10 @@ function OrgDetails() {
       ? true
       : false
 
-  return (
-    <>
-      {display ? (
-        <div>
+  if (display) {
+    return (
+      <article className="level-item">
+        <div className="footer-item">
           {siteSettings.siteName[defaultLocale.code] ? (
             <h3 className="title">
               {siteSettings.siteName[defaultLocale.code]}
@@ -30,7 +30,11 @@ function OrgDetails() {
           ) : null}
           <ul>
             {siteSettings.email[defaultLocale.code] ? (
-              <li className="">{siteSettings.email[defaultLocale.code]}</li>
+              <li className="">
+                <a href={`mailto:${siteSettings.email[defaultLocale.code]}`}>
+                  {siteSettings.email[defaultLocale.code]}
+                </a>
+              </li>
             ) : null}
             {siteSettings.phoneNumber[defaultLocale.code] ? (
               <li className="">
@@ -42,9 +46,11 @@ function OrgDetails() {
             ) : null}
           </ul>
         </div>
-      ) : null}
-    </>
-  )
+      </article>
+    )
+  }
+
+  return null
 }
 
 export default OrgDetails

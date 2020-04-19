@@ -6,12 +6,13 @@ import { getCurrentLocale } from "../utils"
 
 function Footer() {
   const {
-    site: { defaultLocale },
+    site: { defaultLocale, siteSettings },
   } = useStaticQuery(graphql`
     query {
       site {
         defaultLocale
         siteSettings
+        translations
       }
     }
   `)
@@ -19,23 +20,26 @@ function Footer() {
   const currentLocale =
     getCurrentLocale() === "" ? defaultLocale.code : getCurrentLocale()
 
-  console.log("CURRENT LOCALE: ", currentLocale)
-
   return (
     <footer className="section">
-      <div className="container">
+      <div className="level">
         <div className="level-left">
-          <div className="level-item">
-            <a href="https://github.com/alexalexyang/basalt">Source code</a>
-          </div>
+          <article className="level-item">
+            <div className="footer-item">
+              {siteSettings.siteName[defaultLocale.code] ? (
+                <h3 className="title">
+                  {siteSettings.siteName[defaultLocale.code]}
+                </h3>
+              ) : null}
+              <p>
+                <a href="https://github.com/alexalexyang/basalt">Source code</a>
+              </p>
+            </div>
+          </article>
         </div>
         <div className="level-right">
-          <article className="level-item">
-            <SocialMedia />
-          </article>
-          <article className="level-item">
-            <OrgDetails />
-          </article>
+          <SocialMedia />
+          <OrgDetails />
         </div>
       </div>
     </footer>

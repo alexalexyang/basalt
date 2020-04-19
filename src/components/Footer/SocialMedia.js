@@ -17,12 +17,18 @@ function SocialMedia() {
       }
     }
   `)
-  return (
-    <>
-      {siteSettings.facebookLink ||
-      siteSettings.twitterLink ||
-      siteSettings.instagramLink ? (
-        <div>
+
+  const display =
+    siteSettings.facebookLink ||
+    siteSettings.twitterLink ||
+    siteSettings.instagramLink
+      ? true
+      : false
+
+  if (display) {
+    return (
+      <article className="level-item">
+        <div className="footer-item">
           {siteSettings.siteName[defaultLocale.code] ? (
             <h3 className="title">
               {siteSettings.siteName[defaultLocale.code]}
@@ -32,12 +38,7 @@ function SocialMedia() {
             {siteSettings.facebookLink[defaultLocale.code] ? (
               <li className="">
                 <a href={siteSettings.facebookLink[defaultLocale.code]}>
-                  <img
-                    src={facebook}
-                    width="13"
-                    height="13"
-                    alt="Bulma logo."
-                  />{" "}
+                  <img src={facebook} width="13" height="13" alt="Facebook" />{" "}
                   Facebook
                 </a>
               </li>
@@ -45,7 +46,7 @@ function SocialMedia() {
             {siteSettings.twitterLink[defaultLocale.code] ? (
               <li className="">
                 <a href={siteSettings.twitterLink[defaultLocale.code]}>
-                  <img src={twitter} width="13" height="13" alt="Bulma logo." />{" "}
+                  <img src={twitter} width="13" height="13" alt="Twitter" />{" "}
                   Twitter
                 </a>
               </li>
@@ -53,21 +54,18 @@ function SocialMedia() {
             {siteSettings.instagramLink[defaultLocale.code] ? (
               <li className="">
                 <a href={siteSettings.instagramLink[defaultLocale.code]}>
-                  <img
-                    src={instagram}
-                    width="13"
-                    height="13"
-                    alt="Bulma logo."
-                  />{" "}
+                  <img src={instagram} width="13" height="13" alt="Instagram" />{" "}
                   Instagram
                 </a>
               </li>
             ) : null}
           </ul>
         </div>
-      ) : null}
-    </>
-  )
+      </article>
+    )
+  }
+
+  return null
 }
 
 export default SocialMedia

@@ -12,7 +12,7 @@
 }
 
 .search-box {
-  width: 200px;
+  width: 150px;
 }
 
 .featuredImage {
@@ -31,4 +31,42 @@
 
 .blog-blogpost-item {
   padding: 5px;
+}
+
+body {
+  display: flex;
+  justify-content: space-around;
+}
+
+footer {
+  background-color: rgb(170, 0, 0);
+  color: white;
+
+  .title {
+    color: white;
+  }
+  a {
+    color: white;
+  }
+  a:hover {
+    color: lightgrey;
+  }
+}
+
+.level {
+  align-items: normal;
+}
+
+.level-item {
+  height: 100%;
+  .title {
+    margin-bottom: 5px;
+  }
+}
+
+.footer-item {
+  height: 100%;
+  li {
+    margin-bottom: 5px;
+  }
 }
