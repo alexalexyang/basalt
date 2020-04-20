@@ -11908,7 +11908,7 @@ label.panel-block:hover {
 }
 
 .search-box {
-  width: 200px;
+  width: 150px;
 }
 
 .featuredImage {
@@ -11949,6 +11949,7 @@ footer {
 
 footer .title {
   color: white;
+  font-size: 110%;
 }
 
 footer a {

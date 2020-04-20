@@ -1,9 +1,9 @@
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 
-function OrgDetails() {
+function OrgDetails({translationLocale}) {
   const {
-    site: { defaultLocale, siteSettings },
+    site: { defaultLocale, siteSettings, translations },
   } = useStaticQuery(graphql`
     query {
       site {
@@ -23,9 +23,9 @@ function OrgDetails() {
     return (
       <article className="level-item">
         <div className="footer-item">
-          {siteSettings.siteName[defaultLocale.code] ? (
+          {translations.contactDetails[translationLocale] ? (
             <h3 className="title">
-              {siteSettings.siteName[defaultLocale.code]}
+              {translations.contactDetails[translationLocale]}
             </h3>
           ) : null}
           <ul>

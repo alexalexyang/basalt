@@ -1,5 +1,7 @@
-// BLOG POSTS
-export const createBlogposts = client => {
+const { v4 } = require("uuid")
+
+const createBlogposts = (client, featuredImageID) => {
+  console.log("FEATURED IMAGE: ", featuredImageID)
   client
     .then(environment =>
       environment.createEntryWithId("blogPost", v4(), {
@@ -128,3 +130,5 @@ export const createBlogposts = client => {
     .then(res => console.log("Blogpost published"))
     .catch(console.error)
 }
+
+module.exports = { createBlogposts }

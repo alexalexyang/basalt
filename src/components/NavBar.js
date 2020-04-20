@@ -5,9 +5,7 @@ import Search from "./Search"
 import LocaleSwitcher from "./LocaleSwitcher"
 import logo from "../images/logo.svg"
 
-import { getCurrentLocale } from "./utils"
-
-function NavBar() {
+function NavBar({ currentLocale, translationLocale }) {
   const data = useStaticQuery(graphql`
     query {
       site {
@@ -33,13 +31,6 @@ function NavBar() {
     site: { defaultLocale, locales, translations, siteSettings },
     allContentfulPage,
   } = data
-
-  const currentLocale = getCurrentLocale()
-
-  const getTranslationLocale = () => {
-    const locale = currentLocale === "" ? defaultLocale.code : currentLocale
-    return locale
-  }
 
   const pages = () => {
     return currentLocale === ""
@@ -108,12 +99,12 @@ function NavBar() {
                 currentLocale === ""
                   ? `/${translations.blog[defaultLocale.code].toLowerCase()}`
                   : `/${currentLocale}/${translations.blog[
-                      getTranslationLocale()
+                      translationLocale
                     ].toLowerCase()}`
               }
               className="navbar-item"
             >
-              {translations.blog[getTranslationLocale()]}
+              {translations.blog[translationLocale]}
             </Link>
             <div className="navbar-dropdown">
               <Link
@@ -123,11 +114,11 @@ function NavBar() {
                         defaultLocale.code
                       ].toLowerCase()}`
                     : `/${currentLocale}/${translations.categories[
-                        getTranslationLocale()
+                        translationLocale
                       ].toLowerCase()}`
                 }
               >
-                {translations.categories[getTranslationLocale()]}
+                {translations.categories[translationLocale]}
               </Link>
             </div>
           </div>
@@ -135,7 +126,7 @@ function NavBar() {
           {locales ? (
             <div className="navbar-item has-dropdown is-hoverable">
               <Link to={`/`} className="navbar-link">
-                {translations.languages[getTranslationLocale()]}
+                {translations.languages[translationLocale]}
               </Link>
               <div className="navbar-dropdown">
                 <LocaleSwitcher
@@ -147,9 +138,7 @@ function NavBar() {
           ) : null}
           <div className="navbar-item">
             <Search
-              noSearchResults={
-                translations.noSearchResults[getTranslationLocale()]
-              }
+              noSearchResults={translations.noSearchResults[translationLocale]}
             />
           </div>
         </div>

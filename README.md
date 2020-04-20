@@ -1,7 +1,6 @@
 # To do
 
-- Add images to page, blogpost, category in fixtures...
-- Add translations to footer
+- Make images in same line with text in blog, categories
 - Set up new Contentful account and everything
 - Live tests
 - Write docs

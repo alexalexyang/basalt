@@ -5,9 +5,9 @@ import facebook from "../../images/socialMedia/facebook.svg"
 import twitter from "../../images/socialMedia/twitter.svg"
 import instagram from "../../images/socialMedia/instagram.svg"
 
-function SocialMedia() {
+function SocialMedia({ translationLocale }) {
   const {
-    site: { defaultLocale, siteSettings },
+    site: { defaultLocale, siteSettings, translations },
   } = useStaticQuery(graphql`
     query {
       site {
@@ -29,9 +29,9 @@ function SocialMedia() {
     return (
       <article className="level-item">
         <div className="footer-item">
-          {siteSettings.siteName[defaultLocale.code] ? (
+          {translations.socialMedia[translationLocale] ? (
             <h3 className="title">
-              {siteSettings.siteName[defaultLocale.code]}
+              {translations.socialMedia[translationLocale]}
             </h3>
           ) : null}
           <ul>

@@ -2,11 +2,10 @@ import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import SocialMedia from "./SocialMedia"
 import OrgDetails from "./OrgDetails"
-import { getCurrentLocale } from "../utils"
 
-function Footer() {
+function Footer({ translationLocale }) {
   const {
-    site: { defaultLocale, siteSettings },
+    site: { defaultLocale, siteSettings, translations },
   } = useStaticQuery(graphql`
     query {
       site {
@@ -17,29 +16,28 @@ function Footer() {
     }
   `)
 
-  const currentLocale =
-    getCurrentLocale() === "" ? defaultLocale.code : getCurrentLocale()
-
   return (
     <footer className="section">
       <div className="level">
         <div className="level-left">
           <article className="level-item">
             <div className="footer-item">
-              {siteSettings.siteName[defaultLocale.code] ? (
+              {translations.sourceCode[translationLocale] ? (
                 <h3 className="title">
-                  {siteSettings.siteName[defaultLocale.code]}
+                  {translations.sourceCode[translationLocale]}
                 </h3>
               ) : null}
               <p>
-                <a href="https://github.com/alexalexyang/basalt">Source code</a>
+                <a href={siteSettings.sourceCodeLink[defaultLocale.code]}>
+                  {translations.sourceCode[translationLocale]}
+                </a>
               </p>
             </div>
           </article>
         </div>
         <div className="level-right">
-          <SocialMedia />
-          <OrgDetails />
+          <SocialMedia translationLocale={translationLocale} />
+          <OrgDetails translationLocale={translationLocale} />
         </div>
       </div>
     </footer>

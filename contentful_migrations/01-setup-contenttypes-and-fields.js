@@ -214,11 +214,17 @@ module.exports = (migration, context) => {
 
   siteSettings
     .createField("defaultImage")
-    .name("Default Image")
+    .name("Default image")
     .type("Link")
     .linkType("Asset")
     .required(false)
     .localized(true)
+
+  siteSettings
+    .createField("sourceCodeLink")
+    .name("Source code link")
+    .type("Symbol")
+    .required(false)
 
   // TRANSLATIONS
 
@@ -266,6 +272,13 @@ module.exports = (migration, context) => {
   translations
     .createField("languages")
     .name("Languages")
+    .type("Symbol")
+    .required(true)
+    .localized(true)
+
+  translations
+    .createField("contactDetails")
+    .name("Contact details")
     .type("Symbol")
     .required(true)
     .localized(true)
