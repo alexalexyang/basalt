@@ -5,6 +5,8 @@ const { v4 } = require("uuid")
 require("dotenv").config()
 
 const { createBlogposts } = require("./blogposts")
+const { createSiteSettings } = require("./siteSettings")
+const { createTranslations } = require("./translations")
 
 const client = contentful
   .createClient({
@@ -15,7 +17,6 @@ const client = contentful
 
 // SAMPLE FEATURED IMAGES
 
-let logoID = ""
 let featuredImages = {}
 let featuredImageID = ""
 
@@ -59,8 +60,7 @@ client
       })
       .then(asset => {
         asset.publish()
-        logoID = asset.sys.id
-        createSiteSettings(client)
+        createSiteSettings(client, asset.sys.id)
       })
       .then(res => console.log("Image uploaded."))
       .catch(console.error)
@@ -312,145 +312,4 @@ function createPages(client) {
     .catch(console.error)
 }
 
-// TRANSLATIONS
-
-client
-  .then(environment =>
-    environment.createEntryWithId("translations", v4(), {
-      fields: {
-        blog: {
-          is: "Blogg",
-          en: "Blog",
-        },
-        writtenByAuthorOnDate: {
-          is: "Skrifað af %AUTHOR% þann %DATE%",
-          en: "Written by %AUTHOR% on %DATE%",
-        },
-        categories: {
-          is: "Flokkar",
-          en: "Categories",
-        },
-        category: {
-          is: "Flokkur",
-          en: "Category",
-        },
-        tags: {
-          is: "Merki",
-          en: "Tags",
-        },
-        languages: {
-          is: "Tungumál",
-          en: "Languages",
-        },
-        contactDetails: {
-          is: "Hafðu samband",
-          en: "Contact",
-        },
-        searchPlaceholder: {
-          is: "Leit?",
-          en: "Search?",
-        },
-        noSearchResults: {
-          is: "Því miður fundust engar niðurstöður.",
-          en: "Sorry, no results found.",
-        },
-        email: {
-          is: "Email",
-          en: "Email",
-        },
-        address: {
-          is: "Heimilisfang",
-          en: "Address",
-        },
-        phoneNumber: {
-          is: "Tel.",
-          en: "Tel.",
-        },
-        sourceCode: {
-          is: "Frumkóða",
-          en: "Source code",
-        },
-        socialMedia: {
-          is: "samfélagsmiðla",
-          en: "Social media",
-        },
-      },
-    })
-  )
-  .then(entry => entry.publish())
-  .then(res => console.log("Translations published"))
-  .catch(console.error)
-
-// SITE SETTINGS
-
-function createSiteSettings(client) {
-  client
-    .then(environment =>
-      environment.createEntryWithId("siteSettings", v4(), {
-        fields: {
-          siteName: {
-            is: "Fyrstahjalp",
-          },
-          author: {
-            is: "Mr Moumou",
-          },
-          address: {
-            is: "Somewhere in Reykjavik, Iceland",
-          },
-          phoneNumber: {
-            is: "+0100100110001001001",
-          },
-          email: {
-            is: "helpmepls@omglol.com",
-          },
-          facebookLink: {
-            is: "https://facebook.com",
-          },
-          twitterLink: {
-            is: "https://twitter.com",
-          },
-          instagramLink: {
-            is: "https://instagram.com",
-          },
-          logo: {
-            is: {
-              sys: {
-                id: logoID,
-                linkType: "Asset",
-                type: "Link",
-              },
-            },
-            en: {
-              sys: {
-                id: logoID,
-                linkType: "Asset",
-                type: "Link",
-              },
-            },
-          },
-          defaultImage: {
-            is: {
-              sys: {
-                id: logoID,
-                linkType: "Asset",
-                type: "Link",
-              },
-            },
-            en: {
-              sys: {
-                id: logoID,
-                linkType: "Asset",
-                type: "Link",
-              },
-            },
-          },
-          sourceCodeLink: {
-            is: "https://github.com/alexalexyang/basalt",
-          },
-        },
-      })
-    )
-    .then(entry => entry.publish())
-    .then(res => console.log("Page published"))
-    .catch(console.error)
-}
+createTranslations(client)
