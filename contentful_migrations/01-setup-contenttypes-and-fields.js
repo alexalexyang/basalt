@@ -104,6 +104,13 @@ module.exports = (migration, context) => {
     .localized(true)
 
   category
+    .createField("excerpt")
+    .name("Excerpt")
+    .type("Symbol")
+    .required(false)
+    .localized(true)
+
+  category
     .createField("description")
     .name("Description")
     .type("Text")
@@ -129,6 +136,13 @@ module.exports = (migration, context) => {
   page
     .createField("title")
     .name("Title")
+    .type("Symbol")
+    .required(false)
+    .localized(true)
+
+  page
+    .createField("excerpt")
+    .name("Excerpt")
     .type("Symbol")
     .required(false)
     .localized(true)
@@ -169,6 +183,13 @@ module.exports = (migration, context) => {
     .type("Symbol")
     .required(false)
     .localized(false)
+
+  siteSettings
+    .createField("siteDescription")
+    .name("Site description")
+    .type("Symbol")
+    .required(false)
+    .localized(true)
 
   siteSettings
     .createField("author")

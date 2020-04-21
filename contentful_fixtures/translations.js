@@ -54,11 +54,11 @@ const createTranslations = client => {
             en: "Tel.",
           },
           sourceCode: {
-            is: "Frumkóða",
+            is: "kóði",
             en: "Source code",
           },
           socialMedia: {
-            is: "samfélagsmiðla",
+            is: "Samfélagsmiðlar",
             en: "Social media",
           },
         },

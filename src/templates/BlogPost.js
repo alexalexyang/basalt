@@ -7,7 +7,11 @@ import Img from "gatsby-image"
 function BlogPost({ pageContext: { locale, post, translations } }) {
   return (
     <Layout>
-      <SEO title={`Blog | ${post.title}`} />
+      <SEO
+        title={`${translations.blog[locale]} | ${post.title}`}
+        description={post.excerpt}
+        locale={locale}
+      />
       <div key={post.contentful_id} className="section">
         <div className="container">
           <article className="content">
@@ -32,7 +36,7 @@ function BlogPost({ pageContext: { locale, post, translations } }) {
             ></article>
             {post.tags ? (
               <article className="content">
-                <h3>Tags:</h3>
+                <h3>{translations.tags[locale]}:</h3>
                 {post.tags.map(tag => (
                   <p key={tag}>{tag}</p>
                 ))}

@@ -18,7 +18,7 @@ function Categories({
 }) {
   return (
     <Layout>
-      <SEO title={translations.categories[locale]} />
+      <SEO title={translations.categories[locale]} locale={locale} />
       <div className="section">
         <div className="title">
           <h1>{translations.categories[locale]}</h1>

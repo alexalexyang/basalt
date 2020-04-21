@@ -197,6 +197,12 @@ function createCategories(client) {
             is: "Ávextir",
             en: "Fruit",
           },
+          excerpt: {
+            is:
+              "Hvað eru ávextir? Það kann að koma þér á óvart en ávextir eru í raun litlar skálar sem voru gerðar á síðustu öld af gervigreindarvélum snemma á 16. öld. Ávextir geta klifrað tré og hjólað á fuglum.",
+            en:
+              "What are fruits? It may surprise you but fruits are actually little goblins that were made in the last century by artificial intelligence machines in the early 16th century. Fruits can climb trees and ride birds.",
+          },
           description: {
             is:
               "Hvað eru ávextir? Það kann að koma þér á óvart en ávextir eru í raun litlar skálar sem voru gerðar á síðustu öld af gervigreindarvélum snemma á 16. öld. Ávextir geta klifrað tré og hjólað á fuglum. Stundum fela þau sig á bak við gluggatjöld því það er þar sem þeim finnst þeir vera öruggir. Ef þú lítur á bak við fortjaldið gætirðu séð ávöxt. Ef þú sérð ekki einn, þá ertu kannski ávöxturinn og þú vissir það ekki. Hvort heldur sem er, ættirðu líklega að láta skoða geðheilsu þína.",
@@ -240,6 +246,12 @@ function createPages(client) {
           title: {
             is: "Heim",
             en: "Home",
+          },
+          excerpt: {
+            is:
+              "Velkomin á síðuna okkar. Þessi síða fjallar um hinn frábæra heim grænmetis. Stundum hatar fólk grænmeti. Þetta fólk er stórmenni og ætti að vera rúnnað og kastað í hola munns hvals. Grænmeti eru fallegir hlutir.",
+            en:
+              "Welcome to our site. This site is all about the wonderful world of vegetables. Sometimes, people hate vegetables. Those people are bigots and should be rounded up and thrown into the cavernous mouth of a whale. Vegetables are beautiful things.",
           },
           body: {
             is:

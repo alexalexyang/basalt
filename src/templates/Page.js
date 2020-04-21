@@ -3,10 +3,18 @@ import React from "react"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
-const IndexPage = ({ pageContext: { page, defaultLocale, locale } }) => {
+const Page = ({
+  pageContext: { page, translations, defaultLocale, locale },
+}) => {
   return (
     <Layout>
-      <SEO title="Home" />
+      <SEO
+        title={page.title}
+        description={
+          page.excerpt ? page.excerpt : page.body.childMarkdownRemark.html
+        }
+        locale={locale}
+      />
       <div key={page.contentful_id} className="section">
         <div className="container">
           <h1 className="title">{page.title}</h1>
@@ -22,4 +30,4 @@ const IndexPage = ({ pageContext: { page, defaultLocale, locale } }) => {
   )
 }
 
-export default IndexPage
+export default Page

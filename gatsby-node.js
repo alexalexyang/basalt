@@ -196,6 +196,7 @@ exports.createPages = async ({ actions, graphql }) => {
             page,
             locale: locale.code,
             defaultLocale: defaultLocale.code,
+            translations,
           },
         })
       })
@@ -239,6 +240,7 @@ exports.createPages = async ({ actions, graphql }) => {
             numPages: bloglist.length,
             blogposts: postSlice,
             currentPage: i + 1,
+            translations,
           },
         })
       })
@@ -281,23 +283,12 @@ exports.createPages = async ({ actions, graphql }) => {
             numPages: categoriesList.length,
             categories: categorySlice,
             currentPage: i + 1,
+            translations,
           },
         })
       })
-      // Create page for tags.
     })
   })
-}
-
-const punctuation = /[`~!@#$%^&*()_+-={}\[\];:'",.<>\/?\\\|]/g
-
-const makeSlug = (slug, title) => {
-  return slug
-    ? slug
-    : `/${title
-        .replace(punctuation, "")
-        .replace(/\s/g, "-")
-        .toLowerCase()}`
 }
 
 exports.onCreateNode = ({ node, getNode, actions }) => {

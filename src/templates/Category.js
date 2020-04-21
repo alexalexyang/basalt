@@ -8,7 +8,11 @@ import Img from "gatsby-image"
 function Categories({ pageContext: { locale, category, translations } }) {
   return (
     <Layout>
-      <SEO title={translations.category[locale]} />
+      <SEO
+        title={translations.category[locale]}
+        description={translations.excerpt[locale]}
+        locale={locale}
+      />
       <div className="section">
         <div className="title">
           <h1>{translations.categories[locale]}</h1>

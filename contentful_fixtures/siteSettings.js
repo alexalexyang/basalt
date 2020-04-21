@@ -8,6 +8,10 @@ const createSiteSettings = (client, logoID) => {
           siteName: {
             is: "Fyrstahjalp",
           },
+          siteDescription: {
+            is: "Great site, love it.",
+            en: "Wonderful site.",
+          },
           author: {
             is: "Mr Moumou",
           },
