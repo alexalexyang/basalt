@@ -9,7 +9,7 @@ function BlogPost({ pageContext: { locale, post, translations } }) {
     <Layout>
       <SEO
         title={`${translations.blog[locale]} | ${post.title}`}
-        description={post.excerpt}
+        description={post.excerpt ? post.excerpt : null}
         locale={locale}
       />
       <div key={post.contentful_id} className="section">

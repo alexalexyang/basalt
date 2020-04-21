@@ -18,7 +18,7 @@ function Blog({
 }) {
   return (
     <Layout>
-      <SEO title={translations.blog[locale]} />
+      <SEO title={translations.blog[locale]} locale={locale} />
       {blogposts.map(post => (
         <div className="section" key={post.contentful_id}>
           <div className="container">
