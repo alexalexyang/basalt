@@ -61,6 +61,14 @@ const createTranslations = client => {
             is: "Samfélagsmiðlar",
             en: "Social media",
           },
+          pageNotFound: {
+            is: "síða ekki fundin",
+            en: "Page not found",
+          },
+          text404: {
+            is: "Því miður, síðan er ekki til.",
+            en: "Sorry, the page does not exist.",
+          },
         },
       })
     )

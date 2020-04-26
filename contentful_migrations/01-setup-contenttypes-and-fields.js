@@ -340,6 +340,20 @@ module.exports = (migration, context) => {
     .localized(true)
 
   translations
+    .createField("pageNotFound")
+    .name("Page not found")
+    .type("Symbol")
+    .required(true)
+    .localized(true)
+
+  translations
+    .createField("text404")
+    .name("404 text")
+    .type("Symbol")
+    .required(true)
+    .localized(true)
+
+  translations
     .createField("phoneNumber")
     .name("Phone number")
     .type("Symbol")

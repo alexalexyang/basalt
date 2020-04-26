@@ -44,7 +44,7 @@ function SEO({ description, meta, title, locale, socialMediaImage }) {
   const image = socialMediaImage
     ? `https:${socialMediaImage}`
     : `https:${defaultImage}`
-  console.log("META DESC: ", metaDescription)
+
   return (
     <Helmet
       htmlAttributes={{
@@ -56,10 +56,6 @@ function SEO({ description, meta, title, locale, socialMediaImage }) {
         {
           name: `description`,
           content: metaDescription,
-        },
-        {
-          property: `og:url`,
-          content: window.location,
         },
         {
           property: `og:title`,
