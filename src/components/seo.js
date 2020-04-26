@@ -58,6 +58,10 @@ function SEO({ description, meta, title, locale, socialMediaImage }) {
           content: metaDescription,
         },
         {
+          property: `og:url`,
+          content: window.location,
+        },
+        {
           property: `og:title`,
           content: title,
         },
