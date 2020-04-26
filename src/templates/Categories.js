@@ -14,11 +14,16 @@ function Categories({
     categories,
     currentPage,
     numPages,
+    socialMediaImage,
   },
 }) {
   return (
     <Layout>
-      <SEO title={translations.categories[locale]} locale={locale} />
+      <SEO
+        title={translations.categories[locale]}
+        locale={locale}
+        socialMediaImage={socialMediaImage}
+      />
       <div className="section">
         <div className="title">
           <h1>{translations.categories[locale]}</h1>

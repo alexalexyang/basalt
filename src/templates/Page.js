@@ -4,16 +4,19 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 
 const Page = ({
-  pageContext: { page, translations, defaultLocale, locale },
+  pageContext: { page, translations, defaultLocale, locale, socialMediaImage },
 }) => {
   return (
     <Layout>
       <SEO
         title={page.title}
         description={
-          page.excerpt ? page.excerpt : page.body.childMarkdownRemark.html
+          page.excerpt
+            ? page.excerpt[locale]
+            : page.body.childMarkdownRemark.html
         }
         locale={locale}
+        socialMediaImage={socialMediaImage}
       />
       <div key={page.contentful_id} className="section">
         <div className="container">

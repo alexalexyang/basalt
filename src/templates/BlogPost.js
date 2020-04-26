@@ -4,13 +4,16 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Img from "gatsby-image"
 
-function BlogPost({ pageContext: { locale, post, translations } }) {
+function BlogPost({
+  pageContext: { locale, post, translations, socialMediaImage },
+}) {
   return (
     <Layout>
       <SEO
         title={`${translations.blog[locale]} | ${post.title}`}
-        description={post.excerpt ? post.excerpt : null}
+        description={post.excerpt ? post.excerpt[locale] : null}
         locale={locale}
+        socialMediaImage={socialMediaImage}
       />
       <div key={post.contentful_id} className="section">
         <div className="container">

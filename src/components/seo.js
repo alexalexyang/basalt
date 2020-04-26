@@ -10,7 +10,7 @@ import PropTypes from "prop-types"
 import Helmet from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
-function SEO({ description, meta, title, locale }) {
+function SEO({ description, meta, title, locale, socialMediaImage }) {
   const {
     site: { siteSettings, defaultLocale },
   } = useStaticQuery(
@@ -24,7 +24,22 @@ function SEO({ description, meta, title, locale }) {
     `
   )
 
+  let defaultImage = ""
+  if (
+    Object.keys(siteSettings.defaultImage[locale].fields.file).includes(locale)
+  ) {
+    defaultImage = siteSettings.defaultImage[locale].fields.file[locale].url
+  } else {
+    defaultImage =
+      siteSettings.defaultImage[defaultLocale.code].fields.file[
+        defaultLocale.code
+      ].url
+  }
+
   const metaDescription = description || siteSettings.siteDescription[locale]
+  const image = socialMediaImage
+    ? `https:${socialMediaImage}`
+    : `https:${defaultImage}`
 
   return (
     <Helmet
@@ -48,7 +63,7 @@ function SEO({ description, meta, title, locale }) {
         },
         {
           property: `og:image`,
-          content: "WHERE IS IMAGE",
+          content: image,
         },
         {
           property: `og:type`,
@@ -72,7 +87,7 @@ function SEO({ description, meta, title, locale }) {
         },
         {
           name: `twitter:image`,
-          content: "WHERE IS IMAGE",
+          content: image,
         },
       ].concat(meta)}
     />

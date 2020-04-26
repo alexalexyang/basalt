@@ -94,6 +94,9 @@ exports.createPages = async ({ actions, graphql }) => {
                 srcSetWebp
                 srcWebp
               }
+              file {
+                url
+              }
             }
 
             body {
@@ -125,6 +128,9 @@ exports.createPages = async ({ actions, graphql }) => {
                 aspectRatio
                 srcSetWebp
                 srcWebp
+              }
+              file {
+                url
               }
             }
 
@@ -166,6 +172,9 @@ exports.createPages = async ({ actions, graphql }) => {
                 srcSetWebp
                 srcWebp
               }
+              file {
+                url
+              }
             }
 
             blog_post {
@@ -197,6 +206,7 @@ exports.createPages = async ({ actions, graphql }) => {
             locale: locale.code,
             defaultLocale: defaultLocale.code,
             translations,
+            socialMediaImage: page.featuredImage.file.url,
           },
         })
       })
@@ -211,6 +221,7 @@ exports.createPages = async ({ actions, graphql }) => {
             locale: locale.code,
             post,
             translations,
+            socialMediaImage: post.featuredImage.file.url,
           },
         })
       })
@@ -255,6 +266,7 @@ exports.createPages = async ({ actions, graphql }) => {
             locale: locale.code,
             category,
             translations,
+            socialMediaImage: category.featuredImage.file.url,
           },
         })
       })
