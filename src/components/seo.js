@@ -24,16 +24,21 @@ function SEO({ description, meta, title, locale, socialMediaImage }) {
     `
   )
 
+  console.log(siteSettings.defaultImage[locale])
   let defaultImage = ""
-  if (
-    Object.keys(siteSettings.defaultImage[locale].fields.file).includes(locale)
-  ) {
-    defaultImage = siteSettings.defaultImage[locale].fields.file[locale].url
-  } else {
-    defaultImage =
-      siteSettings.defaultImage[defaultLocale.code].fields.file[
-        defaultLocale.code
-      ].url
+  if (siteSettings.defaultImage[locale]) {
+    if (
+      Object.keys(siteSettings.defaultImage[locale].fields.file).includes(
+        locale
+      )
+    ) {
+      defaultImage = siteSettings.defaultImage[locale].fields.file[locale].url
+    } else {
+      defaultImage =
+        siteSettings.defaultImage[defaultLocale.code].fields.file[
+          defaultLocale.code
+        ].url
+    }
   }
 
   const metaDescription = description || siteSettings.siteDescription[locale]
