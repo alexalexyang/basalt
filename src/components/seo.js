@@ -24,7 +24,6 @@ function SEO({ description, meta, title, locale, socialMediaImage }) {
     `
   )
 
-  console.log(siteSettings.defaultImage[locale])
   let defaultImage = ""
   if (siteSettings.defaultImage[locale]) {
     if (
@@ -45,7 +44,7 @@ function SEO({ description, meta, title, locale, socialMediaImage }) {
   const image = socialMediaImage
     ? `https:${socialMediaImage}`
     : `https:${defaultImage}`
-
+  console.log("META DESC: ", metaDescription)
   return (
     <Helmet
       htmlAttributes={{

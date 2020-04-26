@@ -83,7 +83,7 @@ exports.createPages = async ({ actions, graphql }) => {
             title
             createdAt
             node_locale
-
+            excerpt
             featuredImage {
               fluid {
                 sizes
@@ -160,7 +160,7 @@ exports.createPages = async ({ actions, graphql }) => {
                 html
               }
             }
-            
+            excerpt
             featuredImage {
               contentful_id
               fluid {

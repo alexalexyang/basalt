@@ -11,7 +11,9 @@ function BlogPost({
     <Layout>
       <SEO
         title={`${translations.blog[locale]} | ${post.title}`}
-        description={post.excerpt ? post.excerpt[locale] : null}
+        description={
+          post.excerpt ? post.excerpt : post.body.childMarkdownRemark.html
+        }
         locale={locale}
         socialMediaImage={socialMediaImage}
       />

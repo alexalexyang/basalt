@@ -11,9 +11,7 @@ const Page = ({
       <SEO
         title={page.title}
         description={
-          page.excerpt
-            ? page.excerpt[locale]
-            : page.body.childMarkdownRemark.html
+          page.excerpt ? page.excerpt : page.body.childMarkdownRemark.html
         }
         locale={locale}
         socialMediaImage={socialMediaImage}

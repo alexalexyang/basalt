@@ -10,7 +10,11 @@ function Categories({ pageContext: { locale, category, translations } }) {
     <Layout>
       <SEO
         title={translations.category[locale]}
-        description={translations.excerpt ? translations.excerpt[locale] : null}
+        description={
+          category.excerpt
+            ? category.excerpt
+            : category.description.childMarkdownRemark.html
+        }
         locale={locale}
       />
       <div className="section">

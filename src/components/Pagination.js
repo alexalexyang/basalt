@@ -21,8 +21,8 @@ function Pagination({
         <Link
           to={`${
             currentPage === 2
-              ? `${localePath()}`
-              : `${localePath()}/${currentPage - 1}`
+              ? `${localePath().toLowerCase()}`
+              : `${localePath().toLowerCase()}/${currentPage - 1}`
           }`}
         >
           {`<<`}
@@ -34,7 +34,11 @@ function Pagination({
 
   const next = () => {
     if (currentPage !== numPages) {
-      return <Link to={`${localePath()}/${currentPage + 1}`}>{`>>`}</Link>
+      return (
+        <Link
+          to={`${localePath().toLowerCase()}/${currentPage + 1}`}
+        >{`>>`}</Link>
+      )
     }
     return null
   }
