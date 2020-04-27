@@ -2,43 +2,13 @@
 @import "../../node_modules/bulma/bulma.sass";
 @import "./searchModal.scss";
 
-.language-button {
-  background: none;
-  color: inherit;
-  border: none;
-  font: inherit;
-  cursor: pointer;
-  outline: inherit;
-}
-
-.search-box {
-  width: 150px;
-}
-
-.featuredImage {
-  width: 150px;
-}
-
-.blog-blogpost {
-  display: flex;
-}
-
-@media only screen and (max-width: 700px) {
-  .blog-blogpost {
-    flex-direction: column;
-  }
-}
-
-.blog-blogpost-item {
-  padding: 5px;
-}
-
 body {
   display: flex;
   justify-content: space-around;
 }
 
 footer {
+  width: 100%;
   background-color: rgb(170, 0, 0);
   color: white;
 
@@ -54,20 +24,95 @@ footer {
   }
 }
 
+.footer-item {
+  height: 100%;
+  li {
+    margin-bottom: 5px;
+  }
+}
+
+.language-button {
+  background: none;
+  color: inherit;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+.search-box {
+  width: 150px;
+}
+
+.basalt-container {
+  margin: 15px;
+}
+
+.featuredImage {
+  width: 100%;
+}
+
+.featuredImage-small {
+  width: 150px;
+}
+
+.basalt-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.basalt-level {
+  width: 100vw;
+  display: flex;
+  justify-content: flex-start;
+  margin: 15px 0px;
+
+  @media only screen and (max-width: 500px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.basalt-level-left {
+  width: 20%;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+
+  @media only screen and (max-width: 500px) {
+    width: 50%;
+  }
+}
+
+.basalt-level-right {
+  width: 80%;
+  padding: 15px 8px;
+
+  @media only screen and (max-width: 800px) {
+    width: 100%;
+    padding: 15px 12px;
+  }
+}
+
+.basalt-level-item {
+  display: flex;
+  flex-direction: column;
+}
+
 .level {
   align-items: normal;
 }
 
 .level-item {
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px;
   height: 100%;
+  width: 50%;
   .title {
-    margin-bottom: 5px;
-  }
-}
-
-.footer-item {
-  height: 100%;
-  li {
     margin-bottom: 5px;
   }
 }

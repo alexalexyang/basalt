@@ -19,17 +19,22 @@ function Blog({
   return (
     <Layout>
       <SEO title={translations.blog[locale]} locale={locale} />
-      {blogposts.map(post => (
-        <div className="section" key={post.contentful_id}>
-          <div className="container">
-            <div className="blog-blogpost">
+      <div className="section">
+        <div className="container">
+          <h1 className="title">{translations.categories[locale]}</h1>
+        </div>
+        <div className="container">
+          {blogposts.map(post => (
+            <div className="basalt-level card" key={post.contentful_id}>
               {post.featuredImage ? (
-                <div className="blog-blogpost-item featuredImage">
-                  <Img fluid={post.featuredImage.fluid} />
+                <div className="basalt-level-left">
+                  <div className="featuredImage">
+                    <Img fluid={post.featuredImage.fluid} />
+                  </div>
                 </div>
               ) : null}
-              <div className="blog-blogpost-item">
-                <article className="content">
+              <div className="basalt-level-right">
+                <article className="content basalt-level-item">
                   <Link to={post.fields.slug} className="title">
                     {post.title}
                   </Link>
@@ -43,9 +48,9 @@ function Blog({
                 </article>
               </div>
             </div>
-          </div>
+          ))}
         </div>
-      ))}
+      </div>
       <Pagination
         defaultLocale={defaultLocale}
         locale={locale}

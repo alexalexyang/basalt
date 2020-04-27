@@ -44,7 +44,7 @@ function Pagination({
   }
   return (
     <div className="section">
-      <div className="container">
+      <div className="container basalt-center">
         <p>
           {prev()} {currentPage} of {numPages} {next()}
         </p>

@@ -142,6 +142,9 @@ exports.createPages = async ({ actions, graphql }) => {
             categories {
               contentful_id
               title
+              fields {
+                slug
+              }
             }
             tags
           }

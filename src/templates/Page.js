@@ -18,7 +18,6 @@ const Page = ({
       />
       <div key={page.contentful_id} className="section">
         <div className="container">
-          <h1 className="title">{page.title}</h1>
           <article
             className="content"
             dangerouslySetInnerHTML={{

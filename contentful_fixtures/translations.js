@@ -62,7 +62,7 @@ const createTranslations = client => {
             en: "Social media",
           },
           pageNotFound: {
-            is: "síða ekki fundin",
+            is: "Síðan finnst ekki",
             en: "Page not found",
           },
           text404: {

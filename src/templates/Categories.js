@@ -25,29 +25,31 @@ function Categories({
         socialMediaImage={socialMediaImage}
       />
       <div className="section">
-        <div className="title">
-          <h1>{translations.categories[locale]}</h1>
+        <div className="container">
+          <h1 className="title">{translations.categories[locale]}</h1>
         </div>
         <div className="container">
           {categories.map(cat => (
-            <div className="card" key={cat.contentful_id}>
+            <div className="basalt-level card" key={cat.contentful_id}>
               {cat.featuredImage ? (
-                <div className="container featuredImage">
-                  <Img fluid={cat.featuredImage.fluid} />
+                <div className="basalt-level-left">
+                  <div className="featuredImage">
+                    <Img fluid={cat.featuredImage.fluid} />
+                  </div>
                 </div>
               ) : null}
-              <div className="container">
-                <h2 className="title">
-                  <Link to={cat.fields.slug}>{cat.title}</Link>
-                </h2>
-              </div>
-              <div className="container">
-                <article
-                  className="container content"
-                  dangerouslySetInnerHTML={{
-                    __html: cat.description.childMarkdownRemark.html,
-                  }}
-                ></article>
+              <div className="basalt-level-right">
+                <article className="content basalt-level-item">
+                  <Link to={cat.fields.slug} className="title">
+                    {cat.title}
+                  </Link>
+                  <article
+                    className=""
+                    dangerouslySetInnerHTML={{
+                      __html: cat.description.childMarkdownRemark.html,
+                    }}
+                  ></article>
+                </article>
               </div>
             </div>
           ))}

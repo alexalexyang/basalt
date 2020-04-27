@@ -9,7 +9,7 @@ function Categories({ pageContext: { locale, category, translations } }) {
   return (
     <Layout>
       <SEO
-        title={translations.category[locale]}
+        title={`${translations.category[locale]} | ${category.title}`}
         description={
           category.excerpt
             ? category.excerpt
@@ -18,28 +18,30 @@ function Categories({ pageContext: { locale, category, translations } }) {
         locale={locale}
       />
       <div className="section">
-        <div className="title">
-          <h1>{translations.categories[locale]}</h1>
+        <div className="container">
+          <h1>{translations.category[locale]}</h1>
         </div>
         <div className="container">
           <h2 className="title">{category.title}</h2>
+          {category.featuredImage ? (
+            <div className="basalt-container basalt-center">
+              <div className="featuredImage-small">
+                <Img fluid={category.featuredImage.fluid} />
+              </div>
+            </div>
+          ) : null}
           <article
-            className="container content"
+            className="basalt-container content"
             dangerouslySetInnerHTML={{
               __html: category.description.childMarkdownRemark.html,
             }}
           ></article>
-          {category.featuredImage ? (
-            <div className="container featuredImage">
-              <Img fluid={category.featuredImage.fluid} />
-            </div>
-          ) : null}
         </div>
         {category.blog_post ? (
-          <div className="container">
+          <div className="basalt-container">
             {category.blog_post.map(post => (
               <div className="card" key={post.contentful_id}>
-                <article className="content">
+                <article className="content basalt-container">
                   <h2>
                     <Link to={post.fields.slug}>{post.title}</Link>
                   </h2>

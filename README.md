@@ -1,9 +1,8 @@
 # To do
 
-- Add social media sharing metadata
-  - Add image for social media in SEO component
-  - Add Facebook
-- Make images in same line with text in blog, categories
+- Footer
+  - Make custom footer CSS
+  - Move footer to bottom of page
 - Set up new Contentful account and everything
 - Live tests
 - Write docs

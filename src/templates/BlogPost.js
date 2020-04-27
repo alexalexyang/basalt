@@ -1,4 +1,5 @@
 import React from "react"
+import {Link} from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
@@ -29,7 +30,7 @@ function BlogPost({
               </p>
             </article>
             {post.featuredImage ? (
-              <div className="container featuredImage">
+              <div className="container featuredImage-small">
                 <Img fluid={post.featuredImage.fluid} />
               </div>
             ) : null}
@@ -42,16 +43,22 @@ function BlogPost({
             {post.tags ? (
               <article className="content">
                 <h3>{translations.tags[locale]}:</h3>
-                {post.tags.map(tag => (
-                  <p key={tag}>{tag}</p>
-                ))}
+                <p>
+                  {post.tags.map(tag => (
+                    <span key={tag}>{tag}, </span>
+                  ))}
+                </p>
               </article>
             ) : null}
             {post.categories ? (
               <article className="content">
-                <h3>Categories:</h3>
+                <h3>{translations.categories[locale]}:</h3>
                 {post.categories.map(cat => (
-                  <p key={cat.contentful_id}>{cat.title}</p>
+                  <p>
+                    <span key={cat.contentful_id}>
+                      <Link to={cat.fields.slug}>{cat.title}</Link>,{" "}
+                    </span>
+                  </p>
                 ))}
               </article>
             ) : null}
