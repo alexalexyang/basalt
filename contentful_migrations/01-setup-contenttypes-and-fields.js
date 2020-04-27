@@ -126,6 +126,13 @@ module.exports = (migration, context) => {
     .displayField("title")
 
   page
+    .createField("pageNumber")
+    .name("Page number")
+    .type("Integer")
+    .required(false)
+    .localized(false)
+
+  page
     .createField("slug")
     .name("Slug")
     .type("Symbol")

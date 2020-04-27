@@ -239,6 +239,9 @@ function createPages(client) {
     .then(environment =>
       environment.createEntryWithId("page", v4(), {
         fields: {
+          pageNumber: {
+            is: 0,
+          },
           slug: {
             is: "/",
             en: "/",
@@ -286,6 +289,9 @@ function createPages(client) {
     .then(environment =>
       environment.createEntryWithId("page", v4(), {
         fields: {
+          pageNumber: {
+            is: 1,
+          },
           slug: {
             is: "um-okkur",
             en: "about-us",

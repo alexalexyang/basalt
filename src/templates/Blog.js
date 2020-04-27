@@ -21,7 +21,7 @@ function Blog({
       <SEO title={translations.blog[locale]} locale={locale} />
       <div className="section">
         <div className="container">
-          <h1 className="title">{translations.categories[locale]}</h1>
+          <h1 className="title">{translations.blog[locale]}</h1>
         </div>
         <div className="container">
           {blogposts.map(post => (
