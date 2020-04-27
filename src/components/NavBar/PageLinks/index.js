@@ -20,6 +20,8 @@ function Index({ currentLocale, allContentfulPage, defaultLocale }) {
       })
     }
 
+    pageArray.sort((a, b) => (a.pageNumber > b.pageNumber ? -1 : 1))
+
     return pageArray.map(page => (
       <Link to={`/${page.fields.slug}`} className="navbar-item" key={page.id}>
         {page.title}
