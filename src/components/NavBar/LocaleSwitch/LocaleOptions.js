@@ -2,7 +2,7 @@ import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import { Index } from "elasticlunr"
 
-function LocaleSwitcher({ locales }) {
+function LocaleOptions({ locales }) {
   const {
     siteSearchIndex: { index },
   } = useStaticQuery(graphql`
@@ -18,7 +18,6 @@ function LocaleSwitcher({ locales }) {
 
     let path =
       pathname === "/" || /^\/\w\w$/.test(pathname) ? "basaltHome" : pathname
-    console.log("PATH: ", path)
 
     let pages = Index.load(index)
       .search(path)
@@ -29,18 +28,15 @@ function LocaleSwitcher({ locales }) {
     }
 
     let pageID = pages[0].basaltID
-    console.log("PAGE ID: ", pageID)
 
     pages = Index.load(index)
       .search(pageID)
       .map(data => Index.load(index).documentStore.getDoc(data.ref))
 
     let slug = ""
-    console.log("PAGES: ", pages)
     pages.forEach(page => {
       if (page.basaltLocale === locale && page.basaltID === pageID) {
         slug = page.slug
-        console.log("SLUG: ", slug)
       }
     })
 
@@ -62,4 +58,4 @@ function LocaleSwitcher({ locales }) {
   )
 }
 
-export default LocaleSwitcher
+export default LocaleOptions

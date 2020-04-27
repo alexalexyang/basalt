@@ -3,6 +3,7 @@
 - Footer
   - Make custom footer CSS
   - Move footer to bottom of page
+- Give each page a page number
 - Set up new Contentful account and everything
 - Live tests
 - Write docs
