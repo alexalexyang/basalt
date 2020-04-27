@@ -18,27 +18,23 @@ function Footer({ translationLocale }) {
 
   return (
     <footer className="section">
-      <div className="level">
-        <div className="level-left">
-          <article className="level-item">
-            <div className="footer-item">
-              {translations.sourceCode[translationLocale] ? (
-                <h3 className="title">
-                  {translations.sourceCode[translationLocale]}
-                </h3>
-              ) : null}
-              <p>
-                <a href={siteSettings.sourceCodeLink[defaultLocale.code]}>
-                  {translations.sourceCode[translationLocale]}
-                </a>
-              </p>
-            </div>
-          </article>
-        </div>
-        <div className="level-right">
+      <div className="footer-level">
+        <article className="footer-column">
+          {translations.sourceCode[translationLocale] ? (
+            <h3 className="title">
+              <a href={siteSettings.sourceCodeLink[defaultLocale.code]}>
+                {translations.sourceCode[translationLocale]}
+              </a>
+            </h3>
+          ) : null}
+          <p></p>
+        </article>
+        <article className="footer-column">
           <SocialMedia translationLocale={translationLocale} />
+        </article>
+        <article className="footer-column">
           <OrgDetails translationLocale={translationLocale} />
-        </div>
+        </article>
       </div>
     </footer>
   )

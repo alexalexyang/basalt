@@ -30,7 +30,10 @@ const Layout = ({ children }) => {
         currentLocale={currentLocale}
         translationLocale={translationLocale}
       />
-      <main>{children}</main>
+      <main>
+        {children}
+        <div className="push"></div>
+      </main>
       <Footer
         currentLocale={currentLocale}
         translationLocale={translationLocale}
