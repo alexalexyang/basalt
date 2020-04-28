@@ -7,6 +7,8 @@ module.exports = {
     author: `Alex`,
   },
   plugins: [
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`,
     {
       resolve: `gatsby-transformer-remark`,
       options: {
@@ -16,22 +18,11 @@ module.exports = {
         gfm: true,
         plugins: [
           {
-            resolve: "gatsby-remark-embed-video",
+            resolve: `gatsby-remark-images-contentful`,
             options: {
-              width: 800,
-              ratio: 1.77,
-              height: 400,
-              related: false,
-              noIframeBorder: true,
-            },
-          },
-          {
-            resolve: `gatsby-remark-images`,
-            options: {
-              maxWidth: 500,
+              loading: "lazy",
+              maxWidth: 700,
               withWebP: true,
-              backgroundColor: "transparent",
-              showCaptions: true,
             },
           },
         ],
@@ -53,8 +44,6 @@ module.exports = {
         path: `${__dirname}/src/images`,
       },
     },
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {

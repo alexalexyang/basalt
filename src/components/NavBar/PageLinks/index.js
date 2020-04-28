@@ -7,13 +7,13 @@ function Index({ currentLocale, allContentfulPage, defaultLocale }) {
   const pageLinks = () => {
     let pageArray = []
     if (currentLocale === "") {
-      pages.map(page => {
+      pages.forEach(page => {
         if (page.node_locale === defaultLocale.code) {
           pageArray.push(page)
         }
       })
     } else {
-      pages.map(page => {
+      pages.forEach(page => {
         if (page.node_locale === currentLocale) {
           pageArray.push(page)
         }

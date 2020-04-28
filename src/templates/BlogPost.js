@@ -1,5 +1,5 @@
 import React from "react"
-import {Link} from "gatsby"
+import { Link } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
@@ -8,6 +8,10 @@ import Img from "gatsby-image"
 function BlogPost({
   pageContext: { locale, post, translations, socialMediaImage },
 }) {
+  const comma = (arr, elem) => {
+    return arr.indexOf(elem) === arr.length - 1 ? "" : ", "
+  }
+
   return (
     <Layout>
       <SEO
@@ -35,7 +39,7 @@ function BlogPost({
               </div>
             ) : null}
             <article
-              className="content"
+              className="content markdownContent"
               dangerouslySetInnerHTML={{
                 __html: post.body.childMarkdownRemark.html,
               }}
@@ -45,7 +49,10 @@ function BlogPost({
                 <h3>{translations.tags[locale]}:</h3>
                 <p>
                   {post.tags.map(tag => (
-                    <span key={tag}>{tag}, </span>
+                    <span key={tag}>
+                      {tag}
+                      {comma(post.tags, tag)}
+                    </span>
                   ))}
                 </p>
               </article>
@@ -56,7 +63,8 @@ function BlogPost({
                 {post.categories.map(cat => (
                   <p>
                     <span key={cat.contentful_id}>
-                      <Link to={cat.fields.slug}>{cat.title}</Link>,{" "}
+                      <Link to={cat.fields.slug}>{cat.title}</Link>
+                      {comma(post.categories, cat)}
                     </span>
                   </p>
                 ))}

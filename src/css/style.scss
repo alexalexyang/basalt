@@ -6,6 +6,7 @@ html,
 body {
   min-height: 100vh;
   margin: 0;
+  text-align: justify;
 }
 
 main {
@@ -144,4 +145,11 @@ footer {
 .basalt-level-item {
   display: flex;
   flex-direction: column;
+}
+
+.markdownContent {
+  iframe {
+    display: block;
+    margin: auto;
+  }
 }

@@ -1,5 +1,6 @@
 # To do
 
+- Upload pics and videos to blog post and page and see how they perform
 - Set up new Contentful account and everything
 - Live tests
 - Write docs
