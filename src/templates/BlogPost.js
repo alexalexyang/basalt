@@ -61,12 +61,10 @@ function BlogPost({
               <article className="content">
                 <h3>{translations.categories[locale]}:</h3>
                 {post.categories.map(cat => (
-                  <p>
-                    <span key={cat.contentful_id}>
-                      <Link to={cat.fields.slug}>{cat.title}</Link>
-                      {comma(post.categories, cat)}
-                    </span>
-                  </p>
+                  <span key={cat.contentful_id}>
+                    <Link to={cat.fields.slug}>{cat.title}</Link>
+                    {comma(post.categories, cat)}
+                  </span>
                 ))}
               </article>
             ) : null}
