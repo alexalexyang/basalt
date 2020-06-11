@@ -23,6 +23,7 @@ function Index({
       </Link>
       <div className="navbar-dropdown">
         <Link
+          className="navbar-item"
           to={
             currentLocale === ""
               ? `/${translations.categories[defaultLocale.code].toLowerCase()}`
