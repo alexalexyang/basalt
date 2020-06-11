@@ -19,11 +19,15 @@ Ref: [fluid images example](https://github.com/gatsbyjs/gatsby/blob/master/examp
 
 It may be possible to use the search engine, [elasticlunr](https://github.com/gatsby-contrib/gatsby-plugin-elasticlunr-search), for multilingual slugs.
 
+<div style="background-color:rgba(0, 0, 0, 0.0470588);">
+
 # Setup
 
 ## Netlify build hook
 
 Remember to set up a [Netlify build hook](https://www.contentful.com/developers/docs/tutorials/general/automate-site-builds-with-webhooks/) for Contentful so the site builds with every new entry.
+
+</div>
 
 # Contentful
 
